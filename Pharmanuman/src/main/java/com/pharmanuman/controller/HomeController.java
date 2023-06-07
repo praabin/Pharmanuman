@@ -68,7 +68,7 @@ public class HomeController {
 				model.addAttribute("user", user);
 				return "signup";
 			}
-			user.setRole("ROLE_PHARMACY");
+//			user.setRole("ROLE_PHARMACY");
 			user.setEnabled(true);
 			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
