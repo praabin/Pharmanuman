@@ -42,8 +42,8 @@
 								<label for="emailField">Email address</label> <input
 									name="email" type="email" class="form-control"
 									th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}"
-									 id="emailField"
-									placeholder="email@example.com" th:value="${user.email}">
+									id="emailField" placeholder="email@example.com"
+									th:value="${user.email}">
 
 
 								<div th:each="e : ${#fields.errors('email')}"
@@ -51,9 +51,7 @@
 							</div>
 							<div class="form-group">
 								<label for="passwordField">Password</label> <input
-									name="password" type="password"
-								
-									 class="form-control"
+									name="password" type="password" class="form-control"
 									id="passwordField" placeholder="Password">
 
 
@@ -64,9 +62,8 @@
 								<textarea name="about"
 									placeholder="Write something about yourself..."
 									class="form-control" rows="8" th:text="${user.about}"
-									th:classappend="${#fields.hasErrors('about') ? 'is-invalid' : ''}"
-									></textarea>
-									
+									th:classappend="${#fields.hasErrors('about') ? 'is-invalid' : ''}"></textarea>
+
 								<div th:each="e : ${#fields.errors('about')}"
 									class="invalid-feedback" th:text="${e}"></div>
 

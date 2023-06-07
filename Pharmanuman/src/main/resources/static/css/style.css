@@ -1,5 +1,5 @@
 @charset "ISO-8859-1";
-
+/* Pharmacy */
 body {
 	background: #e2e2e2 !important;
 }
@@ -10,7 +10,7 @@ body {
 
 .intro {
 	font-family: "Helvetica Neue", Arial, sans-serif ;
-	font-size: 25px;
+	font-size: 22px;
 	line-height: 1.6;
 	color: #ffffff;
 	margin-bottom: 20px;
