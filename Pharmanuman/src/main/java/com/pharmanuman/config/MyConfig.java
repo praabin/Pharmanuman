@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -41,14 +42,22 @@ public class MyConfig {
 		requestMatchers("/pc/**").hasRole("PC").
 		requestMatchers("/stockist/**").hasRole("STOCKIST").
 		requestMatchers("/**").permitAll().and().formLogin().loginPage("/signin")
-				.loginProcessingUrl("/dologin").
-				defaultSuccessUrl("/admin/index").
-				defaultSuccessUrl("/pc/index").
-				defaultSuccessUrl("/stockist/index").
-				defaultSuccessUrl("/pharmacy/index").failureUrl("/login-fail").and().csrf().disable();
+				.loginProcessingUrl("/dologin")
+				.successHandler(authenticationSuccessHandler()).
+				failureUrl("/login-fail").and().csrf().disable();
 		http.authenticationProvider(authenticationProvider());
 		DefaultSecurityFilterChain build = http.build();
 		return build;
 	}
 
+	@Bean
+	public AuthenticationSuccessHandler authenticationSuccessHandler() {
+	    return new RoleBasedAuthenticationSuccessHandler();
+	}
 }
+
+/*
+ * defaultSuccessUrl("/admin/index", true). defaultSuccessUrl("/pc/index",
+ * true). defaultSuccessUrl("/stockist/index", true).
+ * defaultSuccessUrl("/pharmacy/index", true)
+ */
