@@ -12,8 +12,8 @@ import com.pharmanuman.dao.UserRepository;
 import com.pharmanuman.entities.User;
 
 @Controller
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/pharmacy")
+public class PharmacyController {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -30,7 +30,7 @@ public class UserController {
 	@RequestMapping("/index")
 	public String index(Model model) {
 		model.addAttribute("title", "User Dashboard");
-		return "user/user_dashboard";
+		return "pharmacy/pharmacy_dashboard";
 	}
 
 }

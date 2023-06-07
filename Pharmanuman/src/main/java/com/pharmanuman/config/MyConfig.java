@@ -35,9 +35,17 @@ public class MyConfig {
 //this is where magic happens for role based application
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests().requestMatchers("/admin/**").hasRole("ADMIN").requestMatchers("/user/**")
-				.hasRole("USER").requestMatchers("/**").permitAll().and().formLogin().loginPage("/signin")
-				.loginProcessingUrl("/dologin").defaultSuccessUrl("/admin/index").failureUrl("/login-fail").and().csrf().disable();
+		http.authorizeHttpRequests().
+		requestMatchers("/admin/**").hasRole("ADMIN").
+		requestMatchers("/pharmacy/**").hasRole("PHARMACY").
+		requestMatchers("/pc/**").hasRole("PC").
+		requestMatchers("/stockist/**").hasRole("STOCKIST").
+		requestMatchers("/**").permitAll().and().formLogin().loginPage("/signin")
+				.loginProcessingUrl("/dologin").
+				defaultSuccessUrl("/admin/index").
+				defaultSuccessUrl("/pc/index").
+				defaultSuccessUrl("/stockist/index").
+				defaultSuccessUrl("/pharmacy/index").failureUrl("/login-fail").and().csrf().disable();
 		http.authenticationProvider(authenticationProvider());
 		DefaultSecurityFilterChain build = http.build();
 		return build;
