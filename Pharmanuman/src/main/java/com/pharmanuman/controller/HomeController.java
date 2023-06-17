@@ -69,7 +69,7 @@ public class HomeController {
 				return "signup";
 			}
 //			user.setRole("ROLE_PHARMACY");
-			user.setEnabled(true);
+			
 			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
 			System.out.println("Agreement " + agreement);

@@ -32,35 +32,36 @@
 <body>
   <div class="container card" >
     <h2>Order medicine</h2>
-    <form id="order-form">
+    <form id="order-form" th:object="${medicine}" th:action="@{/pharmacy/process-order}" method="post">
       <div id="medicine-sections">
         <div class="medicine-section" id="medicine1">
           <h4>Medicine 1</h4>
+          
           <div class="form-row">
             <div class="col-md-4">
               <div class="form-group">
                 <label for="name1">Medicine Name:</label>
-                <input type="text" class="form-control" id="name1" name="name[]" placeholder="Enter medicine name">
+                <input type="text" class="form-control" id="name1" name="name" placeholder="Enter medicine name">
               </div>
             </div>
             <div class="col-md-2">
               <div class="form-group">
                 <label for="quantity1">Quantity:</label>
-                <input type="number" class="form-control" id="quantity1" name="quantity[]" placeholder="Enter quantity">
+                <input type="number" class="form-control" id="quantity1" name="quantity" placeholder="Enter quantity">
               </div>
             </div>
             <div class="col-md-2">
               <div class="form-group">
                 <label for="price1">Price:</label>
-                <input type="text" class="form-control" id="price1" name="price[]" placeholder="Enter price">
+                <input type="text" class="form-control" id="price1" name="price" placeholder="Enter price">
               </div>
             </div>
             <div class="col-md-2">
               <div class="form-group">
                 <label for="total1">Total:</label>
-                <input type="text" class="form-control" id="total1" name="total[]" readonly>
+                <input type="text" class="form-control" id="total1" name="total" >
               </div>
-            </div>
+            </div> 
             <div class="col-md-2 align-self-end">
               <button type="button" class="btn btn-danger btn-remove" onclick="removeMedicine(1)">Remove</button>
             </div>
@@ -71,7 +72,7 @@
       <button type="button" class="btn btn-primary" onclick="addMedicine()">Add Medicine</button>
       <div id="form-total">Total: Rs. 0.00</div>
       <div class="text-center mt-2 mb-3">
-      <button type="submit" class="btn btn-primary btn-submit align-center">Register</button>
+      <button type="submit" class="btn btn-primary btn-submit align-center">Order</button>
        
       </div>
     </form>
@@ -80,7 +81,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  
+<!--   
   <script>
     var sectionCounter = 1;
 
@@ -196,6 +197,6 @@
     // Update the form total display
     $('#form-total').text('Total: $' + total.toFixed(2));
   }
-  </script>
+  </script> -->
 </body>
 </html>

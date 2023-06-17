@@ -33,17 +33,15 @@ public class User {
 
 	private String password;
 	private String role;
-	private boolean enabled;
-	private String imageUrl;
 
 	@Column(length = 500)
 	@Length(max = 500, message = "about should be less than 500 character")
 	private String about;
 
-	 @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true) 
-	 private List<Medicine> medicines = new ArrayList<>();
-	 
 
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	private List<Medicine> medicines = new ArrayList<>();
+	
 	public User() {
 		super();
 	}
@@ -56,9 +54,17 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.role = role;
-		this.enabled = enabled;
-		this.imageUrl = imageUrl;
 		this.about = about;
+	}
+	
+	
+
+	public List<Medicine> getMedicines() {
+		return medicines;
+	}
+
+	public void setMedicines(List<Medicine> medicines) {
+		this.medicines = medicines;
 	}
 
 	public int getId() {
@@ -101,22 +107,6 @@ public class User {
 		this.role = role;
 	}
 
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-
 	public String getAbout() {
 		return about;
 	}
@@ -125,4 +115,13 @@ public class User {
 		this.about = about;
 	}
 
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", role=" + role
+				+ ", about=" + about + ", medicines=" + medicines + "]";
+	}
+	
+	
+
+	
 }

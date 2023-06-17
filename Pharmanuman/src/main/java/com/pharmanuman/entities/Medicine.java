@@ -23,7 +23,6 @@ public class Medicine {
 
 	public Medicine() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Medicine(int mid, String name, int quantity, double price, double total) {
@@ -33,6 +32,15 @@ public class Medicine {
 		this.quantity = quantity;
 		this.price = price;
 		this.total = total;
+	}
+
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public int getMid() {

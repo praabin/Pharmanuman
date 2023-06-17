@@ -39,9 +39,22 @@ public class PharmacyController {
 	@GetMapping("/order_medicine")
 	public String openAddContactForm(Model model) {
 		model.addAttribute("title", "Order medicine");
-		model.addAttribute("contact", new Medicine());
+		model.addAttribute("medicine", new Medicine());
 		return "pharmacy/order_medicine";
 	}
 
+	@RequestMapping("/process-order")
+	public String processOrder(@ModelAttribute Medicine medicine, Principal p) {
+		
+		String tempName = p.getName();
+		User user = this.userRepository.getUserByUserName(tempName);
+		medicine.setUser(user);
+		user.getMedicines().add(medicine);
+		this.userRepository.save(user);
+		
+		System.out.println("data: "+medicine);
+		System.out.println("medicines added to database");
+		return "pharmacy/order_medicine";	
+	}
 
 }
