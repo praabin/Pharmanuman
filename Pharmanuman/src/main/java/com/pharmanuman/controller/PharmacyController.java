@@ -5,10 +5,13 @@ import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 import com.pharmanuman.dao.UserRepository;
+import com.pharmanuman.entities.Medicine;
 import com.pharmanuman.entities.User;
 
 @Controller
@@ -32,5 +35,13 @@ public class PharmacyController {
 		model.addAttribute("title", "User Dashboard");
 		return "pharmacy/pharmacy_dashboard";
 	}
+	
+	@GetMapping("/order_medicine")
+	public String openAddContactForm(Model model) {
+		model.addAttribute("title", "Order medicine");
+		model.addAttribute("contact", new Medicine());
+		return "pharmacy/order_medicine";
+	}
+
 
 }

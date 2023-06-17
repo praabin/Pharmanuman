@@ -1,15 +1,20 @@
 package com.pharmanuman.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.validator.constraints.Length;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-
 
 @Entity
 public class User {
@@ -34,6 +39,10 @@ public class User {
 	@Column(length = 500)
 	@Length(max = 500, message = "about should be less than 500 character")
 	private String about;
+
+	 @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true) 
+	 private List<Medicine> medicines = new ArrayList<>();
+	 
 
 	public User() {
 		super();
@@ -115,7 +124,5 @@ public class User {
 	public void setAbout(String about) {
 		this.about = about;
 	}
-
-
 
 }
