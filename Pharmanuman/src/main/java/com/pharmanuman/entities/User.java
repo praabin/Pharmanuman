@@ -39,7 +39,7 @@ public class User {
 	private String about;
 
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
 	private List<Medicine> medicines = new ArrayList<>();
 	
 	public User() {
