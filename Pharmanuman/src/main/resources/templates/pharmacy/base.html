@@ -128,16 +128,16 @@
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
-      function deleteContact(cid) {
+      function deleteMedicine(mid) {
         swal({
           title: "Are you sure?",
-          text: "You want to delete this contact",
+          text: "You want to delete this medicine",
           icon: "warning",
           buttons: true,
           dangerMode: true,
         }).then((willDelete) => {
           if (willDelete) {
-            window.location = "/user/delete/" + cid;
+            window.location = "/pharmacy/delete/" + mid;
           } else {
             swal("Your contact is safe!");
           }

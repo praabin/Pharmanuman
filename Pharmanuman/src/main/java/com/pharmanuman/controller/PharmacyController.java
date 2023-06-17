@@ -2,12 +2,14 @@ package com.pharmanuman.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pharmanuman.dao.MedicineRepository;
@@ -66,10 +68,26 @@ public class PharmacyController {
 		m.addAttribute("title", "View Medicine");
 		String name = p.getName();
 		User tempUser = this.userRepository.getUserByUserName(name);
-
 		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
 		m.addAttribute("medicines", medicines);
-
 		return "pharmacy/view_medicine";
 	}
+	
+	
+	@GetMapping("/delete/{mid}")
+	public String deleteMedicine(@PathVariable("mid") int mid, Model m, Principal p) {
+		
+		Medicine medicine = this.medicineRepository.findById(mid).get();
+		User tempUser = this.userRepository.getUserByUserName(p.getName());
+		tempUser.getMedicines().remove(medicine);
+		this.userRepository.save(tempUser);
+		
+		
+		
+		return "redirect:/pharmacy/view-medicine";
+	}
+	
+	
+
+
 }
