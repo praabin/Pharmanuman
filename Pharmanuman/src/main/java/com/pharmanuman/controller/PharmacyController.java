@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pharmanuman.dao.MedicineRepository;
@@ -100,12 +101,35 @@ public class PharmacyController {
 		User tempUser = this.userRepository.getUserByUserName(p.getName());
 		tempUser.getMedicines().remove(medicine);
 		this.userRepository.save(tempUser);
-		
+
 		String name = p.getName();
 		User tempUser1 = this.userRepository.getUserByUserName(name);
 		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser1.getId());
 		m.addAttribute("medicines", medicines);
 		return "pharmacy/order_medicine";
+	}
+
+	@PostMapping("/updateMedicine/{mid}")
+	public String updateMedicine(@PathVariable("mid") int id,Model m) {
+		m.addAttribute("title","Update medicine");
+		Medicine tempMedicine = this.medicineRepository.findById(id).get();
+		m.addAttribute("medicine", tempMedicine);
+		return "pharmacy/update_medicine";
+	}
+	
+	@PostMapping("/process-update")
+	public String processUpdate(@ModelAttribute Medicine m, Principal p, Model model) {
+//		Medicine oldMedcine = this.medicineRepository.findById(m.getMid()).get();
+		String name = p.getName();
+		User tempUser = this.userRepository.getUserByUserName(name);
+		m.setUser(tempUser);
+		this.medicineRepository.save(m);
+		
+
+		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
+		model.addAttribute("medicines", medicines);
+		
+		return "pharmacy/update_medicine";
 	}
 
 }

@@ -4,6 +4,13 @@
 <head>
 <meta charset="UTF-8" />
 <title>view medicine</title>
+<style type="text/css">
+.button-group {
+	display: flex;
+	gap: 1px;
+	align-items: center;
+}
+</style>
 </head>
 <body>
 
@@ -45,11 +52,26 @@
 							<td th:text="${m.price}"></td>
 							<td th:text="${m.quantity*m.price}"></td>
 
-							<td><a href="#" th:onclick="|deleteMedicine(${m.mid})|"
+							<td>
+								<div class="d-flex justify-content-start align-items-center">
+									<a href="#" th:onclick="|deleteMedicine(${m.mid})|"
+										class="btn btn-danger btn-sm mr-2">Delete</a>
+									<form
+										th:action="@{/pharmacy/updateMedicine/{mid}(mid=${m.mid})}"
+										method="post">
+										<button type="submit" class="btn btn-primary btn-sm">Update</button>
+									</form>
+								</div>
+							</td>
+
+
+							<!-- 							<td><a href="#" th:onclick="|deleteMedicine(${m.mid})|"
 								class="btn btn-danger btn-sm">Delete</a>
 
-									<button class="btn btn-primary btn-sm">Edit</button>	
-						</tr>
+									<form th:action="@{'/pharmacy/updateMedicine/'+${m.mid}}" method="post">
+									<button  type = "submit" class="btn btn-primary btn-sm">Update</button>	
+									</form>
+						</tr> -->
 					</tbody>
 
 				</table>
