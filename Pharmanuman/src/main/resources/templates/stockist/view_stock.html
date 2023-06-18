@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
-	th:replace="pharmacy/base::Layout(~{::section})">
+	th:replace="stockist/base::Layout(~{::section})">
 <head>
 <meta charset="UTF-8" />
 <title>view medicine</title>
@@ -17,7 +17,7 @@
 	<section>
 		<div class="card mr-3 ml-4 ">
 			<div class="card-body">
-				<h1 class="text-center">Your Medicine</h1>
+				<h1 class="text-center">Your Stock List</h1>
 
 				<div th:if="${session.msg}" class="container">
 
@@ -57,7 +57,7 @@
 									<a href="#" th:onclick="|deleteMedicine(${m.mid})|"
 										class="btn btn-danger btn-sm mr-2">Delete</a>
 									<form
-										th:action="@{/pharmacy/updateMedicine/{mid}(mid=${m.mid})}"
+										th:action="@{/stockist/updateMedicine/{mid}(mid=${m.mid})}"
 										method="post">
 										<button type="submit" class="btn btn-primary btn-sm">Update</button>
 									</form>

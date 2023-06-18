@@ -32,5 +32,21 @@ public class CompanyController {
 		model.addAttribute("title", "User Dashboard");
 		return "pharmaceuticalcompany/pc_dashboard";
 	}
+	
+	
+	@RequestMapping("/profile")
+	public String profile(Model model) {
+		model.addAttribute("title", "User Dashboard");
+		return "pharmaceuticalcompany/profile";
+	}
+	
+	@RequestMapping("/setting")
+	public String setting(Model model) {
+		model.addAttribute("title", "User Dashboard");
+		return "pharmaceuticalcompany/setting";
+	}
 
+
+
+	
 }

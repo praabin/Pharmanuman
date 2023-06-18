@@ -41,7 +41,7 @@ h2 {
 	<div class="container card">
 		<h2>Update Medicine</h2>
 		<form id="order-form" th:object="${medicine}"
-			th:action="@{/pharmacy/process-update}" method="post">
+			th:action="@{/stockist/process-update}" method="post">
 			<div id="medicine-sections">
 				<div class="medicine-section" id="medicine1">
 					<h4>Medicine 1</h4>
@@ -76,7 +76,7 @@ h2 {
 				<button type="submit"
 					class="btn btn-primary btn-submit align-center">Update
 					Medicine</button>
-				<a href="/pharmacy/index"
+				<a href="/stockist/index"
 					class="btn btn-primary btn-submit align-center text-white">Go
 					to dashboard</a>
 

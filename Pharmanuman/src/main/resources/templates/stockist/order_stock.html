@@ -39,9 +39,9 @@ h2 {
 <body>
 
 	<div class="container card">
-		<h2>Order medicine</h2>
+		<h2>Add to your stock</h2>
 		<form id="order-form" th:object="${medicine}"
-			th:action="@{/pharmacy/process-order}" method="post">
+			th:action="@{/stockist/process-order}" method="post">
 			<div id="medicine-sections">
 				<div class="medicine-section" id="medicine1">
 					<h4>Medicine 1</h4>
@@ -80,14 +80,14 @@ h2 {
 					</div>
 				</div>
 			</div>
-
+<!-- 
 			<button type="button" class="btn btn-primary" onclick="addMedicine()">Add
-				Medicine</button>
+				Medicine</button> -->
 			<!--   <div id="form-total">Total: Rs. 0.00</div> -->
 			<div class="text-center mt-2 mb-3">
 				<button type="submit"
-					class="btn btn-primary btn-submit align-center">Order</button>
-				<a href="/pharmacy/index"
+					class="btn btn-primary btn-submit align-center">Add </button>
+				<a href="/stockist/index"
 					class="btn btn-primary btn-submit align-center text-white">Go
 					to dashboard</a>
 
