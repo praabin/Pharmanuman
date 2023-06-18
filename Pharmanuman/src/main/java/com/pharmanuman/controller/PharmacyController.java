@@ -1,8 +1,9 @@
 package com.pharmanuman.controller;
 
 import java.security.Principal;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,14 +44,18 @@ public class PharmacyController {
 	}
 
 	@GetMapping("/order-medicine")
-	public String openAddContactForm(Model model) {
+	public String openAddContactForm(Model model, Principal p) {
 		model.addAttribute("title", "Order medicine");
 		model.addAttribute("medicine", new Medicine());
+		String name = p.getName();
+		User tempUser = this.userRepository.getUserByUserName(name);
+		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
+		model.addAttribute("medicines", medicines);
 		return "pharmacy/order_medicine";
 	}
 
 	@RequestMapping("/process-order")
-	public String processOrder(@ModelAttribute Medicine medicine, Principal p) {
+	public String processOrder(@ModelAttribute Medicine medicine, Principal p, Model m) {
 
 		String tempName = p.getName();
 		User user = this.userRepository.getUserByUserName(tempName);
@@ -60,6 +65,11 @@ public class PharmacyController {
 
 		System.out.println("data: " + medicine);
 		System.out.println("medicines added to database");
+		String name = p.getName();
+		User tempUser = this.userRepository.getUserByUserName(name);
+		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
+		Collections.sort(medicines, Comparator.comparingInt(Medicine::getMid).reversed());
+		m.addAttribute("medicines", medicines);
 		return "pharmacy/order_medicine";
 	}
 
@@ -72,22 +82,30 @@ public class PharmacyController {
 		m.addAttribute("medicines", medicines);
 		return "pharmacy/view_medicine";
 	}
-	
-	
+
 	@GetMapping("/delete/{mid}")
 	public String deleteMedicine(@PathVariable("mid") int mid, Model m, Principal p) {
-		
+
+		Medicine medicine = this.medicineRepository.findById(mid).get();
+		User tempUser = this.userRepository.getUserByUserName(p.getName());
+		tempUser.getMedicines().remove(medicine);
+		this.userRepository.save(tempUser);
+		return "redirect:/pharmacy/view-medicine";
+	}
+
+	@GetMapping("/deleteProcessOrder/{mid}")
+	public String deleteMedicineFromProcessOrder(@PathVariable("mid") int mid, Model m, Principal p) {
+
 		Medicine medicine = this.medicineRepository.findById(mid).get();
 		User tempUser = this.userRepository.getUserByUserName(p.getName());
 		tempUser.getMedicines().remove(medicine);
 		this.userRepository.save(tempUser);
 		
-		
-		
-		return "redirect:/pharmacy/view-medicine";
+		String name = p.getName();
+		User tempUser1 = this.userRepository.getUserByUserName(name);
+		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser1.getId());
+		m.addAttribute("medicines", medicines);
+		return "pharmacy/order_medicine";
 	}
-	
-	
-
 
 }
