@@ -43,6 +43,18 @@ public class PharmacyController {
 		model.addAttribute("title", "User Dashboard");
 		return "pharmacy/pharmacy_dashboard";
 	}
+	
+	@RequestMapping("/profile")
+	public String profile(Model model) {
+		model.addAttribute("title", "User Dashboard");
+		return "pharmacy/profile";
+	}
+	
+	@RequestMapping("/setting")
+	public String setting(Model model) {
+		model.addAttribute("title", "User Dashboard");
+		return "pharmacy/setting";
+	}
 
 	@GetMapping("/order-medicine")
 	public String openAddContactForm(Model model, Principal p) {
