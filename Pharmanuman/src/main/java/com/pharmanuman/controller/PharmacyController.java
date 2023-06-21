@@ -43,13 +43,13 @@ public class PharmacyController {
 		model.addAttribute("title", "User Dashboard");
 		return "pharmacy/pharmacy_dashboard";
 	}
-	
+
 	@RequestMapping("/profile")
 	public String profile(Model model) {
 		model.addAttribute("title", "User Dashboard");
 		return "pharmacy/profile";
 	}
-	
+
 	@RequestMapping("/setting")
 	public String setting(Model model) {
 		model.addAttribute("title", "User Dashboard");
@@ -85,6 +85,30 @@ public class PharmacyController {
 		m.addAttribute("medicines", medicines);
 		return "pharmacy/order_medicine";
 	}
+
+	/*
+	 * @RequestMapping("/process-order") public String
+	 * processOrder(@ModelAttribute("medicineList") List<Medicine> medicineList,
+	 * Principal principal, Model model) {
+	 * 
+	 * String username = principal.getName(); User user =
+	 * userRepository.getUserByUserName(username);
+	 * 
+	 * for (Medicine medicine : medicineList) { medicine.setUser(user);
+	 * user.getMedicines().add(medicine); }
+	 * 
+	 * userRepository.save(user);
+	 * System.out.println("Medicines added to the database");
+	 * 
+	 * List<Medicine> medicines =
+	 * medicineRepository.findMedicinesById(user.getId());
+	 * Collections.sort(medicines,
+	 * Comparator.comparingInt(Medicine::getMid).reversed());
+	 * model.addAttribute("medicines", medicines);
+	 * 
+	 * return "pharmacy/order_medicine"; }
+	 * 
+	 */
 
 	@RequestMapping("/view-medicine")
 	public String viewMedicine(Model m, Principal p) {
@@ -122,13 +146,13 @@ public class PharmacyController {
 	}
 
 	@PostMapping("/updateMedicine/{mid}")
-	public String updateMedicine(@PathVariable("mid") int id,Model m) {
-		m.addAttribute("title","Update medicine");
+	public String updateMedicine(@PathVariable("mid") int id, Model m) {
+		m.addAttribute("title", "Update medicine");
 		Medicine tempMedicine = this.medicineRepository.findById(id).get();
 		m.addAttribute("medicine", tempMedicine);
 		return "pharmacy/update_medicine";
 	}
-	
+
 	@PostMapping("/process-update")
 	public String processUpdate(@ModelAttribute Medicine m, Principal p, Model model) {
 //		Medicine oldMedcine = this.medicineRepository.findById(m.getMid()).get();
@@ -136,11 +160,10 @@ public class PharmacyController {
 		User tempUser = this.userRepository.getUserByUserName(name);
 		m.setUser(tempUser);
 		this.medicineRepository.save(m);
-		
 
 		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
 		model.addAttribute("medicines", medicines);
-		
+
 		return "pharmacy/update_medicine";
 	}
 
