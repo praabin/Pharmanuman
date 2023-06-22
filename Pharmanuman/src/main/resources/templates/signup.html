@@ -20,6 +20,8 @@
 							<p class="text-center" th:text="${session.message.content}"></p>
 
 							<!-- <th:block th:text="${#session.removeAttribute('message')}"></th:block> -->
+
+							<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
 							<!-- error occurred in above line -->
 						</div>
 
@@ -90,7 +92,10 @@
 							<div class="container text-center">
 								<button type="submit" class="btn bg-primary text-white">Sign
 									up</button>
-								<button type="reset" class="btn btn-dark text-white">Reset</button>
+								<button type="reset" class="btn bg-danger text-white"
+									onclick="window.location.href='/signin'">Go to Login</button>
+									
+									
 							</div>
 
 						</form>

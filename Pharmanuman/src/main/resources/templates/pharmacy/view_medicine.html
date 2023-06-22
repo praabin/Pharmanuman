@@ -76,7 +76,6 @@
 
 				</table>
 
-
 			</div>
 		</div>
 	</section>
@@ -90,13 +89,125 @@
 <head>
 <meta charset="UTF-8" />
 <title>View Medicine</title>
+
 <style type="text/css">
-.button-group {
-	display: flex;
-	gap: 1px;
-	align-items: center;
-}
-</style>
+		/* Global Styles */
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f8f8f8;
+			margin: 0;
+			padding: 0;
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+
+		/* Card Styles */
+		.card {
+			background-color: #fff;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			border-radius: 5px;
+			padding: 20px;
+			margin-bottom: 20px;
+		}
+
+		.card-title {
+			font-size: 24px;
+			font-weight: bold;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+
+		/* Search Styles */
+		.search-controller {
+			margin-bottom: 20px;
+		}
+
+		.search-input {
+			width: 100%;
+			padding: 10px;
+			font-size: 16px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
+
+		/* Table Styles */
+		.table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+		.table thead th {
+			background-color: #f0f0f0;
+			color: #333;
+			font-weight: bold;
+			padding: 10px;
+			text-align: left;
+		}
+
+		.table tbody td {
+			padding: 10px;
+			border-bottom: 1px solid #f0f0f0;
+		}
+
+		.table tbody tr:last-child td {
+			border-bottom: none;
+		}
+
+		/* Button Styles */
+		.button-group {
+			display: flex;
+			gap: 10px;
+			justify-content: flex-start;
+			align-items: center;
+		}
+
+		.button-group button {
+			padding: 10px 20px;
+			font-size: 16px;
+			border-radius: 5px;
+			border: none;
+			cursor: pointer;
+			color: #fff;
+		}
+
+		.button-group button.primary {
+			background-color: #007bff;
+		}
+
+		.button-group button.danger {
+			background-color: #dc3545;
+		}
+
+		/* Responsive Styles */
+		@media screen and (max-width: 768px) {
+			.container {
+				padding: 10px;
+			}
+
+			.card {
+				padding: 10px;
+			}
+
+			.card-title {
+				font-size: 20px;
+				margin-bottom: 10px;
+			}
+
+			.search-input {
+				font-size: 14px;
+			}
+
+			.button-group button {
+				padding: 8px 16px;
+				font-size: 14px;
+			}
+		}
+	</style>
+
 </head>
 <body>
 

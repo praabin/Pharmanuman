@@ -18,6 +18,9 @@ import com.pharmanuman.dao.MedicineRepository;
 import com.pharmanuman.dao.UserRepository;
 import com.pharmanuman.entities.Medicine;
 import com.pharmanuman.entities.User;
+import com.pharmanuman.helper.MyMessage;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/pharmacy")
@@ -64,12 +67,13 @@ public class PharmacyController {
 		User tempUser = this.userRepository.getUserByUserName(name);
 		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
 		model.addAttribute("medicines", medicines);
-		return "pharmacy/order_medicine";
+		return "pharmacy/add_medicine";
 	}
 
 	@RequestMapping("/process-order")
-	public String processOrder(@ModelAttribute Medicine medicine, Principal p, Model m) {
+	public String processOrder(@ModelAttribute Medicine medicine, Principal p, Model m, HttpSession session) {
 
+		try {
 		String tempName = p.getName();
 		User user = this.userRepository.getUserByUserName(tempName);
 		medicine.setUser(user);
@@ -83,7 +87,16 @@ public class PharmacyController {
 		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
 		Collections.sort(medicines, Comparator.comparingInt(Medicine::getMid).reversed());
 		m.addAttribute("medicines", medicines);
-		return "pharmacy/order_medicine";
+		session.setAttribute("msg", new MyMessage("Successfully added!! ","alert-success"));
+		return "pharmacy/add_medicine";
+		
+		}catch (Exception e) {
+			// TODO: handle exception
+			m.addAttribute("medicines", medicine);
+			session.setAttribute("msg", new MyMessage("Something went wrong!! "+e.getMessage(),"alert-danger"));
+			return "pharmacy/add_medicine";
+		}
+		
 	}
 
 	/*
@@ -161,9 +174,11 @@ public class PharmacyController {
 		m.setUser(tempUser);
 		this.medicineRepository.save(m);
 
-		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
-		model.addAttribute("medicines", medicines);
-
+		/*
+		 * List<Medicine> medicines =
+		 * this.medicineRepository.findMedicinesById(tempUser.getId());
+		 * model.addAttribute("medicines", medicines);
+		 */
 		return "pharmacy/update_medicine";
 	}
 

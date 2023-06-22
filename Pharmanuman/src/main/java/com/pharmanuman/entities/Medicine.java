@@ -1,14 +1,20 @@
 package com.pharmanuman.entities;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Medicine {
@@ -17,24 +23,61 @@ public class Medicine {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int mid;
 
-	
+	@Column(nullable = false)
+	@NotBlank(message = "Name shouldn't be blank")
+	@Size(min = 2, max = 20, message = "min 2 and max 30 characters required")
 	private String name;
-	
+
+	@Column(nullable = false)
+	@Min(value = 0, message = "Quantity must be a positive number or zero")
 	private int quantity;
+	
+	@Column(nullable = false)
+	@DecimalMin(value = "0.00", inclusive = true, message = "Price must be a positive number or zero")
 	private double price;
+	
+	@Column(nullable = false)
+	@NotBlank(message = "Composition shouldn't be blank")
+	@Size(min = 2, max = 20, message = "min 2 and max 20 characters required")
 	private String composition;
+	
+	@Column(nullable = false)
+	@NotBlank(message = "Type shouldn't be blank")
 	private String type;
+	
+	
+	@Column(length = 200, nullable = false)
+	@Length(max = 200, message = "Description should be less than 200 character")
 	private String description;
 
+	@Column(nullable = false)
 	@JsonFormat(pattern = "mm/dd/yyyy", shape = Shape.STRING)
 	private String manufacturerDate;
 
+	@Column(nullable = false)
 	@JsonFormat(pattern = "mm/dd/yyyy", shape = Shape.STRING)
 	private String expiryDate;
 
+	
+	@Column(nullable = false)
+	@NotBlank(message = "DosageForm shouldn't be blank")
+	@Size(min = 2, max = 20, message = "min 2 and max 20 characters required")
 	private String dosageForm;
+	
+	
+	@Column(nullable = false)
+	@NotBlank(message = "StorageInstructions shouldn't be blank")
+	@Size(min = 2, max = 20, message = "min 2 and max 20 characters required")
 	private String storageInstructions;
+	
+	@Column(nullable = false)
+	@NotBlank(message = "ManufacturerName shouldn't be blank")
+	@Size(min = 2, max = 20, message = "min 2 and max 30 characters required")
 	private String manufacturerName;
+	
+	@Column(nullable = false)
+	@NotBlank(message = "ManufacturerLocation shouldn't be blank")
+	@Size(min = 2, max = 20, message = "min 2 and max 30 characters required")
 	private String manufacturerLocation;
 
 	@ManyToOne
@@ -128,8 +171,6 @@ public class Medicine {
 		this.description = description;
 	}
 
-
-
 	public String getManufacturerDate() {
 		return manufacturerDate;
 	}
@@ -178,15 +219,14 @@ public class Medicine {
 		this.manufacturerLocation = manufacturerLocation;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "Medicine [mid=" + mid + ", name=" + name + ", quantity=" + quantity + ", price=" + price
-//				+ ", composition=" + composition + ", type=" + type + ", description=" + description
-//				+ ", manufacturerDate=" + manufacturerDate + ", expiryDate=" + expiryDate + ", dosageForm=" + dosageForm
-//				+ ", storageInstructions=" + storageInstructions + ", manufacturerName=" + manufacturerName
-//				+ ", manufacturerLocation=" + manufacturerLocation + ", user=" + user + "]";
-//	}
-	
-	
-
+	/*
+	 * @Override public String toString() { return "Medicine [mid=" + mid +
+	 * ", name=" + name + ", quantity=" + quantity + ", price=" + price +
+	 * ", composition=" + composition + ", type=" + type + ", description=" +
+	 * description + ", manufacturerDate=" + manufacturerDate + ", expiryDate=" +
+	 * expiryDate + ", dosageForm=" + dosageForm + ", storageInstructions=" +
+	 * storageInstructions + ", manufacturerName=" + manufacturerName +
+	 * ", manufacturerLocation=" + manufacturerLocation + ", user=" + user + "]"; }
+	 * 
+	 */
 }

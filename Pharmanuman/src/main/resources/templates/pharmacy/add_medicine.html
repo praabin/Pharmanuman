@@ -1,0 +1,769 @@
+
+<!--first ma yesto  -->
+<!-- 
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<title>Medicine Order Form</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<style>
+.container {
+	margin-top: 50px;
+}
+
+h2 {
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+.medicine-section {
+	border: 1px solid #ccc;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+.medicine-section h4 {
+	margin-top: 0;
+}
+
+.btn-remove {
+	margin-top: 10px;
+}
+
+.btn-submit {
+	margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+	<div class="container card">
+		<h2>Order medicine</h2>
+		<form id="order-form" th:object="${medicine}"
+			th:action="@{/pharmacy/process-order}" method="post">
+			<div id="medicine-sections">
+				<div class="medicine-section" id="medicine1">
+					<h4>Medicine 1</h4>
+
+					<div class="form-row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="name1">Medicine Name:</label> <input type="text"
+									class="form-control" id="name1" name="name"
+									placeholder="Enter medicine name">
+							</div>
+						</div>
+
+
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="name2">Composition:</label> <input type="text"
+									class="form-control" id="name2" name="composition"
+									placeholder="Enter compositon name">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<label for="quantity1">Quantity:</label> <input type="number"
+									class="form-control" id="quantity1" name="quantity"
+									placeholder="Enter quantity">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<label for="price1">Price:</label> <input type="text"
+									class="form-control" id="price1" name="price"
+									placeholder="Enter price">
+							</div>
+						</div>
+						<div class="col-md-2">
+              <div class="form-group">
+                <label for="total1">Total:</label>
+                <input type="text" class="form-control" id="total1" name="total" >
+              </div>
+            </div> 
+						<div class="col-md-2 align-self-end">
+              <button type="button" class="btn btn-danger btn-remove" onclick="removeMedicine(1)">Remove</button>
+            </div>
+					</div>
+				</div>
+			</div>
+
+			<button type="button" class="btn btn-primary" onclick="addMedicine()">Add
+				Medicine</button>
+			  <div id="form-total">Total: Rs. 0.00</div>
+			<div class="text-center mt-2 mb-3">
+				<button type="submit"
+					class="btn btn-primary btn-submit align-center">Order</button>
+				<a href="/pharmacy/index"
+					class="btn btn-primary btn-submit align-center text-white">Go
+					to dashboard</a>
+
+			</div>
+
+		</form>
+	</div>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	  
+  <script>
+    var sectionCounter = 1;
+
+    // Function to add a new medicine section
+    function addMedicine() {
+      sectionCounter++;
+
+      var newSection = `
+        <div class="medicine-section" id="medicine${sectionCounter}">
+          <h4>Medicine ${sectionCounter}</h4>
+          <div class="form-row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="name${sectionCounter}">Medicine Name:</label>
+                <input type="text" class="form-control" id="name${sectionCounter}" name="name[]" placeholder="Enter medicine name">
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="quantity${sectionCounter}">Quantity:</label>
+                <input type="number" class="form-control" id="quantity${sectionCounter}" name="quantity[]" placeholder="Enter quantity">
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="price${sectionCounter}">Price:</label>
+                <input type="text" class="form-control" id="price${sectionCounter}" name="price[]" placeholder="Enter price">
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="total${sectionCounter}">Total:</label>
+                <input type="text" class="form-control" id="total${sectionCounter}" name="total[]" readonly>
+              </div>
+            </div>
+            <div class="col-md-2 align-self-end">
+              <button type="button" class="btn btn-danger btn-remove" onclick="removeMedicine(${sectionCounter})">Remove</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      $('#medicine-sections').append(newSection);
+    }
+
+    // Function to remove a medicine section
+    function removeMedicine(sectionId) {
+      $('#medicine' + sectionId).remove();
+    }
+
+    // Calculate the total based on quantity and price
+    $(document).on('input', 'input[name^="quantity"], input[name^="price"]', function() {
+      var section = $(this).closest('.medicine-section');
+      var quantity = section.find('input[name^="quantity"]').val();
+      var price = section.find('input[name^="price"]').val();
+      var total = quantity * price;
+      section.find('input[name^="total"]').val(total.toFixed(2));
+    });
+
+    // Submit form event handler
+    $('#order-form').submit(function(event) {
+      event.preventDefault();
+      var formData = $(this).serialize();
+      console.log(formData);
+    });
+    
+    
+    
+      // Calculate the total based on quantity and price
+  $(document).on('input', 'input[name^="quantity"], input[name^="price"]', function() {
+    var section = $(this).closest('.medicine-section');
+    var quantity = section.find('input[name^="quantity"]').val();
+    var price = section.find('input[name^="price"]').val();
+    var total = quantity * price;
+    section.find('input[name^="total"]').val(total.toFixed(2));
+
+    // Update the form total
+    calculateFormTotal();
+  });
+
+// ...
+
+  // Function to remove a medicine section
+  function removeMedicine(sectionId) {
+    $('#medicine' + sectionId).remove();
+
+    // Update the form total
+    calculateFormTotal();
+  }
+
+  // Calculate the total based on quantity and price
+  $(document).on('input', 'input[name^="quantity"], input[name^="price"]', function() {
+    var section = $(this).closest('.medicine-section');
+    var quantity = section.find('input[name^="quantity"]').val();
+    var price = section.find('input[name^="price"]').val();
+    var total = quantity * price;
+    section.find('input[name^="total"]').val(total.toFixed(2));
+
+    // Update the form total
+    calculateFormTotal();
+  });
+
+  // Calculate the total of all medicines in the form
+  function calculateFormTotal() {
+    var total = 0;
+    $('.medicine-section').each(function() {
+      var quantity = $(this).find('input[name^="quantity"]').val();
+      var price = $(this).find('input[name^="price"]').val();
+      var subtotal = quantity * price;
+      total += subtotal;
+    });
+
+    // Update the form total display
+    $('#form-total').text('Total: $' + total.toFixed(2));
+  }
+  </script>
+
+
+	<section>
+		<div class="card mr-3 ml-4 ">
+			<div class="card-body">
+				<h1 class="text-center">Your Medicine</h1>
+
+				<div th:if="${session.msg}" class="container">
+
+					<div th:classappend="${'alert-'+session.msg.type}"
+						class="alert text-center" role="alert">
+						<span th:text="${session.msg.content}"></span>
+					</div>
+					<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
+				</div>
+
+				<div class="search-controller my-4">
+					<input type="text" class="form-control"
+						placeholder="Search your medicines" />
+				</div>
+
+				<table class="table">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">Id</th>
+							<th scope="col">Name</th>
+							<th scope="col">Quantity</th>
+							<th scope="col">Price</th>
+							<th scope="col">Total</th>
+							<th scope="col">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+
+
+						<tr th:each="m : ${medicines}">
+							<td th:text="MID+${m.mid}"></td>
+							<td th:text="${m.name}"></td>
+							<td th:text="${m.quantity}"></td>
+							<td th:text="${m.price}"></td>
+							<td th:text="${m.quantity*m.price}"></td>
+
+							<td><a href="#"
+								th:onclick="|deleteMedicineFromProcessOrder(${m.mid})|"
+								class="btn btn-danger btn-sm">Delete</a>
+
+
+								<button class="btn btn-primary btn-sm">Edit</button>
+						</tr>
+					</tbody>
+
+				</table>
+
+
+			</div>
+		</div>
+	</section>
+
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script>
+      function deleteMedicineFromProcessOrder(mid) {
+        swal({
+          title: "Are you sure?",
+          text: "You want to delete this medicine",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        }).then((willDelete) => {
+          if (willDelete) {
+            window.location = "/pharmacy/deleteProcessOrder/" + mid;
+          } else {
+            swal("Your contact is safe!");
+          }
+        });
+      }
+    </script>
+
+</body>
+</html>
+ -->
+
+<!--second ma yesto  -->
+
+<!-- 
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+	th:replace="pharmacy/base::Layout(~{::section})">
+<head>
+<title>Add Medicine</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	
+<style type="text/css">
+
+
+.container {
+	in-top: 50px;
+}
+
+h2 {
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+.medicine-section {
+	border: 1px solid #ccc;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+.medicine-section h4 {
+	margin-top: 0;
+}
+
+.btn-remove {
+	margin-top: 10px;
+}
+
+.btn-submit {
+	margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+<section>
+	<div class="container card mt-5">
+		<h2 class="text-center">Add Medicine</h2>
+		<form id="order-form" th:object="${medicine}"
+			th:action="@{/pharmacy/process-order}" method="post">
+			
+			<div id="medicine-sections">
+				<div class="medicine-section" id="medicine1">
+					<h4>Medicine 1</h4>
+					<div class="form-row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="name1">Medicine Name:</label> <input type="text"
+									class="form-control" id="name1" name="name"
+									placeholder="Enter medicine name" required="required">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<label for="quantity1">Quantity:</label> <input type="number"
+									class="form-control" id="quantity1" name="quantity"
+									placeholder="Enter quantity" required="required">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<label for="price1">Price:</label> <input type="text"
+									class="form-control" id="price1" name="price"
+									placeholder="Enter price" required="required">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<label for="composition1">Composition:</label> <input
+									type="text" class="form-control" id="composition1"
+									name="composition" placeholder="Enter composition" required="required">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<label for="type1">Type:</label> <input type="text"
+									class="form-control" id="type1" name="type"
+									placeholder="Enter type" required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="description1">Description:</label> <input
+									type="text" class="form-control" id="description1"
+									name="description" placeholder="Enter description" required="required">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<label for="manufacturerDate1">Manufacturer Date:</label> <input
+									type="date" class="form-control" id="manufacturerDate1"
+									name="manufacturerDate" required="required">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<label for="expiryDate1">Expiry Date:</label> <input type="date"
+									class="form-control" id="expiryDate1" name="expiryDate" required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="dosageForm1">Dosage Form:</label> <input type="text"
+									class="form-control" id="dosageForm1" name="dosageForm"
+									placeholder="Enter dosage form" required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="storageInstructions1">Storage Instructions:</label>
+								<input type="text" class="form-control"
+									id="storageInstructions1" name="storageInstructions"
+									placeholder="Enter storage instructions" required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="manufacturerName1">Manufacturer Name:</label> <input
+									type="text" class="form-control" id="manufacturerName1"
+									name="manufacturerName" placeholder="Enter manufacturer name" required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="manufacturerLocation1">Manufacturer
+									Location:</label> <input type="text" class="form-control"
+									id="manufacturerLocation1" name="manufacturerLocation"
+									placeholder="Enter manufacturer location" required="required">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="text-center mt-2 mb-3">
+				<button type="submit"
+					class="btn btn-success btn-submit align-center">Add </button>
+				<a href="/pharmacy/index"
+					class="btn btn-danger btn-submit align-center text-white">Go
+					to dashboard</a>
+			</div>
+		</form>
+	</div>
+	
+
+</section>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+
+</body>
+</html>
+
+
+ 
+ 
+ -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+	th:replace="pharmacy/base::Layout(~{::section})">
+
+<head>
+<title>Add Medicine</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<style type="text/css">
+body {
+	background-color: #f7f7f7;
+}
+
+.card {
+	border: none;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+	background-color: #f8f9fa;
+	border-bottom: 1px solid #e9ecef;
+}
+
+.btn-submit {
+	background-color: #28a745;
+	border-color: #28a745;
+}
+
+.btn-submit:hover {
+	background-color: #218838;
+	border-color: #218838;
+}
+
+.btn-danger {
+	background-color: #dc3545;
+	border-color: #dc3545;
+}
+
+.btn-danger:hover {
+	background-color: #c82333;
+	border-color: #bd2130;
+}
+
+@media ( max-width : 576px) {
+	.col-md-4, .col-md-2 {
+		margin-bottom: 15px;
+	}
+}
+</style>
+</head>
+
+<body>
+	<section>
+		<div class="container card">
+
+					<div class="mycard mt-3">
+
+						<div th:if="${session.msg}"
+							th:classappend="${session.msg.type}" class="alert"
+							role="alert">
+							<p class="text-center" th:text="${session.msg.content}"></p>
+
+							<!-- <th:block th:text="${#session.removeAttribute('message')}"></th:block> -->
+							<!-- error occurred in above line -->
+							
+							<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
+						</div>
+				
+			</div>
+			<h2 class="card-header text-center">Add Medicine</h2>
+			<form id="order-form" th:object="${medicine}"
+				th:action="@{/pharmacy/process-order}" method="post">
+
+				<div id="medicine-sections">
+					<div class="card-body bg-light p-4 mb-4">
+						<h4>Medicine </h4>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="name1">Medicine Name:</label> <input type="text"
+										class="form-control "
+										th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
+										id="name1" name="name" placeholder="Enter medicine name"
+									>
+
+
+									<div th:each="e : ${#fields.errors('name')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="quantity1">Quantity:</label> <input type="number"
+										class="form-control"  th:classappend="${#fields.hasErrors('quantity') ? 'is-invalid' : ''}" id="quantity1" name="quantity"
+										placeholder="Enter quantity" >
+										
+										
+									<div th:each="e : ${#fields.errors('quantity')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="price1">Price:</label> <input type="text"
+										class="form-control" id="price1"
+										
+										
+										 th:classappend="${#fields.hasErrors('price') ? 'is-invalid' : ''}"
+										 name="price"
+										placeholder="Enter price" >
+										
+										
+										
+									<div th:each="e : ${#fields.errors('price')}"
+										class="invalid-feedback" th:text="${e}"></div>
+										
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="composition1">Composition:</label> <input
+										type="text" class="form-control"
+										
+										
+										 th:classappend="${#fields.hasErrors('composition') ? 'is-invalid' : ''}"
+										 id="composition1"
+										name="composition" placeholder="Enter composition"
+										>
+										
+										
+									<div th:each="e : ${#fields.errors('composition')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="type1">Type:</label> <input type="text"
+										class="form-control"
+										
+										
+										 th:classappend="${#fields.hasErrors('type') ? 'is-invalid' : ''}"
+										 id="type1" name="type"
+										placeholder="Enter type" >
+										
+										
+										
+									<div th:each="e : ${#fields.errors('type')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="manufacturerDate1">Manufacturer Date:</label> <input
+										type="date" class="form-control"
+										
+										 th:classappend="${#fields.hasErrors('manufacturerDate') ? 'is-invalid' : ''}"
+										 id="manufacturerDate1"
+										name="manufacturerDate" >
+										
+										
+										
+									<div th:each="e : ${#fields.errors('manufacturerDate')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="expiryDate1">Expiry Date:</label> <input
+										type="date" class="form-control"
+										
+										 th:classappend="${#fields.hasErrors('expiryDate') ? 'is-invalid' : ''}"
+										 id="expiryDate1"
+										name="expiryDate" >
+										
+										
+									<div th:each="e : ${#fields.errors('expiryDate')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="dosageForm1">Dosage Form:</label> <input
+										type="text" class="form-control"
+										
+										 th:classappend="${#fields.hasErrors('dosageForm') ? 'is-invalid' : ''}"
+										 id="dosageForm1"
+										name="dosageForm" placeholder="Enter dosage form"
+										>
+										
+										
+									<div th:each="e : ${#fields.errors('dosageForm')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="storageInstructions1">Storage Instructions:</label>
+									<input type="text" class="form-control"
+									
+									 th:classappend="${#fields.hasErrors('storageInstructions') ? 'is-invalid' : ''}"
+									
+										id="storageInstructions1" name="storageInstructions"
+										placeholder="Enter storage instructions" >
+										
+										
+										
+									<div th:each="e : ${#fields.errors('storageInstructions')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="manufacturerName1">Manufacturer Name:</label> <input
+										type="text" class="form-control"
+										
+										 th:classappend="${#fields.hasErrors('manufacturerName') ? 'is-invalid' : ''}"
+										 id="manufacturerName1"
+										name="manufacturerName" placeholder="Enter manufacturer name"
+										>
+										
+										
+										
+									<div th:each="e : ${#fields.errors('manufacturerName')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="manufacturerLocation1">Manufacturer
+										Location:</label> <input type="text" class="form-control"
+										
+										 th:classappend="${#fields.hasErrors('manufacturerLocation') ? 'is-invalid' : ''}"
+										id="manufacturerLocation1" name="manufacturerLocation"
+										placeholder="Enter manufacturer location" >
+										
+										
+										
+									<div th:each="e : ${#fields.errors('manufacturerLocation')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="description1">Description:</label>
+									<textarea rows=4 class="form-control" 
+									 th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}"
+									id="description1"
+										name="description" placeholder="Enter description"
+										></textarea>
+										
+										
+									<div th:each="e : ${#fields.errors('description')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="text-center mt-2 mb-3">
+					<button type="submit"
+						class="btn btn-success btn-submit align-center">Add</button>
+					<a href="/pharmacy/index"
+						class="btn btn-danger btn-submit align-center text-white">Go
+						to dashboard</a>
+				</div>
+			</form>
+		</div>
+	</section>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
