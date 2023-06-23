@@ -8,9 +8,9 @@
 <body>
 	<div class="container">
 
-		<div th:if="${session.msg}" th:classappend="${session.msg.type}"
+		<div th:if="${session.message}" th:classappend="${session.message}"
 			class="alert" role="alert">
-			<p class="text-center" th:text="${session.msg.content}"></p>
+			<p class="text-center" th:text="${session.message}"></p>
 
 			<!-- <th:block th:text="${#session.removeAttribute('message')}"></th:block> -->
 
@@ -26,9 +26,9 @@
 
 							<div class="alert alert-warning mt-2" role="alert">We have sent
 								OTP to your email...</div>
-							<form action="" th:action="@{/send-otp}" method="post">
+							<form action="" th:action="@{/verify-otp}" method="post">
 
-								<div class="form-group mt-3">
+								<div class="form-group mt-3">	 
 									<input type="text" placeholder="Enter OTP here"
 										class="form-control" required="required" name="otp" />
 								</div>

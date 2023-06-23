@@ -22,14 +22,21 @@
 				<div id="login-row"
 					class="row justify-content-center align-items-center">
 					<div id="login-column" class="col-md-6">
-						<div id="login-box" class="col-md-12">
+						<div id="login-box" style="height: 500px;" class="col-md-12">
 							<form id="login-form" class="form" th:action="@{/dologin}"
 								action="#" method="post">
 								<h3 class="text-center text-info">Login</h3>
+								
 								<div th:if="${param.error}" class="alert alert-danger">Invalid
 									username and password</div>
+									
 								<div th:if="${param.logout}" class="alert alert-success">User
 									logged out</div>
+									
+									
+									<div th:if="${param.change}" class="alert alert-success">
+									<p th:text="${param.change}"></p></div>
+									
 								<div class="form-group">
 									<label for="username" class="text-info">Email:</label><br>
 									<input type="text" name="username" id="username"

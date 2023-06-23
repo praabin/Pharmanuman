@@ -5,7 +5,7 @@ body {
 }
 
 .bg-primary {
-	background: #009688 !important;
+	background: #003399 !important;
 }
 
 .intro {
@@ -38,6 +38,7 @@ body {
 	height: 400px;
 	border: 1px solid #9C9C9C;
 	background-color: #FFFFFF;
+	
 }
 
 #login .container #login-row #login-column #login-box #login-form {
