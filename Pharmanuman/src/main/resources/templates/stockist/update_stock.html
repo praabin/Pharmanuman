@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
@@ -51,23 +50,93 @@ h2 {
 							<div class="form-group">
 								<label for="name1">Medicine Name:</label> <input type="text"
 									class="form-control" id="name1" name="name"
-									th:value="${medicine.name}">
+									th:value="${medicine.name}" required="required">
 							</div>
 						</div>
 						<div class="col-md-2">
 							<div class="form-group">
 								<label for="quantity1">Quantity:</label> <input type="number"
-									class="form-control" id="quantity1" name="quantity" th:value="${medicine.quantity}">
+									class="form-control" id="quantity1" name="quantity"
+									th:value="${medicine.quantity}" required="required">
 							</div>
 						</div>
 						<div class="col-md-2">
 							<div class="form-group">
 								<label for="price1">Price:</label> <input type="text"
 									class="form-control" id="price1" name="price"
-									th:value="${medicine.price}">
+									th:value="${medicine.price}" required="required">
 							</div>
 						</div>
-
+						<!-- Add additional fields here -->
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="composition1">Composition:</label> <input
+									type="text" class="form-control" id="composition1"
+									name="composition" th:value="${medicine.composition}"
+									required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="type1">Type:</label> <input type="text"
+									class="form-control" id="type1" name="type"
+									th:value="${medicine.type}" required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="description1">Description:</label> <input
+									type="text" class="form-control" id="description1"
+									name="description" th:value="${medicine.description}"
+									required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="manufacturerDate1">Manufacturer Date:</label> <input
+									type="date" class="form-control" id="manufacturerDate1"
+									name="manufacturerDate" th:value="${medicine.manufacturerDate}"
+									required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="expiryDate1">Expiry Date:</label> <input type="date"
+									class="form-control" id="expiryDate1" name="expiryDate"
+									th:value="${medicine.expiryDate}" required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="dosageForm1">Dosage Form:</label> <input type="text"
+									class="form-control" id="dosageForm1" name="dosageForm"
+									th:value="${medicine.dosageForm}" required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="storageInstructions1">Storage Instructions:</label>
+								<input type="text" class="form-control"
+									id="storageInstructions1" name="storageInstructions"
+									th:value="${medicine.storageInstructions}" required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="manufacturerName1">Manufacturer Name:</label> <input
+									type="text" class="form-control" id="manufacturerName1"
+									name="manufacturerName" th:value="${medicine.manufacturerName}"
+									required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="manufacturerLocation1">Manufacturer
+									Location:</label> <input type="text" class="form-control"
+									id="manufacturerLocation1" name="manufacturerLocation"
+									th:value="${medicine.manufacturerLocation}" required="required">
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -91,63 +160,6 @@ h2 {
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-	<section>
-		<div class="card mr-3 ml-4 ">
-			<div class="card-body">
-				<h1 class="text-center">Your Medicine</h1>
-
-				<div th:if="${session.msg}" class="container">
-
-					<div th:classappend="${'alert-'+session.msg.type}"
-						class="alert text-center" role="alert">
-						<span th:text="${session.msg.content}"></span>
-					</div>
-					<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
-				</div>
-
-				<div class="search-controller my-4">
-					<input type="text" class="form-control"
-						placeholder="Search your medicines" />
-				</div>
-
-				<table class="table">
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col">Id</th>
-							<th scope="col">Name</th>
-							<th scope="col">Quantity</th>
-							<th scope="col">Price</th>
-							<th scope="col">Total</th>
-							<th scope="col">Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-
-
-						<tr th:each="m : ${medicines}">
-							<td th:text="MID+${m.mid}"></td>
-							<td th:text="${m.name}"></td>
-							<td th:text="${m.quantity}"></td>
-							<td th:text="${m.price}"></td>
-							<td th:text="${m.quantity*m.price}"></td>
-
-							<td><a href="#"
-								th:onclick="|deleteMedicineFromProcessOrder(${m.mid})|"
-								class="btn btn-danger btn-sm">Delete</a>
-
-
-								<button class="btn btn-primary btn-sm">Edit</button>
-						</tr>
-					</tbody>
-
-				</table>
-
-
-			</div>
-		</div>
-	</section>
-
 
 </body>
 </html>

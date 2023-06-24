@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+	th:replace="stockist/base::Layout(~{::section})">
+
+<head>
+<title>Add Medicine</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<style type="text/css">
+body {
+	background-color: #f7f7f7;
+}
+
+.card {
+	border: none;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+	background-color: #f8f9fa;
+	border-bottom: 1px solid #e9ecef;
+}
+
+.btn-submit {
+	background-color: #28a745;
+	border-color: #28a745;
+}
+
+.btn-submit:hover {
+	background-color: #218838;
+	border-color: #218838;
+}
+
+.btn-danger {
+	background-color: #dc3545;
+	border-color: #dc3545;
+}
+
+.btn-danger:hover {
+	background-color: #c82333;
+	border-color: #bd2130;
+}
+
+@media ( max-width : 576px) {
+	.col-md-4, .col-md-2 {
+		margin-bottom: 15px;
+	}
+}
+</style>
+</head>
+
+<body>
+	<section>
+		<div class="container card">
+
+			<div class="mycard mt-3">
+
+				<div th:if="${session.msg}" th:classappend="${session.msg.type}"
+					class="alert" role="alert">
+					<p class="text-center" th:text="${session.msg.content}"></p>
+
+
+					<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
+				</div>
+
+			</div>
+			<h2 class="card-header text-center">Add Stock</h2>
+			<form id="order-form" th:object="${medicine}"
+				th:action="@{/stockist/process-order}" method="post">
+
+				<div id="medicine-sections">
+					<div class="card-body bg-light p-4 mb-4">
+						<h4>Medicine</h4>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="name1">Medicine Name:</label> <input type="text"
+										class="form-control "
+										th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
+										id="name1" name="name" placeholder="Enter medicine name">
+
+
+									<div th:each="e : ${#fields.errors('name')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="quantity1">Quantity:</label> <input type="number"
+										class="form-control"
+										th:classappend="${#fields.hasErrors('quantity') ? 'is-invalid' : ''}"
+										id="quantity1" name="quantity" placeholder="Enter quantity">
+
+
+									<div th:each="e : ${#fields.errors('quantity')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="price1">Price:</label> <input type="text"
+										class="form-control" id="price1"
+										th:classappend="${#fields.hasErrors('price') ? 'is-invalid' : ''}"
+										name="price" placeholder="Enter price">
+
+
+
+									<div th:each="e : ${#fields.errors('price')}"
+										class="invalid-feedback" th:text="${e}"></div>
+
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="composition1">Composition:</label> <input
+										type="text" class="form-control"
+										th:classappend="${#fields.hasErrors('composition') ? 'is-invalid' : ''}"
+										id="composition1" name="composition"
+										placeholder="Enter composition">
+
+
+									<div th:each="e : ${#fields.errors('composition')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="type1">Type:</label> <input type="text"
+										class="form-control"
+										th:classappend="${#fields.hasErrors('type') ? 'is-invalid' : ''}"
+										id="type1" name="type" placeholder="Enter type">
+
+
+
+									<div th:each="e : ${#fields.errors('type')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="manufacturerDate1">Manufacturer Date:</label> <input
+										type="date" class="form-control"
+										th:classappend="${#fields.hasErrors('manufacturerDate') ? 'is-invalid' : ''}"
+										id="manufacturerDate1" name="manufacturerDate">
+
+
+
+									<div th:each="e : ${#fields.errors('manufacturerDate')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="expiryDate1">Expiry Date:</label> <input
+										type="date" class="form-control"
+										th:classappend="${#fields.hasErrors('expiryDate') ? 'is-invalid' : ''}"
+										id="expiryDate1" name="expiryDate">
+
+
+									<div th:each="e : ${#fields.errors('expiryDate')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="dosageForm1">Dosage Form:</label> <input
+										type="text" class="form-control"
+										th:classappend="${#fields.hasErrors('dosageForm') ? 'is-invalid' : ''}"
+										id="dosageForm1" name="dosageForm"
+										placeholder="Enter dosage form">
+
+
+									<div th:each="e : ${#fields.errors('dosageForm')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="storageInstructions1">Storage Instructions:</label>
+									<input type="text" class="form-control"
+										th:classappend="${#fields.hasErrors('storageInstructions') ? 'is-invalid' : ''}"
+										id="storageInstructions1" name="storageInstructions"
+										placeholder="Enter storage instructions">
+
+
+
+									<div th:each="e : ${#fields.errors('storageInstructions')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="manufacturerName1">Manufacturer Name:</label> <input
+										type="text" class="form-control"
+										th:classappend="${#fields.hasErrors('manufacturerName') ? 'is-invalid' : ''}"
+										id="manufacturerName1" name="manufacturerName"
+										placeholder="Enter manufacturer name">
+
+
+
+									<div th:each="e : ${#fields.errors('manufacturerName')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="manufacturerLocation1">Manufacturer
+										Location:</label> <input type="text" class="form-control"
+										th:classappend="${#fields.hasErrors('manufacturerLocation') ? 'is-invalid' : ''}"
+										id="manufacturerLocation1" name="manufacturerLocation"
+										placeholder="Enter manufacturer location">
+
+
+
+									<div th:each="e : ${#fields.errors('manufacturerLocation')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="description1">Description:</label>
+									<textarea rows=4 class="form-control"
+										th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}"
+										id="description1" name="description"
+										placeholder="Enter description"></textarea>
+
+
+									<div th:each="e : ${#fields.errors('description')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="text-center mt-2 mb-3">
+					<button type="submit"
+						class="btn btn-success btn-submit align-center">Add</button>
+					<a href="/stockist/index"
+						class="btn btn-danger btn-submit align-center text-white">Go
+						to dashboard</a>
+				</div>
+			</form>
+		</div>
+	</section>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -18,6 +18,9 @@ import com.pharmanuman.dao.MedicineRepository;
 import com.pharmanuman.dao.UserRepository;
 import com.pharmanuman.entities.Medicine;
 import com.pharmanuman.entities.User;
+import com.pharmanuman.helper.MyMessage;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/stockist")
@@ -64,7 +67,7 @@ public class StockistController {
 		User tempUser = this.userRepository.getUserByUserName(name);
 		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
 		model.addAttribute("medicines", medicines);
-		return "stockist/order_stock";
+		return "stockist/add_stock";
 	}
 
 	@RequestMapping("/process-order")
@@ -83,7 +86,7 @@ public class StockistController {
 		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
 		Collections.sort(medicines, Comparator.comparingInt(Medicine::getMid).reversed());
 		m.addAttribute("medicines", medicines);
-		return "stockist/order_stock";
+		return "stockist/add_stock";
 	}
 
 	@RequestMapping("/view-medicine")
@@ -134,7 +137,7 @@ public class StockistController {
 		return "stockist/order_stock";
 	}
 
-	@PostMapping("/updateMedicine/{mid}")
+	@PostMapping("/updateStock/{mid}")
 	public String updateMedicine(@PathVariable("mid") int id, Model m) {
 		m.addAttribute("title", "Update medicine");
 		Medicine tempMedicine = this.medicineRepository.findById(id).get();
@@ -143,7 +146,7 @@ public class StockistController {
 	}
 
 	@PostMapping("/process-update")
-	public String processUpdate(@ModelAttribute Medicine m, Principal p, Model model) {
+	public String processUpdate(@ModelAttribute Medicine m, Principal p, Model model, HttpSession session) {
 //		Medicine oldMedcine = this.medicineRepository.findById(m.getMid()).get();
 		String name = p.getName();
 		User tempUser = this.userRepository.getUserByUserName(name);
@@ -153,7 +156,8 @@ public class StockistController {
 		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
 		model.addAttribute("medicines", medicines);
 
-		return "stockist/update_stock";
+		session.setAttribute("message", new MyMessage("Successfully Updated!! ", "alert-success"));
+		return "stockist/view_stock";
 	}
 
 }

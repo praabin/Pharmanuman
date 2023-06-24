@@ -12,7 +12,6 @@
 			class="alert" role="alert">
 			<p class="text-center" th:text="${session.message}"></p>
 
-			<!-- <th:block th:text="${#session.removeAttribute('message')}"></th:block> -->
 
 			<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
 			<!-- error occurred in above line -->
