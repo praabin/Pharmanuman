@@ -12,31 +12,42 @@
 			class="alert" role="alert">
 			<p class="text-center" th:text="${session.msg.content}"></p>
 
-			<!-- <th:block th:text="${#session.removeAttribute('message')}"></th:block> -->
-
 			<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
-			<!-- error occurred in above line -->
 		</div>
+
+
 		<div id="login">
 			<div class="container">
+
 				<div id="login-row"
 					class="row justify-content-center align-items-center">
 					<div id="login-column" class="col-md-6">
 						<div id="login-box" style="height: 500px;" class="col-md-12">
 							<form id="login-form" class="form" th:action="@{/dologin}"
 								action="#" method="post">
+								<div th:if="${session.message}"
+									th:classappend="${session.message.type}" class="alert"
+									role="alert">
+									<p class="text-center" th:text="${session.message.content}"></p>
+
+									<th:block
+										th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
+								</div>
 								<h3 class="text-center text-info">Login</h3>
-								
+
+
+
 								<div th:if="${param.error}" class="alert alert-danger">Invalid
-									username and password</div>
-									
+									name and password</div>
+
 								<div th:if="${param.logout}" class="alert alert-success">User
 									logged out</div>
-									
-									
-									<div th:if="${param.change}" class="alert alert-success">
-									<p th:text="${param.change}"></p></div>
-									
+
+
+								<div th:if="${param.change}" class="alert alert-success">
+									<p th:text="${param.change}"></p>
+								</div>
+
 								<div class="form-group">
 									<label for="username" class="text-info">Email:</label><br>
 									<input type="text" name="username" id="username"
@@ -57,10 +68,10 @@
 								<div id="register-link" class="text-right">
 									<a href="/forgot" class="text-info">Forgot Password?</a>
 								</div>
-								
+
 								<br>
 								<div class="container text-center mt-4">
-								<h1 class="form-control">Don't have account?</h1>
+									<h1 class="form-control">Don't have account?</h1>
 								</div>
 								<div class="container text-center">
 									<a href="/signup" class="text-info">Register here</a>

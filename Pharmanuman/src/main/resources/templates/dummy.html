@@ -18,38 +18,21 @@
 							th:classappend="${session.message.type}" class="alert"
 							role="alert">
 							<p class="text-center" th:text="${session.message.content}"></p>
-
-							<!-- <th:block th:text="${#session.removeAttribute('message')}"></th:block> -->
-
-							<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
-							<!-- error occurred in above line -->
 						</div>
 
 						<h1 class="text-center">Register Here</h1>
-						<form th:action="@{/register}" method="post" th:object="${user}">
+						<form th:action="@{/register}" method="post">
 
 							<!-- name field -->
 							<div class="form-group">
-								<label for="nameField">User name</label> <input name="name"
-									type="text" class="form-control "
-									th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
-									id="nameField" placeholder="Enter name" th:value="${user.name}">
-
-
-								<div th:each="e : ${#fields.errors('name')}"
-									class="invalid-feedback" th:text="${e}"></div>
-
+								<label for="nameField">Name </label> <input name="name"
+									type="text" class="form-control" id="nameField"
+									placeholder="Enter name">
 							</div>
 							<div class="form-group">
-								<label for="emailField">User Email</label> <input name="email"
-									type="email" class="form-control"
-									th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}"
-									id="emailField" placeholder="email@example.com"
-									th:value="${user.email}">
-
-
-								<div th:each="e : ${#fields.errors('email')}"
-									class="invalid-feedback" th:text="${e}"></div>
+								<label for="emailField">Email</label> <input name="email"
+									type="email" class="form-control" id="emailField"
+									th:value="${session.email}" readonly="readonly">
 							</div>
 							<div class="form-group">
 								<label for="passwordField">Password</label> <input
@@ -68,23 +51,17 @@
 								</select>
 							</div>
 
-
 							<!-- drop down ends here -->
 
 							<!-- about  -->
 							<div class="form-group">
 								<textarea name="about"
 									placeholder="Write something about yourself..."
-									class="form-control" rows="8" th:text="${user.about}"
-									th:classappend="${#fields.hasErrors('about') ? 'is-invalid' : ''}"></textarea>
-
-								<div th:each="e : ${#fields.errors('about')}"
-									class="invalid-feedback" th:text="${e}"></div>
-
+									class="form-control" rows="8"></textarea>
 							</div>
 
 							<!-- terms and conditions agreement -->
-							<div class="form-group form-check ">
+							<div class="form-group form-check">
 								<input name="agreement" type="checkbox" class="form-check-input" />
 								<label for="agreement">Accept terms and conditions</label>
 							</div>
@@ -94,8 +71,6 @@
 									up</button>
 								<button type="reset" class="btn bg-danger text-white"
 									onclick="window.location.href='/signin'">Go to Login</button>
-									
-									
 							</div>
 
 						</form>

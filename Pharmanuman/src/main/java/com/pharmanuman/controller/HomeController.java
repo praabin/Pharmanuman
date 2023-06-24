@@ -38,11 +38,18 @@ public class HomeController {
 		return "about";
 	}
 
+	@RequestMapping("/signupnow")
+	public String signupnow(Model model) {
+		model.addAttribute("title", "Signup");
+		model.addAttribute("user", new User());
+		return "signupnow";
+	}
+
 	@RequestMapping("/signup")
 	public String signup(Model model) {
 		model.addAttribute("title", "Signup");
 		model.addAttribute("user", new User());
-		return "signup";
+		return "verify_email";
 	}
 
 	@RequestMapping("/signin")
@@ -69,17 +76,19 @@ public class HomeController {
 				return "signup";
 			}
 //			user.setRole("ROLE_PHARMACY");
-			
+
 			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
 			System.out.println("Agreement " + agreement);
 			System.out.println("User " + user);
+
 			this.userRepository.save(user);
 			model.addAttribute("user", new User());
 			model.addAttribute("session", session);
 
 			session.setAttribute("message", new MyMessage("Successfully Registered!", "alert-success"));
-			return "signup";
+//			return "signup";
+			return "signin";
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("user", user);

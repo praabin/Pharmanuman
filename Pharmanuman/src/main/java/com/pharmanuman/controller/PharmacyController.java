@@ -76,6 +76,7 @@ public class PharmacyController {
 			String tempName = p.getName();
 			User user = this.userRepository.getUserByUserName(tempName);
 			medicine.setUser(user);
+			
 			user.getMedicines().add(medicine);
 			this.userRepository.save(user);
 
@@ -90,7 +91,7 @@ public class PharmacyController {
 			return "pharmacy/add_medicine";
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			m.addAttribute("medicines", medicine);
 			session.setAttribute("msg", new MyMessage("Something went wrong!! " + e.getMessage(), "alert-danger"));
 			return "pharmacy/add_medicine";
