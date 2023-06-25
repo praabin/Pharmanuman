@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.boot.contact.entities.Contact;
 import com.pharmanuman.dao.MedicineRepository;
 import com.pharmanuman.dao.UserRepository;
 import com.pharmanuman.entities.Medicine;
@@ -99,30 +101,6 @@ public class PharmacyController {
 
 	}
 
-	/*
-	 * @RequestMapping("/process-order") public String
-	 * processOrder(@ModelAttribute("medicineList") List<Medicine> medicineList,
-	 * Principal principal, Model model) {
-	 * 
-	 * String username = principal.getName(); User user =
-	 * userRepository.getUserByUserName(username);
-	 * 
-	 * for (Medicine medicine : medicineList) { medicine.setUser(user);
-	 * user.getMedicines().add(medicine); }
-	 * 
-	 * userRepository.save(user);
-	 * System.out.println("Medicines added to the database");
-	 * 
-	 * List<Medicine> medicines =
-	 * medicineRepository.findMedicinesById(user.getId());
-	 * Collections.sort(medicines,
-	 * Comparator.comparingInt(Medicine::getMid).reversed());
-	 * model.addAttribute("medicines", medicines);
-	 * 
-	 * return "pharmacy/order_medicine"; }
-	 * 
-	 */
-
 	@RequestMapping("/view-medicine")
 	public String viewMedicine(Model m, Principal p) {
 		m.addAttribute("title", "View Medicine");
@@ -196,9 +174,22 @@ public class PharmacyController {
 			return "pharmacy/setting";
 
 		}
-//		System.out.println("New password::" + newPassword);
 
-//		return "redirect:/pharmacy/index";
+	}
+
+	@RequestMapping("/medicine-details/{mid}")
+	public String showMedicineDetail(@PathVariable("mid") Integer mid, Model model, Principal p) {
+		System.out.println("mid " + mid);
+		Optional<Medicine> medicineOptional = this.medicineRepository.findById(mid);
+		Medicine medicine = medicineOptional.get();
+		String name = p.getName();
+		User user = this.userRepository.getUserByUserName(name);
+		if (user.getId() == medicine.getUser().getId()) {
+			model.addAttribute("medicine", medicine);
+			model.addAttribute("title", medicine.getName());
+		}
+
+		return "pharmacy/medicine_details";
 	}
 
 }

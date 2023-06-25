@@ -1,10 +1,69 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+	th:replace="pharmacy/base::Layout(~{::div})">
 <head>
-	<meta charset="UTF-8" />
-	<title>profile</title>
+<meta charset="UTF-8" />
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<title>user profile</title>
+
+
 </head>
 <body>
-	<h1>Profile</h1>
+
+
+	<section>
+		<div class="container">
+
+			<div class="card">
+				<div class="container">
+					<h1 class="text-center">
+						Welcome <span th:text="${user.name}"></span> to your profile
+					</h1>
+
+				</div>
+				
+				<div class="card-body">
+					
+					<table class="table mt-4">
+						<thead>
+							<tr>
+								<th scope="col">#USERID</th>
+								<th scope="col">ID#181728<span th:text="${user.id}"></span></th>
+							</tr>
+						</thead>
+						<tbody>
+						
+						
+							<tr>
+								<th scope="row">Name</th>
+								<td><span th:text="${user.name}"></span></td>
+							</tr>
+
+							<tr>
+								<th scope="row">Email</th>
+								<td><span th:text="${user.email}"></span></td>
+							</tr>
+							<tr>
+								<th scope="row">Role</th>
+								<td><span th:text="${user.role}"></span></td>
+							</tr>
+
+							<tr>
+								<th scope="row">About</th>
+								<td><span th:text="${user.about}"></span></td>
+							</tr>
+						</tbody>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+
+
 </body>
 </html>

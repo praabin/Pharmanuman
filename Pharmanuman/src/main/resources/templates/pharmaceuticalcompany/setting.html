@@ -1,13 +1,74 @@
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
-	th:replace="pharmaceuticalcompany/base::Layout(~{::div})">
+	th:replace="pharmaceuticalcompany/base::Layout(~{::section})">
 <head>
 <meta charset="UTF-8" />
 <title>Setting</title>
 </head>
 <body>
-	<div class="container">
-		<h1 class="text-center">Setting</h1>
-	</div>
+
+
+	<section>
+		<div class="container">
+
+			<div class="mycard mt-3">
+
+				<div th:if="${session.msg}" th:classappend="${session.msg.type}"
+					class="alert" role="alert">
+					<p class="text-center" th:text="${session.msg.content}"></p>
+
+
+					<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
+				</div>
+
+			</div>
+
+			<div class="row">
+
+				<div class="col-md-12">
+
+					<div class="card">
+
+						<div class="card-body">
+
+							<h1 class=" text-center">Change password</h1>
+
+							<form th:action="@{/pc/change-password}" method="post">
+
+
+								<div class="form-group">
+									<input type="text" class="form-control"
+										placeholder="Enter old password" name="oldPassword">
+								</div>
+
+
+
+								<div class="form-group">
+									<input type="text" class="form-control"
+										placeholder="Enter new password" name="newPassword">
+
+								</div>
+
+								<div class="container text-center">
+									<button type="submit" class="btn btn-success">Change</button>
+									<button type="reset" class="btn btn-warning">Reset</button>
+
+								</div>
+
+
+
+
+							</form>
+
+
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
 </body>
 </html>

@@ -4,8 +4,10 @@ import java.security.Principal;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pharmanuman.dao.MedicineForCompanyRepository;
 import com.pharmanuman.dao.MedicineRepository;
@@ -33,6 +36,9 @@ public class CompanyController {
 
 	@Autowired
 	MedicineForCompanyRepository medicineForCompanyRepository;
+
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@ModelAttribute
 	public void addCommonData(Model model, Principal principal) {
@@ -60,7 +66,7 @@ public class CompanyController {
 		model.addAttribute("title", "Setting");
 		return "pharmaceuticalcompany/setting";
 	}
-	
+
 	@RequestMapping("/prediction")
 	public String prediciton(Model model) {
 		model.addAttribute("title", "Prediction");
@@ -133,8 +139,6 @@ public class CompanyController {
 		return "pharmaceuticalcompany/view_stock";
 	}
 
-
-
 	@PostMapping("/updateStock/{mfcid}")
 	public String updateMedicine(@PathVariable("mfcid") int id, Model m) {
 		m.addAttribute("title", "Update medicine");
@@ -157,8 +161,45 @@ public class CompanyController {
 		session.setAttribute("message", new MyMessage("Successfully Updated!! ", "alert-success"));
 		return "pharmaceuticalcompany/view_stock";
 	}
-	
-	
-	
+
+	@PostMapping("/change-password")
+	public String changePassword(@RequestParam("oldPassword") String oldPassword,
+			@RequestParam("newPassword") String newPassword, Principal p, HttpSession session) {
+		System.out.println("Old password::" + oldPassword);
+		String name = p.getName();
+
+		User tempUser = this.userRepository.getUserByUserName(name);
+		String oldPassword1 = tempUser.getPassword();
+
+		if (this.bCryptPasswordEncoder.matches(oldPassword, oldPassword1)) {
+			tempUser.setPassword(this.bCryptPasswordEncoder.encode(newPassword));
+			this.userRepository.save(tempUser);
+
+			this.userRepository.save(tempUser);
+			session.setAttribute("msg", new MyMessage("Successfully Updated!! ", "alert-success"));
+			return "pharmaceuticalcompany/setting";
+		} else {
+			System.out.println("password doesn't matches");
+			session.setAttribute("msg", new MyMessage("Password doesn't match. ", "alert-danger"));
+			return "pharmaceuticalcompany/setting";
+
+		}
+
+	}
+
+	@RequestMapping("/medicine-details/{mfcid}")
+	public String showMedicineDetail(@PathVariable("mfcid") Integer mfcid, Model model, Principal p) {
+		System.out.println("mid " + mfcid);
+		Optional<MedicineForCompany> medicineOptional = this.medicineForCompanyRepository.findById(mfcid);
+		MedicineForCompany medicine = medicineOptional.get();
+		String name = p.getName();
+		User user = this.userRepository.getUserByUserName(name);
+		if (user.getId() == medicine.getUser().getId()) {
+			model.addAttribute("medicine", medicine);
+			model.addAttribute("title", medicine.getName());
+		}
+
+		return "pharmaceuticalcompany/medicine_details";
+	}
 
 }

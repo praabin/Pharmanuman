@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+	th:replace="pharmacy/base::Layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>Setting</title>
+</head>
+<body>
+
+
+	<section>
+		<div class="container">
+
+			<div class="mycard mt-3">
+
+				<div th:if="${session.msg}" th:classappend="${session.msg.type}"
+					class="alert" role="alert">
+					<p class="text-center" th:text="${session.msg.content}"></p>
+
+
+					<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
+				</div>
+
+			</div>
+
+			<div class="row">
+
+				<div class="col-md-12">
+
+					<div class="card">
+
+						<div class="card-body">
+
+							<h1 class=" text-center">Medicine details</h1>
+
+
+							<div class="card-body">
+
+								<table class="table mt-4">
+									<thead>
+										<tr>
+											<th scope="col">#MedicineID</th>
+											<th scope="col">ID#181728<span th:text="${medicine.mid}"></span></th>
+										</tr>
+									</thead>
+									<tbody>
+
+										<tr>
+											<th scope="row">Name</th>
+											<td><span th:text="${medicine.name}"></span></td>
+										</tr>
+
+										<tr>
+											<th scope="row">Price</th>
+											<td><span th:text="${medicine.price}"></span></td>
+										</tr>
+										<tr>
+											<th scope="row">Quantity</th>
+											<td><span th:text="${medicine.quantity}"></span></td>
+										</tr>
+
+
+										<tr>
+											<th scope="row">Composition</th>
+											<td><span th:text="${medicine.composition}"></span></td>
+										</tr>
+
+
+
+										<tr>
+											<th scope="row">Type</th>
+											<td><span th:text="${medicine.type}"></span></td>
+										</tr>
+
+
+
+										<tr>
+											<th scope="row">Description</th>
+											<td><span th:text="${medicine.description}"></span></td>
+										</tr>
+
+
+
+
+										<tr>
+											<th scope="row">Manufacturer Date</th>
+											<td><span th:text="${medicine.manufacturerDate}"></span></td>
+										</tr>
+
+
+
+										<tr>
+											<th scope="row">Expiry Date</th>
+											<td><span th:text="${medicine.expiryDate}"></span></td>
+										</tr>
+
+
+
+
+										<tr>
+											<th scope="row">Dosage Form</th>
+											<td><span th:text="${medicine.dosageForm}"></span></td>
+										</tr>
+
+
+
+
+										<tr>
+											<th scope="row">Storage Instructions</th>
+											<td><span th:text="${medicine.storageInstructions}"></span></td>
+										</tr>
+
+
+
+
+										<tr>
+											<th scope="row">Manufacturer Name</th>
+											<td><span th:text="${medicine.manufacturerName}"></span></td>
+										</tr>
+
+
+
+
+										<tr>
+											<th scope="row">Manufacturer Location</th>
+											<td><span th:text="${medicine.manufacturerLocation}"></span></td>
+										</tr>
+
+
+									</tbody>
+
+								</table>
+							</div>
+							<!--
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int mid;
+
+	@Column(nullable = false)
+	@NotBlank(message = "Name shouldn't be blank")
+	@Size(min = 2, max = 20, message = "min 2 and max 30 characters required")
+	private String name;
+
+	@Column(nullable = false)
+	@Min(value = 0, message = "Quantity must be a positive number or zero")
+	private int quantity;
+	
+	@Column(nullable = false)
+	@DecimalMin(value = "0.00", inclusive = true, message = "Price must be a positive number or zero")
+	private double price;
+	
+	@Column(nullable = false)
+	@NotBlank(message = "Composition shouldn't be blank")
+	@Size(min = 2, max = 20, message = "min 2 and max 20 characters required")
+	private String composition;
+	
+	@Column(nullable = false)
+	@NotBlank(message = "Type shouldn't be blank")
+	private String type;
+	
+	
+	@Column(length = 200, nullable = false)
+	@Length(max = 200, message = "Description should be less than 200 character")
+	private String description;
+
+	@Column(nullable = false)
+	@JsonFormat(pattern = "mm/dd/yyyy", shape = Shape.STRING)
+	private String manufacturerDate;
+
+	@Column(nullable = false)
+	@JsonFormat(pattern = "mm/dd/yyyy", shape = Shape.STRING)
+	private String expiryDate;
+
+	
+	@Column(nullable = false)
+	@NotBlank(message = "DosageForm shouldn't be blank")
+	@Size(min = 2, max = 20, message = "min 2 and max 20 characters required")
+	private String dosageForm;
+	
+	
+	@Column(nullable = false)
+	@NotBlank(message = "StorageInstructions shouldn't be blank")
+	@Size(min = 2, max = 20, message = "min 2 and max 20 characters required")
+	private String storageInstructions;
+	
+	@Column(nullable = false)
+	@NotBlank(message = "ManufacturerName shouldn't be blank")
+	@Size(min = 2, max = 20, message = "min 2 and max 30 characters required")
+	private String manufacturerName;
+	
+	@Column(nullable = false)
+	@NotBlank(message = "ManufacturerLocation shouldn't be blank")
+	@Size(min = 2, max = 20, message = "min 2 and max 30 characters required")
+	private String manufacturerLocation;
+	
+  -->
+
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
+</body>
+</html>

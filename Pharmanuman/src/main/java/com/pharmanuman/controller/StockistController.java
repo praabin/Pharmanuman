@@ -4,8 +4,10 @@ import java.security.Principal;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pharmanuman.dao.MedicineRepository;
 import com.pharmanuman.dao.UserRepository;
@@ -31,6 +34,9 @@ public class StockistController {
 
 	@Autowired
 	private MedicineRepository medicineRepository;
+
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@ModelAttribute
 	public void addCommonData(Model model, Principal principal) {
@@ -144,6 +150,47 @@ public class StockistController {
 
 		session.setAttribute("message", new MyMessage("Successfully Updated!! ", "alert-success"));
 		return "stockist/view_stock";
+	}
+
+	@PostMapping("/change-password")
+	public String changePassword(@RequestParam("oldPassword") String oldPassword,
+			@RequestParam("newPassword") String newPassword, Principal p, HttpSession session) {
+		System.out.println("Old password::" + oldPassword);
+		String name = p.getName();
+
+		User tempUser = this.userRepository.getUserByUserName(name);
+		String oldPassword1 = tempUser.getPassword();
+
+		if (this.bCryptPasswordEncoder.matches(oldPassword, oldPassword1)) {
+			tempUser.setPassword(this.bCryptPasswordEncoder.encode(newPassword));
+			this.userRepository.save(tempUser);
+
+			this.userRepository.save(tempUser);
+			session.setAttribute("msg", new MyMessage("Successfully Updated!! ", "alert-success"));
+			return "stockist/setting";
+		} else {
+			System.out.println("password doesn't matches");
+			session.setAttribute("msg", new MyMessage("Password doesn't match. ", "alert-danger"));
+			return "stockist/setting";
+
+		}
+
+	}
+	
+	
+	@RequestMapping("/medicine-details/{mid}")
+	public String showMedicineDetail(@PathVariable("mid") Integer mid, Model model, Principal p) {
+		System.out.println("mid " + mid);
+		Optional<Medicine> medicineOptional = this.medicineRepository.findById(mid);
+		Medicine medicine = medicineOptional.get();
+		String name = p.getName();
+		User user = this.userRepository.getUserByUserName(name);
+		if (user.getId() == medicine.getUser().getId()) {
+			model.addAttribute("medicine", medicine);
+			model.addAttribute("title", medicine.getName());
+		}
+
+		return "stockist/medicine_details";
 	}
 
 }

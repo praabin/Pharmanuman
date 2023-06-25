@@ -418,7 +418,14 @@ body {
 						<tbody>
 							<tr th:each="m : ${medicines}">
 								<td th:text="${m.mfcid}"></td>
-								<td th:text="${m.name}"></td>
+								<!-- <td th:text="${m.name}"></td> -->
+
+
+								<td><a href="#"
+									th:href="@{'/pc'+'/medicine-details/'+${m.mfcid}}"><span
+										th:text="${m.name}"> </span></a></td>
+
+
 								<td th:text="${m.quantity}"></td>
 								<td th:text="${m.price}"></td>
 								<td th:text="${m.composition}"></td>
@@ -445,7 +452,7 @@ body {
 									<div class="d-flex justify-content-start align-items-center">
 										<a href="#" th:onclick="|deleteMedicine(${m.mfcid})|"
 											class="btn btn-danger btn-sm mr-2">Delete</a>
-											
+
 										<form th:action="@{/pc/updateStock/{mfcid}(mfcid=${m.mfcid})}"
 											method="post">
 											<button type="submit" class="btn btn-primary btn-sm">Update</button>

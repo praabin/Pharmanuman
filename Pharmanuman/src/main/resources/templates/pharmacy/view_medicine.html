@@ -91,122 +91,118 @@
 <title>View Medicine</title>
 
 <style type="text/css">
-		/* Global Styles */
-		body {
-			font-family: Arial, sans-serif;
-			background-color: #f8f8f8;
-			margin: 0;
-			padding: 0;
-		}
+/* Global Styles */
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f8f8f8;
+	margin: 0;
+	padding: 0;
+}
 
-		.container {
-			max-width: 1200px;
-			margin: 0 auto;
-			padding: 20px;
-		}
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+}
 
-		/* Card Styles */
-		.card {
-			background-color: #fff;
-			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-			border-radius: 5px;
-			padding: 20px;
-			margin-bottom: 20px;
-		}
+/* Card Styles */
+.card {
+	background-color: #fff;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	padding: 20px;
+	margin-bottom: 20px;
+}
 
-		.card-title {
-			font-size: 24px;
-			font-weight: bold;
-			text-align: center;
-			margin-bottom: 20px;
-		}
+.card-title {
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 20px;
+}
 
-		/* Search Styles */
-		.search-controller {
-			margin-bottom: 20px;
-		}
+/* Search Styles */
+.search-controller {
+	margin-bottom: 20px;
+}
 
-		.search-input {
-			width: 100%;
-			padding: 10px;
-			font-size: 16px;
-			border: 1px solid #ccc;
-			border-radius: 5px;
-		}
+.search-input {
+	width: 100%;
+	padding: 10px;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
 
-		/* Table Styles */
-		.table {
-			width: 100%;
-			border-collapse: collapse;
-		}
+/* Table Styles */
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
 
-		.table thead th {
-			background-color: #f0f0f0;
-			color: #333;
-			font-weight: bold;
-			padding: 10px;
-			text-align: left;
-		}
+.table thead th {
+	background-color: #f0f0f0;
+	color: #333;
+	font-weight: bold;
+	padding: 10px;
+	text-align: left;
+}
 
-		.table tbody td {
-			padding: 10px;
-			border-bottom: 1px solid #f0f0f0;
-		}
+.table tbody td {
+	padding: 10px;
+	border-bottom: 1px solid #f0f0f0;
+}
 
-		.table tbody tr:last-child td {
-			border-bottom: none;
-		}
+.table tbody tr:last-child td {
+	border-bottom: none;
+}
 
-		/* Button Styles */
-		.button-group {
-			display: flex;
-			gap: 10px;
-			justify-content: flex-start;
-			align-items: center;
-		}
+/* Button Styles */
+.button-group {
+	display: flex;
+	gap: 10px;
+	justify-content: flex-start;
+	align-items: center;
+}
 
-		.button-group button {
-			padding: 10px 20px;
-			font-size: 16px;
-			border-radius: 5px;
-			border: none;
-			cursor: pointer;
-			color: #fff;
-		}
+.button-group button {
+	padding: 10px 20px;
+	font-size: 16px;
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+	color: #fff;
+}
 
-		.button-group button.primary {
-			background-color: #007bff;
-		}
+.button-group button.primary {
+	background-color: #007bff;
+}
 
-		.button-group button.danger {
-			background-color: #dc3545;
-		}
+.button-group button.danger {
+	background-color: #dc3545;
+}
 
-		/* Responsive Styles */
-		@media screen and (max-width: 768px) {
-			.container {
-				padding: 10px;
-			}
-
-			.card {
-				padding: 10px;
-			}
-
-			.card-title {
-				font-size: 20px;
-				margin-bottom: 10px;
-			}
-
-			.search-input {
-				font-size: 14px;
-			}
-
-			.button-group button {
-				padding: 8px 16px;
-				font-size: 14px;
-			}
-		}
-	</style>
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+	.container {
+		padding: 10px;
+	}
+	.card {
+		padding: 10px;
+	}
+	.card-title {
+		font-size: 20px;
+		margin-bottom: 10px;
+	}
+	.search-input {
+		font-size: 14px;
+	}
+	.button-group button {
+		padding: 8px 16px;
+		font-size: 14px;
+	}
+}
+</style>
 
 </head>
 <body>
@@ -251,7 +247,15 @@
 					<tbody>
 						<tr th:each="m : ${medicines}">
 							<td th:text="${m.mid}"></td>
-							<td th:text="${m.name}"></td>
+
+							<!-- <td th:text="${m.name}"></td> -->
+
+							<!--@{'/user/'+${c.cid}+'/contact'}-->
+							<td><a href="#"
+								th:href="@{'/pharmacy'+'/medicine-details/'+${m.mid}}"><span
+									th:text="${m.name}"> </span></a></td>
+
+
 							<td th:text="${m.quantity}"></td>
 							<td th:text="${m.price}"></td>
 							<td th:text="${m.composition}"></td>

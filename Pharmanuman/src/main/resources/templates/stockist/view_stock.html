@@ -127,8 +127,8 @@ body {
 			<div class="card-body">
 
 
-				<div th:if="${session.message}" th:classappend="${session.message.type}"
-					class="alert" role="alert">
+				<div th:if="${session.message}"
+					th:classappend="${session.message.type}" class="alert" role="alert">
 					<p class="text-center" th:text="${session.message.content}"></p>
 
 					<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
@@ -171,7 +171,13 @@ body {
 					<tbody>
 						<tr th:each="m : ${medicines}">
 							<td th:text="${m.mid}"></td>
-							<td th:text="${m.name}"></td>
+							<!-- <td th:text="${m.name}"></td> -->
+
+
+							<td><a href="#"
+								th:href="@{'/stockist'+'/medicine-details/'+${m.mid}}"><span
+									th:text="${m.name}"> </span></a></td>
+
 							<td th:text="${m.quantity}"></td>
 							<td th:text="${m.price}"></td>
 							<td th:text="${m.composition}"></td>
