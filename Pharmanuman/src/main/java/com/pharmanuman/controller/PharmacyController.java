@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.boot.contact.entities.Contact;
 import com.pharmanuman.dao.MedicineRepository;
 import com.pharmanuman.dao.UserRepository;
 import com.pharmanuman.entities.Medicine;

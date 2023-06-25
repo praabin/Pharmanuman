@@ -32,6 +32,20 @@ body {
 	background: #FFFFFF;
 }
 
+.search-container {
+	position: relative;
+}
+
+.search-result {
+	position: absolute;
+	background: white;
+	width: 100%;
+	padding: 10px;
+	border: 1px solid gray;
+	display: none;
+}
+
+
 #login .container #login-row #login-column #login-box {
 	margin-top: 120px;
 	max-width: 600px;
