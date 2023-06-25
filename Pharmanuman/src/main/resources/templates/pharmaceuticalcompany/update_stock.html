@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<title>Medicine Order Form</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<style>
+.container {
+	margin-top: 50px;
+}
+
+h2 {
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+.medicine-section {
+	border: 1px solid #ccc;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+.medicine-section h4 {
+	margin-top: 0;
+}
+
+.btn-remove {
+	margin-top: 10px;
+}
+
+.btn-submit {
+	margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+	<div class="container card">
+		<h2>Update Medicine</h2>
+		<form id="order-form" th:object="${medicine}"
+			th:action="@{/pc/process-update}" method="post">
+			<div id="medicine-sections">
+				<div class="medicine-section" id="medicine1">
+					<h4>Medicine 1</h4>
+					<input type="hidden" th:value="${medicine.mfcid}" name="mfcid" />
+					<div class="form-row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="name1">Medicine Name:</label> <input type="text"
+									class="form-control" id="name1" name="name"
+									th:value="${medicine.name}" required="required">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<label for="quantity1">Quantity:</label> <input type="number"
+									class="form-control" id="quantity1" name="quantity"
+									th:value="${medicine.quantity}" required="required">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<label for="price1">Price:</label> <input type="text"
+									class="form-control" id="price1" name="price"
+									th:value="${medicine.price}" required="required">
+							</div>
+						</div>
+						<!-- Add additional fields here -->
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="composition1">Composition:</label> <input
+									type="text" class="form-control" id="composition1"
+									name="composition" th:value="${medicine.composition}"
+									required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="type1">Type:</label> <input type="text"
+									class="form-control" id="type1" name="type"
+									th:value="${medicine.type}" required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="description1">Description:</label> <input
+									type="text" class="form-control" id="description1"
+									name="description" th:value="${medicine.description}"
+									required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="manufacturerDate1">Manufacturer Date:</label> <input
+									type="date" class="form-control" id="manufacturerDate1"
+									name="manufacturerDate" th:value="${medicine.manufacturerDate}"
+									required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="expiryDate1">Expiry Date:</label> <input type="date"
+									class="form-control" id="expiryDate1" name="expiryDate"
+									th:value="${medicine.expiryDate}" required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="dosageForm1">Dosage Form:</label> <input type="text"
+									class="form-control" id="dosageForm1" name="dosageForm"
+									th:value="${medicine.dosageForm}" required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="storageInstructions1">Storage Instructions:</label>
+								<input type="text" class="form-control"
+									id="storageInstructions1" name="storageInstructions"
+									th:value="${medicine.storageInstructions}" required="required">
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="manufacturerName1">Manufacturer Name:</label> <input
+									type="text" class="form-control" id="manufacturerName1"
+									name="manufacturerName" th:value="${medicine.manufacturerName}"
+									required="required">
+							</div>
+						</div>
+
+
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="manufacturerLocation">manufacturerLocation</label> <input
+									type="text" class="form-control" id="manufacturerLocation"
+									name="manufacturerLocation" th:value="${medicine.manufacturerLocation}"
+									required="required">
+							</div>
+						</div>
+
+
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="batchNumber">Manufacturer batchNumber</label> <input
+									type="text" class="form-control" id="batchNumber"
+									name="batchNumber" th:value="${medicine.batchNumber}"
+									required="required">
+							</div>
+						</div>
+
+
+
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="registrationNumber">Manufacturer
+									registrationNumber</label> <input type="text" class="form-control"
+									id="registrationNumber" name="registrationNumber"
+									th:value="${medicine.registrationNumber}" required="required">
+							</div>
+						</div>
+
+
+
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="countryOfOrigin">countryOfOrigin :</label> <input
+									type="text" class="form-control" id="countryOfOrigin"
+									name="countryOfOrigin" th:value="${medicine.countryOfOrigin}"
+									required="required">
+							</div>
+						</div>
+
+
+
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="prescriptionRequired">prescriptionRequired</label> <input
+									type="text" class="form-control" id="prescriptionRequired"
+									name="prescriptionRequired"
+									th:value="${medicine.prescriptionRequired}" required="required">
+							</div>
+						</div>
+
+
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="packaging">packaging</label> <input type="text"
+									class="form-control" id="packaging" name="packaging"
+									th:value="${medicine.packaging}" required="required">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="text-center mt-2 mb-3">
+				<button type="submit"
+					class="btn btn-primary btn-submit align-center">Update
+					Medicine</button>
+				<a href="/pc/index"
+					class="btn btn-primary btn-submit align-center text-white">Go
+					to dashboard</a>
+
+			</div>
+
+		</form>
+	</div>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

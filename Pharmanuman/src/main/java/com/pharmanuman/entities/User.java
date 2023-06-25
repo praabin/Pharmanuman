@@ -38,10 +38,12 @@ public class User {
 	@Length(max = 500, message = "about should be less than 500 character")
 	private String about;
 
-
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
 	private List<Medicine> medicines = new ArrayList<>();
-	
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+	private List<MedicineForCompany> medicinesForCompany = new ArrayList<>();
+
 	public User() {
 		super();
 	}
@@ -56,8 +58,6 @@ public class User {
 		this.role = role;
 		this.about = about;
 	}
-	
-	
 
 	public List<Medicine> getMedicines() {
 		return medicines;
@@ -115,13 +115,18 @@ public class User {
 		this.about = about;
 	}
 
+	public List<MedicineForCompany> getMedicinesForCompany() {
+		return medicinesForCompany;
+	}
+
+	public void setMedicinesForCompany(List<MedicineForCompany> medicinesForCompany) {
+		this.medicinesForCompany = medicinesForCompany;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", role=" + role
 				+ ", about=" + about + ", medicines=" + medicines + "]";
 	}
-	
-	
 
-	
 }

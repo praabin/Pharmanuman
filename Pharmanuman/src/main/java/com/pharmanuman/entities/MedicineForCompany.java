@@ -17,11 +17,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
-public class Medicine {
+public class MedicineForCompany {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int mid;
+	private int mfcid;
 
 	@Column(nullable = false)
 	@NotBlank(message = "Name shouldn't be blank")
@@ -31,21 +31,20 @@ public class Medicine {
 	@Column(nullable = false)
 	@Min(value = 0, message = "Quantity must be a positive number or zero")
 	private int quantity;
-	
+
 	@Column(nullable = false)
 	@DecimalMin(value = "0.00", inclusive = true, message = "Price must be a positive number or zero")
 	private double price;
-	
+
 	@Column(nullable = false)
 	@NotBlank(message = "Composition shouldn't be blank")
 	@Size(min = 2, max = 20, message = "min 2 and max 20 characters required")
 	private String composition;
-	
+
 	@Column(nullable = false)
 	@NotBlank(message = "Type shouldn't be blank")
 	private String type;
-	
-	
+
 	@Column(length = 200, nullable = false)
 	@Length(max = 200, message = "Description should be less than 200 character")
 	private String description;
@@ -58,46 +57,66 @@ public class Medicine {
 	@JsonFormat(pattern = "mm/dd/yyyy", shape = Shape.STRING)
 	private String expiryDate;
 
-	
 	@Column(nullable = false)
 	@NotBlank(message = "DosageForm shouldn't be blank")
 	@Size(min = 2, max = 20, message = "min 2 and max 20 characters required")
 	private String dosageForm;
-	
-	
+
 	@Column(nullable = false)
 	@NotBlank(message = "StorageInstructions shouldn't be blank")
 	@Size(min = 2, max = 20, message = "min 2 and max 20 characters required")
 	private String storageInstructions;
-	
+
 	@Column(nullable = false)
 	@NotBlank(message = "ManufacturerName shouldn't be blank")
 	@Size(min = 2, max = 20, message = "min 2 and max 30 characters required")
 	private String manufacturerName;
-	
+
 	@Column(nullable = false)
 	@NotBlank(message = "ManufacturerLocation shouldn't be blank")
 	@Size(min = 2, max = 20, message = "min 2 and max 30 characters required")
 	private String manufacturerLocation;
-	
-	
-	//below fields are for pharmaceuticals company
-	
-	
-	
+
+	// below fields are for pharmaceuticals company
+
+	@Column(nullable = false)
+	private String batchNumber;
+
+	@Column(nullable = false)
+	private String registrationNumber;
+
+	@Column(nullable = false)
+	private String countryOfOrigin;
+
+	@Column(nullable = false)
+	private String prescriptionRequired;
+
+	@Column(nullable = false)
+	private String packaging;
 
 	@ManyToOne
 	private User user;
 
-	public Medicine() {
+	public MedicineForCompany() {
 		super();
 	}
 
-	public Medicine(int mid, String name, int quantity, double price, String composition, String type,
-			String description, String manufacturerDate, String expiryDate, String dosageForm,
-			String storageInstructions, String manufacturerName, String manufacturerLocation, User user) {
+	public MedicineForCompany(int mfcid,
+			@NotBlank(message = "Name shouldn't be blank") @Size(min = 2, max = 20, message = "min 2 and max 30 characters required") String name,
+			@Min(value = 0, message = "Quantity must be a positive number or zero") int quantity,
+			@DecimalMin(value = "0.00", inclusive = true, message = "Price must be a positive number or zero") double price,
+			@NotBlank(message = "Composition shouldn't be blank") @Size(min = 2, max = 20, message = "min 2 and max 20 characters required") String composition,
+			@NotBlank(message = "Type shouldn't be blank") String type,
+			@Length(max = 200, message = "Description should be less than 200 character") String description,
+			String manufacturerDate, String expiryDate,
+			@NotBlank(message = "DosageForm shouldn't be blank") @Size(min = 2, max = 20, message = "min 2 and max 20 characters required") String dosageForm,
+			@NotBlank(message = "StorageInstructions shouldn't be blank") @Size(min = 2, max = 20, message = "min 2 and max 20 characters required") String storageInstructions,
+			@NotBlank(message = "ManufacturerName shouldn't be blank") @Size(min = 2, max = 20, message = "min 2 and max 30 characters required") String manufacturerName,
+			@NotBlank(message = "ManufacturerLocation shouldn't be blank") @Size(min = 2, max = 20, message = "min 2 and max 30 characters required") String manufacturerLocation,
+			String batchNumber, String registrationNumber, String countryOfOrigin, String prescriptionRequired,
+			String packaging, User user) {
 		super();
-		this.mid = mid;
+		this.mfcid = mfcid;
 		this.name = name;
 		this.quantity = quantity;
 		this.price = price;
@@ -110,6 +129,11 @@ public class Medicine {
 		this.storageInstructions = storageInstructions;
 		this.manufacturerName = manufacturerName;
 		this.manufacturerLocation = manufacturerLocation;
+		this.batchNumber = batchNumber;
+		this.registrationNumber = registrationNumber;
+		this.countryOfOrigin = countryOfOrigin;
+		this.prescriptionRequired = prescriptionRequired;
+		this.packaging = packaging;
 		this.user = user;
 	}
 
@@ -119,14 +143,6 @@ public class Medicine {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public int getMid() {
-		return mid;
-	}
-
-	public void setMid(int mid) {
-		this.mid = mid;
 	}
 
 	public String getName() {
@@ -223,6 +239,54 @@ public class Medicine {
 
 	public void setManufacturerLocation(String manufacturerLocation) {
 		this.manufacturerLocation = manufacturerLocation;
+	}
+
+	public String getBatchNumber() {
+		return batchNumber;
+	}
+
+	public void setBatchNumber(String batchNumber) {
+		this.batchNumber = batchNumber;
+	}
+
+	public String getRegistrationNumber() {
+		return registrationNumber;
+	}
+
+	public void setRegistrationNumber(String registrationNumber) {
+		this.registrationNumber = registrationNumber;
+	}
+
+	public String getCountryOfOrigin() {
+		return countryOfOrigin;
+	}
+
+	public void setCountryOfOrigin(String countryOfOrigin) {
+		this.countryOfOrigin = countryOfOrigin;
+	}
+
+	public String getPackaging() {
+		return packaging;
+	}
+
+	public void setPackaging(String packaging) {
+		this.packaging = packaging;
+	}
+
+	public int getMfcid() {
+		return mfcid;
+	}
+
+	public void setMfcid(int mfcid) {
+		this.mfcid = mfcid;
+	}
+
+	public String getPrescriptionRequired() {
+		return prescriptionRequired;
+	}
+
+	public void setPrescriptionRequired(String prescriptionRequired) {
+		this.prescriptionRequired = prescriptionRequired;
 	}
 
 	/*

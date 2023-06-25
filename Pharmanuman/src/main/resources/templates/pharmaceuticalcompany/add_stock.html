@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
-	th:replace="stockist/base::Layout(~{::section})">
+	th:replace="pharmaceuticalcompany/base::Layout(~{::section})">
 
 <head>
 <title>Add Medicine</title>
@@ -72,8 +72,8 @@ body {
 				<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
 			</div>
 			<h2 class="card-header text-center">Add Stock</h2>
-			<form id="order-form" th:object="${medicine}"
-				th:action="@{/stockist/process-order}" method="post">
+			<form id="order-form" th:object="${mfc}"
+				th:action="@{/pc/process-order}" method="post">
 
 				<div id="medicine-sections">
 					<div class="card-body bg-light p-4 mb-4">
@@ -224,6 +224,101 @@ body {
 										class="invalid-feedback" th:text="${e}"></div>
 								</div>
 							</div>
+
+
+
+
+
+
+
+
+
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="batchNumber">Manufacturer batchNumber:</label> <input
+										type="text" class="form-control"
+										th:classappend="${#fields.hasErrors('batchNumber') ? 'is-invalid' : ''}"
+										id="batchNumber" name="batchNumber"
+										placeholder="Enter batchNumber ">
+
+
+
+									<div th:each="e : ${#fields.errors('batchNumber')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+
+
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="registrationNumber">Manufacturer
+										registrationNumber:</label> <input type="text" class="form-control"
+										th:classappend="${#fields.hasErrors('registrationNumber') ? 'is-invalid' : ''}"
+										id="registrationNumber" name="registrationNumber"
+										placeholder="Enter registrationNumber ">
+
+
+
+									<div th:each="e : ${#fields.errors('registrationNumber')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+
+
+
+
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="countryOfOrigin">Manufacturer
+										countryOfOrigin:</label> <input type="text" class="form-control"
+										th:classappend="${#fields.hasErrors('countryOfOrigin') ? 'is-invalid' : ''}"
+										id="countryOfOrigin" name="countryOfOrigin"
+										placeholder="Enter manufacturer location">
+
+
+
+									<div th:each="e : ${#fields.errors('countryOfOrigin')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+
+
+
+
+
+
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="prescriptionRequired">Manufacturer
+										prescriptionRequired:</label> <input type="text" class="form-control"
+										th:classappend="${#fields.hasErrors('prescriptionRequired') ? 'is-invalid' : ''}"
+										id="prescriptionRequired" name="prescriptionRequired"
+										placeholder="Enter manufacturer location">
+
+
+
+									<div th:each="e : ${#fields.errors('prescriptionRequired')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+
+
+
+
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="packaging">Manufacturer packaging:</label> <input
+										type="text" class="form-control"
+										th:classappend="${#fields.hasErrors('packaging') ? 'is-invalid' : ''}"
+										id="packaging" name="packaging" placeholder="Enter packaging">
+
+
+
+									<div th:each="e : ${#fields.errors('packaging')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+
 							<div class="col-md-4">
 								<div class="form-group">
 									<label for="description1">Description:</label>
@@ -237,6 +332,7 @@ body {
 										class="invalid-feedback" th:text="${e}"></div>
 								</div>
 							</div>
+
 						</div>
 					</div>
 				</div>
@@ -244,7 +340,7 @@ body {
 				<div class="text-center mt-2 mb-3">
 					<button type="submit"
 						class="btn btn-success btn-submit align-center">Add</button>
-					<a href="/stockist/index"
+					<a href="/pharmaceuticalcompany/index"
 						class="btn btn-danger btn-submit align-center text-white">Go
 						to dashboard</a>
 				</div>

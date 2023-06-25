@@ -71,7 +71,7 @@ public class StockistController {
 	}
 
 	@RequestMapping("/process-order")
-	public String processOrder(@ModelAttribute Medicine medicine, Principal p, Model m) {
+	public String processOrder(@ModelAttribute Medicine medicine, Principal p, Model m, HttpSession session) {
 
 		String tempName = p.getName();
 		User user = this.userRepository.getUserByUserName(tempName);
@@ -86,6 +86,8 @@ public class StockistController {
 		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
 		Collections.sort(medicines, Comparator.comparingInt(Medicine::getMid).reversed());
 		m.addAttribute("medicines", medicines);
+
+		session.setAttribute("message", new MyMessage("Successfully Updated!! ", "alert-success"));
 		return "stockist/add_stock";
 	}
 
@@ -105,36 +107,20 @@ public class StockistController {
 	}
 
 	@GetMapping("/delete/{mid}")
-	public String deleteMedicine(@PathVariable("mid") int mid, Model m, Principal p) {
+	public String deleteMedicineFromStockist(@PathVariable("mid") int mid, Model m, Principal p, HttpSession session) {
 
 		Medicine medicine = this.medicineRepository.findById(mid).get();
 		User tempUser = this.userRepository.getUserByUserName(p.getName());
 		tempUser.getMedicines().remove(medicine);
 		this.userRepository.save(tempUser);
-		
-		
 
 		String name = p.getName();
 		User tempUser1 = this.userRepository.getUserByUserName(name);
 		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser1.getId());
 		m.addAttribute("medicines", medicines);
-		
+
+		session.setAttribute("message", new MyMessage("Deleted Successfully!! ", "alert-success"));
 		return "stockist/view_stock";
-	}
-
-	@GetMapping("/deleteProcessOrder/{mid}")
-	public String deleteMedicineFromProcessOrder(@PathVariable("mid") int mid, Model m, Principal p) {
-
-		Medicine medicine = this.medicineRepository.findById(mid).get();
-		User tempUser = this.userRepository.getUserByUserName(p.getName());
-		tempUser.getMedicines().remove(medicine);
-		this.userRepository.save(tempUser);
-
-		String name = p.getName();
-		User tempUser1 = this.userRepository.getUserByUserName(name);
-		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser1.getId());
-		m.addAttribute("medicines", medicines);
-		return "stockist/order_stock";
 	}
 
 	@PostMapping("/updateStock/{mid}")
@@ -142,7 +128,7 @@ public class StockistController {
 		m.addAttribute("title", "Update medicine");
 		Medicine tempMedicine = this.medicineRepository.findById(id).get();
 		m.addAttribute("medicine", tempMedicine);
-		return "stockist/update_stock";
+		return "stockist/view_stock";
 	}
 
 	@PostMapping("/process-update")

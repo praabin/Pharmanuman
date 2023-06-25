@@ -76,7 +76,7 @@ public class PharmacyController {
 			String tempName = p.getName();
 			User user = this.userRepository.getUserByUserName(tempName);
 			medicine.setUser(user);
-			
+
 			user.getMedicines().add(medicine);
 			this.userRepository.save(user);
 
@@ -91,7 +91,7 @@ public class PharmacyController {
 			return "pharmacy/add_medicine";
 
 		} catch (Exception e) {
-			
+
 			m.addAttribute("medicines", medicine);
 			session.setAttribute("msg", new MyMessage("Something went wrong!! " + e.getMessage(), "alert-danger"));
 			return "pharmacy/add_medicine";
@@ -141,21 +141,6 @@ public class PharmacyController {
 		tempUser.getMedicines().remove(medicine);
 		this.userRepository.save(tempUser);
 		return "redirect:/pharmacy/view-medicine";
-	}
-
-	@GetMapping("/deleteProcessOrder/{mid}")
-	public String deleteMedicineFromProcessOrder(@PathVariable("mid") int mid, Model m, Principal p) {
-
-		Medicine medicine = this.medicineRepository.findById(mid).get();
-		User tempUser = this.userRepository.getUserByUserName(p.getName());
-		tempUser.getMedicines().remove(medicine);
-		this.userRepository.save(tempUser);
-
-		String name = p.getName();
-		User tempUser1 = this.userRepository.getUserByUserName(name);
-		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser1.getId());
-		m.addAttribute("medicines", medicines);
-		return "pharmacy/order_medicine";
 	}
 
 	@PostMapping("/updateMedicine/{mid}")
@@ -209,8 +194,8 @@ public class PharmacyController {
 			System.out.println("password doesn't matches");
 			session.setAttribute("msg", new MyMessage("Password doesn't match. ", "alert-danger"));
 			return "pharmacy/setting";
-		
-		} 
+
+		}
 //		System.out.println("New password::" + newPassword);
 
 //		return "redirect:/pharmacy/index";
