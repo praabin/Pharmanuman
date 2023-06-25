@@ -35,6 +35,17 @@ public class SearchController {
 		List<Medicine> medicines = this.medicineRepository.findByNameContainingAndUser(query, tempUser);
 		return ResponseEntity.ok(medicines);
 	}
+	
+	
+	
+
+	@GetMapping("/searchstockist/{query}")
+	public ResponseEntity<?> searchStockist(@PathVariable("query") String query, Principal p) {
+		System.out.println(query);
+		User tempUser = this.userRepository.getUserByUserName(p.getName());
+		List<Medicine> medicines = this.medicineRepository.findByNameContainingAndUser(query, tempUser);
+		return ResponseEntity.ok(medicines);
+	}
 
 	// for pc
 

@@ -144,9 +144,13 @@ body {
 					<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
 				</div>
 
-				<div class="search-controller my-4">
-					<input type="text" class="form-control"
-						placeholder="Search your medicines" />
+				<div class="search-container my-4">
+					<input onkeyup="searchStockist()" id="search-input" type="text"
+						class="form-control" placeholder="Search your stock" />
+
+					<div class="search-result"></div>
+
+
 				</div>
 
 				<table class="table">
