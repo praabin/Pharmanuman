@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pharmanuman.dao.MedicineRepository;
+import com.pharmanuman.dao.PlaceOrderRepository;
 import com.pharmanuman.dao.UserRepository;
 import com.pharmanuman.entities.Medicine;
+import com.pharmanuman.entities.PlaceOrder;
 import com.pharmanuman.entities.User;
 import com.pharmanuman.helper.MyMessage;
 
@@ -38,6 +41,9 @@ public class PharmacyController {
 	@Autowired
 	private MedicineRepository medicineRepository;
 
+	@Autowired
+	private PlaceOrderRepository placeOrderRepository;
+
 	@ModelAttribute
 	public void addCommonData(Model model, Principal principal) {
 		String name = principal.getName();
@@ -45,6 +51,7 @@ public class PharmacyController {
 		User user = this.userRepository.getUserByUserName(name);
 		System.out.println("USER " + user);
 		model.addAttribute("user", user);
+
 	}
 
 	@RequestMapping("/index")
@@ -83,12 +90,14 @@ public class PharmacyController {
 
 			System.out.println("data: " + medicine);
 			System.out.println("medicines added to database");
+
 			String name = p.getName();
 			User tempUser = this.userRepository.getUserByUserName(name);
 			List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
 			Collections.sort(medicines, Comparator.comparingInt(Medicine::getMid).reversed());
 			m.addAttribute("medicines", medicines);
 			session.setAttribute("msg", new MyMessage("Successfully added!! ", "alert-success"));
+
 			return "pharmacy/add_medicine";
 
 		} catch (Exception e) {
@@ -189,6 +198,61 @@ public class PharmacyController {
 		}
 
 		return "pharmacy/medicine_details";
+	}
+
+	// order
+
+	/*
+	 * @GetMapping("/add-order") public String openAddOrderForm(Model model,
+	 * Principal p) { model.addAttribute("title", "Order medicine");
+	 * model.addAttribute("placeorder", new PlaceOrder()); return
+	 * "pharmacy/add_order"; }
+	 */
+	@PostMapping("/process-order-form")
+	public String proceOrderForm(@ModelAttribute PlaceOrder placeOrder, Model m, Principal p, HttpSession session) {
+
+		User tempUser = this.userRepository.getUserByUserName(p.getName());
+		double price = 0.0;
+		placeOrder.setPrice(price);
+		placeOrder.setStatus("pending");
+		placeOrder.setTotal(price);
+
+		placeOrder.setUser(tempUser);
+
+		tempUser.getPlaceOrders().add(placeOrder);
+		this.userRepository.save(tempUser);
+
+		System.out.println("medicine added to database" + placeOrder);
+
+		return "pharmacy/add_order";
+
+	}
+
+	@RequestMapping("/see-order")
+	public String seeOrder(Model model, Principal p) {
+
+		String name = p.getName();
+		System.out.println("naem " + name);
+		User tempUser = this.userRepository.getUserByUserName(name);
+
+		System.out.println("tempuser" + tempUser);
+
+		List<PlaceOrder> orders = this.placeOrderRepository.findPlaceOrderById(tempUser.getId());
+		System.out.println("k ho to output herdim na  " + orders);
+		model.addAttribute("placeorder", orders);
+
+		return "pharmacy/see_order";
+	}
+
+	@GetMapping("/users")
+	public String getUserRoleStockist(Model model) {
+		model.addAttribute("title", "Order medicine");
+		model.addAttribute("placeorder", new PlaceOrder());
+		
+		List<User> stockistUsers = userRepository.findByRole("ROLE_STOCKIST");
+		System.out.println("list of users" + stockistUsers);
+		model.addAttribute("stockistUsers", stockistUsers);
+		return "pharmacy/add_order";
 	}
 
 }

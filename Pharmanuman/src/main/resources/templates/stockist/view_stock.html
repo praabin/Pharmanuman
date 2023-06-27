@@ -175,8 +175,6 @@ body {
 					<tbody>
 						<tr th:each="m : ${medicines}">
 							<td th:text="${m.mid}"></td>
-							<!-- <td th:text="${m.name}"></td> -->
-
 
 							<td><a href="#"
 								th:href="@{'/stockist'+'/medicine-details/'+${m.mid}}"><span
@@ -203,7 +201,6 @@ body {
 									</form>
 								</div>
 							</td>
-							<!-- Add any additional columns or actions here -->
 						</tr>
 					</tbody>
 				</table>

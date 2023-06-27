@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
-	th:replace="stockist/base::Layout(~{::section})">
+	th:replace="pharmacy/base::Layout(~{::section})">
 <head>
 <meta charset="UTF-8" />
 <title>view medicine</title>
@@ -39,20 +39,40 @@
 							<th scope="col">Id</th>
 							<th scope="col">Name</th>
 							<th scope="col">Quantity</th>
-							<th scope="col">Price</th>
-							<th scope="col">Total</th>
+
+
+
+							<th scope="col">Phone</th>
+							<th scope="col">Location</th>
+							<th scope="col">Created date</th>
+
+							<th scope="col">Arrive date</th>
+
+
+							<th scope="col">Stockist Name</th>
+							<th scope="col">Status</th>
+
 							<th scope="col">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="m : ${medicines}">
-							<td th:text="MID+${m.mid}"></td>
-							<td th:text="${m.name}"></td>
-							<td th:text="${m.quantity}"></td>
-							<td th:text="${m.price}"></td>
-							<td th:text="${m.quantity*m.price}"></td>
+						<tr th:each="p : ${placeorder}">
+							<td th:text="MID+${p.poid}"></td>
+							<td th:text="${p.name}"></td>
+							<td th:text="${p.quantity}"></td>
 
-							<td>
+
+							<td th:text="${p.phone}"></td>
+							<td th:text="${p.location}"></td>
+
+
+							<td th:text="${p.createdDate}"></td>
+							<td th:text="${p.arriveDate}"></td>
+							<td th:text="${p.stockist}"></td>
+
+							<td th:text="${p.status}"></td>
+
+							<!-- 	<td>
 								<div class="d-flex justify-content-start align-items-center">
 									<a href="#" th:onclick="|deleteMedicine(${m.mid})|"
 										class="btn btn-danger btn-sm mr-2">Delete</a>
@@ -62,7 +82,7 @@
 										<button type="submit" class="btn btn-primary btn-sm">Update</button>
 									</form>
 								</div>
-							</td>
+							</td> -->
 
 
 							<!-- 							<td><a href="#" th:onclick="|deleteMedicine(${m.mid})|"
@@ -72,6 +92,8 @@
 									<button  type = "submit" class="btn btn-primary btn-sm">Update</button>	
 									</form>
 						</tr> -->
+
+						</tr>
 					</tbody>
 
 				</table>

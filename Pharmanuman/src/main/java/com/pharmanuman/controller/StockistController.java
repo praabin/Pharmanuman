@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pharmanuman.dao.MedicineRepository;
+import com.pharmanuman.dao.PlaceOrderRepository;
 import com.pharmanuman.dao.UserRepository;
 import com.pharmanuman.entities.Medicine;
+import com.pharmanuman.entities.PlaceOrder;
 import com.pharmanuman.entities.User;
 import com.pharmanuman.helper.MyMessage;
 
@@ -34,6 +36,9 @@ public class StockistController {
 
 	@Autowired
 	private MedicineRepository medicineRepository;
+
+	@Autowired
+	private PlaceOrderRepository placeOrderRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -176,8 +181,7 @@ public class StockistController {
 		}
 
 	}
-	
-	
+
 	@RequestMapping("/medicine-details/{mid}")
 	public String showMedicineDetail(@PathVariable("mid") Integer mid, Model model, Principal p) {
 		System.out.println("mid " + mid);
@@ -191,6 +195,20 @@ public class StockistController {
 		}
 
 		return "stockist/medicine_details";
+	}
+
+	@RequestMapping("/see-order-stockist")
+	public String seeOrder(Model model, Principal p) {
+		
+		String name = p.getName();
+		System.out.println("naem " + name);
+		User tempUser = this.userRepository.getUserByUserName(name);
+		System.out.println("tempuser" + tempUser);
+		List<PlaceOrder> orders = this.placeOrderRepository.findPlaceOrderById(tempUser.getId());
+		System.out.println("k ho to output herdim na  " + orders);
+		model.addAttribute("placeorder", orders);
+
+		return "stockist/see_order_stockist";
 	}
 
 }

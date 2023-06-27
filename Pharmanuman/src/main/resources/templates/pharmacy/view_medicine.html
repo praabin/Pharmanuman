@@ -165,9 +165,6 @@ body {
 						<tr th:each="m : ${medicines}">
 							<td th:text="${m.mid}"></td>
 
-							<!-- <td th:text="${m.name}"></td> -->
-
-							<!--@{'/user/'+${c.cid}+'/contact'}-->
 							<td><a href="#"
 								th:href="@{'/pharmacy'+'/medicine-details/'+${m.mid}}"><span
 									th:text="${m.name}"> </span></a></td>

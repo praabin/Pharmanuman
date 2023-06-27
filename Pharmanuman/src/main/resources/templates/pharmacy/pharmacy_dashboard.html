@@ -7,14 +7,69 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <title>user dashboard</title>
-
-
 </head>
 <body>
+
+
 	<div class="container">
 		<h1 class="text-center">Welcome to Pharmacy dashboard</h1>
 	</div>
 
+	<div class="row justify-content-center text-center mt-5">
+		<div class="col-sm-6 col-md-4 col-lg-3">
+			<div class="card text-white bg-secondary mb-3">
+				<div class="card-header">View Medicine</div>
+				<div class="card-body">
+					<h5 class="card-title">
+						<a href="#" th:href="@{/pharmacy/view-medicine}"
+							class="text-white">View Medicine</a>
+					</h5>
+					<p class="card-text">Click to view available medicines.</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6 col-md-4 col-lg-3">
+			<div class="card text-white bg-danger mb-3">
+				<div class="card-header">Add Medicine</div>
+				<div class="card-body">
+					<h5 class="card-title">
+						<a href="#" th:href="@{/pharmacy/order-medicine}"
+							class="text-white">Add Medicine</a>
+					</h5>
+					<p class="card-text">Click to add a new medicine to the
+						inventory.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row justify-content-center text-center">
+		<div class="col-sm-6 col-md-4 col-lg-3">
+			<div class="card text-white bg-success mb-3">
+				<div class="card-header">Profile</div>
+				<div class="card-body">
+					<h5 class="card-title">
+						<a href="#" th:href="@{/pharmacy/profile}" class="text-white">Profile</a>
+					</h5>
+					<p class="card-text">Click to view and edit your pharmacy
+						profile.</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6 col-md-4 col-lg-3">
+			<div class="card text-white bg-info mb-3">
+				<div class="card-header">Setting</div>
+				<div class="card-body">
+					<h5 class="card-title">
+						<a href="#" th:href="@{/pharmacy/setting}" class="text-white">Setting</a>
+					</h5>
+					<p class="card-text">Click to access and modify your pharmacy
+						settings.</p>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </body>
+
 </html>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+	th:replace="pharmacy/base::Layout(~{::section})">
+
+<head>
+<meta charset="UTF-8" />
+<title>Document</title>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<style>
+.container {
+	max-width: 500px;
+	margin: 0 auto;
+}
+
+.card {
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+</style>
+</head>
+
+<body>
+	<section>
+		<div class="container">
+			<div class="card p-4">
+				<form id="process-order-form" th:object="${placeorder}"
+					th:action="@{/pharmacy/process-order-form}" method="post">
+
+					<h1 class="text-center">Order now</h1>
+
+					<div class="form-group">
+						<label for="name">Name:</label> <input type="text" name="name"
+							class="form-control" />
+					</div>
+
+					<div class="form-group">
+						<label for="quantity">Quantity:</label> <input type="number"
+							name="quantity" class="form-control" />
+					</div>
+
+
+					<!-- 
+					<div class="form-group">
+						<label for="status" hidden="true">Status:</label> <input
+							type="text" name="status" class="form-control" hidden="true" />
+					</div> -->
+
+					<div class="form-group">
+						<label for="location">Location:</label> <input type="text"
+							name="location" class="form-control" />
+					</div>
+
+					<div class="form-group">
+						<label for="phone">Phone:</label> <input type="text" name="phone"
+							class="form-control" />
+					</div>
+
+					<!-- 					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="price" hidden="true">Price:</label> <input
+								type="number" name="price" class="form-control" hidden="true" />
+						</div>
+
+						<div class="form-group col-md-6">
+							<label for="total" hidden="true">Total:</label> <input
+								type="number" name="total" class="form-control" hidden="true" />
+						</div>
+					</div> -->
+
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="createdDate">Created Date:</label> <input type="date"
+								name="createdDate" class="form-control" />
+						</div>
+
+						<div class="form-group col-md-6">
+							<label for="arriveDate">Arrive Date:</label> <input type="date"
+								name="arriveDate" class="form-control" />
+						</div>
+					</div>
+
+					<div class="dropdown mb-3">
+						<label for="dropdownMenu">Select stockist:</label> <select
+							id="dropdownMenu" name="stockist">
+							<option th:each="stockist : ${stockistUsers}"
+								th:value="${stockist.name}" th:text="${stockist.name}"></option>
+						</select>
+					</div>
+
+
+
+
+
+					<div class="container text-center">
+						<button class="btn btn-primary" type="submit">Order</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+
+	<!-- Bootstrap JS -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+

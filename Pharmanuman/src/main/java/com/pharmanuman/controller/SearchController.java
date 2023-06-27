@@ -30,7 +30,7 @@ public class SearchController {
 
 	@GetMapping("/search/{query}")
 	public ResponseEntity<?> search(@PathVariable("query") String query, Principal p) {
-		System.out.println(query);
+//		System.out.println(query);
 		User tempUser = this.userRepository.getUserByUserName(p.getName());
 		List<Medicine> medicines = this.medicineRepository.findByNameContainingAndUser(query, tempUser);
 		return ResponseEntity.ok(medicines);
@@ -41,7 +41,7 @@ public class SearchController {
 
 	@GetMapping("/searchstockist/{query}")
 	public ResponseEntity<?> searchStockist(@PathVariable("query") String query, Principal p) {
-		System.out.println(query);
+//		System.out.println(query);
 		User tempUser = this.userRepository.getUserByUserName(p.getName());
 		List<Medicine> medicines = this.medicineRepository.findByNameContainingAndUser(query, tempUser);
 		return ResponseEntity.ok(medicines);
@@ -51,7 +51,7 @@ public class SearchController {
 
 	@GetMapping("/searchpc/{query}")
 	public ResponseEntity<?> searchPC(@PathVariable("query") String query, Principal p) {
-		System.out.println(query);
+//		System.out.println(query);
 		User tempUser = this.userRepository.getUserByUserName(p.getName());
 //		List<Medicine> medicines = this.medicineRepository.findByNameContainingAndUser(query, tempUser);
 		List<MedicineForCompany> medicines = this.medicineForCompanyRepository

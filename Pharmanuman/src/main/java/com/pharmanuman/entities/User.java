@@ -44,6 +44,9 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
 	private List<MedicineForCompany> medicinesForCompany = new ArrayList<>();
 
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	private List<PlaceOrder> placeOrders = new ArrayList<>();
+
 	public User() {
 		super();
 	}
@@ -121,6 +124,14 @@ public class User {
 
 	public void setMedicinesForCompany(List<MedicineForCompany> medicinesForCompany) {
 		this.medicinesForCompany = medicinesForCompany;
+	}
+
+	public List<PlaceOrder> getPlaceOrders() {
+		return placeOrders;
+	}
+
+	public void setPlaceOrders(List<PlaceOrder> placeOrders) {
+		this.placeOrders = placeOrders;
 	}
 
 	@Override

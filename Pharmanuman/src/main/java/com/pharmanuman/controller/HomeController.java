@@ -16,6 +16,7 @@ import com.pharmanuman.helper.MyMessage;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.AssertFalse.List;
 
 @Controller
 public class HomeController {
@@ -75,7 +76,6 @@ public class HomeController {
 				model.addAttribute("user", user);
 				return "signup";
 			}
-//			user.setRole("ROLE_PHARMACY");
 
 			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
@@ -97,5 +97,7 @@ public class HomeController {
 		}
 
 	}
+
+
 
 }
