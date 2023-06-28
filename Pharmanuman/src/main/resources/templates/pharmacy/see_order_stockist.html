@@ -65,14 +65,15 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="p : ${order}">
+						<tr th:each="p : ${orderr}">
+						
 							<td th:text="MID+${p.poid}"></td>
 							<td th:text="${p.name}"></td>
 							<td th:text="${p.quantity}"></td>
 
 							<td th:text="Rs. + ${p.price}"></td>
 
-							<td th:text="Rs. +${p.total}"></td>
+							<td th:text="Rs. +${p.price * p.quantity}"></td>
 
 
 							<td th:text="${p.phone}"></td>

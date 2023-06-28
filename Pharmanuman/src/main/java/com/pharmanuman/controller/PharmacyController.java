@@ -1,6 +1,7 @@
 package com.pharmanuman.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -36,7 +37,6 @@ public class PharmacyController {
 
 	@Autowired
 	private UserRepository userRepository;
-	
 
 	@Autowired
 	private MedicineRepository medicineRepository;
@@ -200,6 +200,8 @@ public class PharmacyController {
 
 		tempUser.getPlaceOrders().add(placeOrder);
 		this.userRepository.save(tempUser);
+		System.out.println("pharmacy name " + placeOrder.getPharmacyName());
+		session.setAttribute("pharmacyname", placeOrder.getPharmacyName());
 
 //		System.out.println("medicine added to database" + placeOrder);
 
@@ -278,24 +280,26 @@ public class PharmacyController {
 
 	@RequestMapping("/see-order-stockist")
 	public String seeUpdatedOrder(Model model, Principal principal) {
+
 		List<PlaceOrder> findAll = this.placeOrderRepository.findAll();
 
 		PlaceOrder foundPlaceOrder = null; // Declare a variable outside the loop
 
 		for (PlaceOrder placeOrder : findAll) {
 			System.out.println(placeOrder.getPharmacyName());
-			foundPlaceOrder = placeOrder; // Assign the current PlaceOrder object to the variable
+
+			foundPlaceOrder = placeOrder; // Assign the current PlaceOrder object to the
 		}
 
-		
 		List<PlaceOrder> orders = this.placeOrderRepository
 				.findPlaceOrderByPharmacyName(foundPlaceOrder.getPharmacyName());
 
-		
 		System.out.println("herdim " + findAll);
 
-		model.addAttribute("order", orders);
+		model.addAttribute("orderr", orders);
 		return "pharmacy/see_order_stockist";
 
 	}
+
+
 }
