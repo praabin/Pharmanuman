@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<title>Medicine Order Form</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<style>
+.container {
+	margin-top: 50px;
+}
+
+h2 {
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+.medicine-section {
+	border: 1px solid #ccc;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+.medicine-section h4 {
+	margin-top: 0;
+}
+
+.btn-remove {
+	margin-top: 10px;
+}
+
+.btn-submit {
+	margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+	<div class="container card">
+		<h2>Update Order</h2>
+		<form id="order-form" th:object="${order}"
+			th:action="@{/pharmacy/process-update-order}" method="post">
+			<div id="medicine-sections">
+				<div class="medicine-section" id="medicine1">
+					<h4>Medicine 1</h4>
+					
+					<input type="text" th:value="${order.poid}" name="poid" />
+					
+					<div class="form-row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="name1">Medicine Name:</label> <input type="text"
+									class="form-control" id="name1" name="name"
+									th:value="${order.name}" required="required">
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<label for="quantity1">Quantity:</label> <input type="number"
+									class="form-control" id="quantity1" name="quantity"
+									th:value="${order.quantity}" required="required">
+							</div>
+						</div>
+						
+						
+						<!-- Add additional fields here -->
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="location">Location:</label> <input
+									type="text" class="form-control" id="location"
+									name="location" th:value="${order.location}" required="required">
+							</div>
+						</div>
+						
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="type1">Phone:</label> <input type="text"
+									class="form-control" id="type1" name="phone"
+									th:value="${order.phone}" required="required">
+							</div>
+						</div>
+						
+						
+						
+						
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="createdDate">Created Date:</label> <input type="date"
+									class="form-control" id="createdDate1" name="createdDate"
+									th:value="${order.createdDate}" required="required" readonly="readonly">
+							</div>
+						</div>
+						
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="arriveDate">Arrive Date:</label> <input type="date"
+									class="form-control" id="arriveDate1" name="arriveDate"
+									th:value="${order.arriveDate}" required="required">
+							</div>
+						</div>
+						
+						
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="stockist">Stockist Name:</label> <input type="text"
+									class="form-control" id="stockist" name="stockist"
+									th:value="${order.stockist}" required="required" readonly="readonly">
+							</div>
+						</div>
+						
+						
+						
+					</div>
+				</div>
+			</div>
+
+			<div class="text-center mt-2 mb-3">
+				<button type="submit"
+					class="btn btn-primary btn-submit align-center">Update
+					Order</button>
+				<a href="/pharmacy/index"
+					class="btn btn-primary btn-submit align-center text-white">Go
+					to dashboard</a>
+
+			</div>
+
+		</form>
+	</div>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	</body>
+</html>

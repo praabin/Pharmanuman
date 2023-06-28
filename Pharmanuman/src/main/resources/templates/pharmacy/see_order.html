@@ -50,6 +50,7 @@
 
 
 							<th scope="col">Stockist Name</th>
+							
 							<th scope="col">Status</th>
 
 							<th scope="col">Actions</th>
@@ -70,30 +71,25 @@
 							<td th:text="${p.arriveDate}"></td>
 							<td th:text="${p.stockist}"></td>
 
-							<td th:text="${p.status}"></td>
+							<td th:text="${p.status}"
+								style="color: orange; font-weight: bold;"></td>
 
-							<!-- 	<td>
+							<td>
 								<div class="d-flex justify-content-start align-items-center">
-									<a href="#" th:onclick="|deleteMedicine(${m.mid})|"
-										class="btn btn-danger btn-sm mr-2">Delete</a>
+
+									<a href="#" th:onclick="|deleteOrder(${p.poid})|"
+										class="btn btn-danger btn-sm mr-2">Cancel</a>
+
 									<form
-										th:action="@{/stockist/updateMedicine/{mid}(mid=${m.mid})}"
+										th:action="@{/pharmacy/updateOrder/{poid}(poid=${p.poid})}"
 										method="post">
-										<button type="submit" class="btn btn-primary btn-sm">Update</button>
+										<button type="submit" class="btn btn-primary btn-sm">Edit</button>
 									</form>
 								</div>
-							</td> -->
-
-
-							<!-- 							<td><a href="#" th:onclick="|deleteMedicine(${m.mid})|"
-								class="btn btn-danger btn-sm">Delete</a>
-
-									<form th:action="@{'/pharmacy/updateMedicine/'+${m.mid}}" method="post">
-									<button  type = "submit" class="btn btn-primary btn-sm">Update</button>	
-									</form>
-						</tr> -->
+							</td>
 
 						</tr>
+
 					</tbody>
 
 				</table>

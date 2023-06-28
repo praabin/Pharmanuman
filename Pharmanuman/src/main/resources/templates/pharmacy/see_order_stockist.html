@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
-	th:replace="stockist/base::Layout(~{::section})">
+	th:replace="pharmacy/base::Layout(~{::section})">
 <head>
 <meta charset="UTF-8" />
 <title>view medicine</title>
@@ -40,6 +40,11 @@
 							<th scope="col">Name</th>
 							<th scope="col">Quantity</th>
 
+							<th scope="col">Price</th>
+
+
+							<th scope="col">Total</th>
+
 
 
 							<th scope="col">Phone</th>
@@ -60,10 +65,14 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="p : ${placeorder}">
+						<tr th:each="p : ${order}">
 							<td th:text="MID+${p.poid}"></td>
 							<td th:text="${p.name}"></td>
 							<td th:text="${p.quantity}"></td>
+
+							<td th:text="Rs. + ${p.price}"></td>
+
+							<td th:text="Rs. +${p.total}"></td>
 
 
 							<td th:text="${p.phone}"></td>

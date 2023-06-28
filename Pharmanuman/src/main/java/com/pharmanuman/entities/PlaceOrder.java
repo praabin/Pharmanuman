@@ -17,6 +17,8 @@ public class PlaceOrder {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int poid;
 
+	private String pharmacyName;
+
 	private String name;
 
 	private int quantity;
@@ -48,10 +50,12 @@ public class PlaceOrder {
 		super();
 	}
 
-	public PlaceOrder(int poid, String name, int quantity, String status, String location, String phone, double price,
-			double total, String stockist, String createdDate, String arriveDate, User user) {
+	public PlaceOrder(int poid, String pharmacyName, String name, int quantity, String status, String location,
+			String phone, double price, double total, String stockist, String createdDate, String arriveDate,
+			User user) {
 		super();
 		this.poid = poid;
+		this.pharmacyName = pharmacyName;
 		this.name = name;
 		this.quantity = quantity;
 		this.status = status;
@@ -159,6 +163,14 @@ public class PlaceOrder {
 
 	public void setStockist(String stockist) {
 		this.stockist = stockist;
+	}
+
+	public String getPharmacyName() {
+		return pharmacyName;
+	}
+
+	public void setPharmacyName(String pharmacyName) {
+		this.pharmacyName = pharmacyName;
 	}
 
 }

@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -119,16 +118,6 @@ public class PharmacyController {
 		return "pharmacy/view_medicine";
 	}
 
-	@GetMapping("/delete/{mid}")
-	public String deleteMedicine(@PathVariable("mid") int mid, Model m, Principal p) {
-
-		Medicine medicine = this.medicineRepository.findById(mid).get();
-		User tempUser = this.userRepository.getUserByUserName(p.getName());
-		tempUser.getMedicines().remove(medicine);
-		this.userRepository.save(tempUser);
-		return "redirect:/pharmacy/view-medicine";
-	}
-
 	@PostMapping("/updateMedicine/{mid}")
 	public String updateMedicine(@PathVariable("mid") int id, Model m) {
 		m.addAttribute("title", "Update medicine");
@@ -139,17 +128,10 @@ public class PharmacyController {
 
 	@PostMapping("/process-update")
 	public String processUpdate(@ModelAttribute Medicine m, Principal p, Model model) {
-//		Medicine oldMedcine = this.medicineRepository.findById(m.getMid()).get();
 		String name = p.getName();
 		User tempUser = this.userRepository.getUserByUserName(name);
 		m.setUser(tempUser);
 		this.medicineRepository.save(m);
-
-		/*
-		 * List<Medicine> medicines =
-		 * this.medicineRepository.findMedicinesById(tempUser.getId());
-		 * model.addAttribute("medicines", medicines);
-		 */
 		return "pharmacy/update_medicine";
 	}
 
@@ -202,19 +184,15 @@ public class PharmacyController {
 
 	// order
 
-	/*
-	 * @GetMapping("/add-order") public String openAddOrderForm(Model model,
-	 * Principal p) { model.addAttribute("title", "Order medicine");
-	 * model.addAttribute("placeorder", new PlaceOrder()); return
-	 * "pharmacy/add_order"; }
-	 */
 	@PostMapping("/process-order-form")
 	public String proceOrderForm(@ModelAttribute PlaceOrder placeOrder, Model m, Principal p, HttpSession session) {
 
 		User tempUser = this.userRepository.getUserByUserName(p.getName());
 		double price = 0.0;
 		placeOrder.setPrice(price);
-		placeOrder.setStatus("pending");
+		placeOrder.setStatus("Pending");
+
+		placeOrder.setPharmacyName(tempUser.getName());
 		placeOrder.setTotal(price);
 
 		placeOrder.setUser(tempUser);
@@ -222,7 +200,7 @@ public class PharmacyController {
 		tempUser.getPlaceOrders().add(placeOrder);
 		this.userRepository.save(tempUser);
 
-		System.out.println("medicine added to database" + placeOrder);
+//		System.out.println("medicine added to database" + placeOrder);
 
 		return "pharmacy/add_order";
 
@@ -232,27 +210,91 @@ public class PharmacyController {
 	public String seeOrder(Model model, Principal p) {
 
 		String name = p.getName();
-		System.out.println("naem " + name);
 		User tempUser = this.userRepository.getUserByUserName(name);
-
-		System.out.println("tempuser" + tempUser);
-
 		List<PlaceOrder> orders = this.placeOrderRepository.findPlaceOrderById(tempUser.getId());
-		System.out.println("k ho to output herdim na  " + orders);
 		model.addAttribute("placeorder", orders);
 
 		return "pharmacy/see_order";
 	}
 
+	// to open order form
 	@GetMapping("/users")
 	public String getUserRoleStockist(Model model) {
 		model.addAttribute("title", "Order medicine");
 		model.addAttribute("placeorder", new PlaceOrder());
-		
+
 		List<User> stockistUsers = userRepository.findByRole("ROLE_STOCKIST");
 		System.out.println("list of users" + stockistUsers);
 		model.addAttribute("stockistUsers", stockistUsers);
 		return "pharmacy/add_order";
 	}
 
+	// to open update form
+
+	@PostMapping("/updateOrder/{poid}")
+	public String updateOrder(@PathVariable("poid") int poid, Model m) {
+		m.addAttribute("title", "Update ordere");
+		PlaceOrder placeOrder = this.placeOrderRepository.findById(poid).get();
+		m.addAttribute("order", placeOrder);
+		return "pharmacy/update_order";
+	}
+
+	@PostMapping("/process-update-order")
+	public String processUpdateOrder(@ModelAttribute PlaceOrder m, Principal p, Model model) {
+
+		m.setStatus("Pending");
+
+		String name = p.getName();
+		User tempUser = this.userRepository.getUserByUserName(name);
+
+		m.setUser(tempUser);
+
+		this.placeOrderRepository.save(m);
+		return "redirect:/pharmacy/see-order";
+	}
+
+	@GetMapping("/delete/{mid}")
+	public String deleteMedicine(@PathVariable("mid") int mid, Model m, Principal p) {
+
+		Medicine medicine = this.medicineRepository.findById(mid).get();
+		User tempUser = this.userRepository.getUserByUserName(p.getName());
+		tempUser.getMedicines().remove(medicine);
+		this.userRepository.save(tempUser);
+		return "redirect:/pharmacy/view-medicine";
+	}
+
+	@GetMapping("/delete-order/{poid}")
+	public String deleteOrder(@PathVariable("poid") int poid, Model m, Principal p) {
+
+		PlaceOrder medicine = this.placeOrderRepository.findById(poid).get();
+		System.out.println("order id " + medicine.getPoid());
+		User tempUser = this.userRepository.getUserByUserName(p.getName());
+		tempUser.getPlaceOrders().remove(medicine);
+		this.userRepository.save(tempUser);
+		System.out.println("deleted successfully");
+		return "redirect:/pharmacy/see-order";
+	}
+
+	@RequestMapping("/see-order-stockist")
+	public String seeUpdatedOrder(Model model, Principal principal) {
+		List<PlaceOrder> findAll = this.placeOrderRepository.findAll();
+
+		PlaceOrder foundPlaceOrder = null; // Declare a variable outside the loop
+
+		for (PlaceOrder placeOrder : findAll) {
+			System.out.println(placeOrder.getPharmacyName());
+			foundPlaceOrder = placeOrder; // Assign the current PlaceOrder object to the variable
+		}
+
+		
+		List<PlaceOrder> orders = this.placeOrderRepository
+				.findPlaceOrderByPharmacyName(foundPlaceOrder.getPharmacyName());
+
+		
+		System.out.println("herdim " + findAll);
+
+		model.addAttribute("order", orders);
+		return "pharmacy/see_order_stockist";
+
+	}
 }

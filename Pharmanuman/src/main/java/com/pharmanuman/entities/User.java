@@ -44,7 +44,7 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
 	private List<MedicineForCompany> medicinesForCompany = new ArrayList<>();
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
 	private List<PlaceOrder> placeOrders = new ArrayList<>();
 
 	public User() {

@@ -1,8 +1,10 @@
 package com.pharmanuman.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -198,17 +200,40 @@ public class StockistController {
 	}
 
 	@RequestMapping("/see-order-stockist")
-	public String seeOrder(Model model, Principal p) {
-		
-		String name = p.getName();
-		System.out.println("naem " + name);
-		User tempUser = this.userRepository.getUserByUserName(name);
-		System.out.println("tempuser" + tempUser);
-		List<PlaceOrder> orders = this.placeOrderRepository.findPlaceOrderById(tempUser.getId());
-		System.out.println("k ho to output herdim na  " + orders);
+	public String seeOrder(Model model, Principal principal) {
+
+		String username = principal.getName();
+
+		User user = userRepository.getUserByUserName(username);
+
+		List<PlaceOrder> orders = placeOrderRepository.findPlaceOrderByOrderStockist(user.getName());
+
 		model.addAttribute("placeorder", orders);
 
 		return "stockist/see_order_stockist";
+
+	}
+
+	@PostMapping("/updateOrder/{poid}")
+	public String updateOrder(@PathVariable("poid") int poid, Model m) {
+		m.addAttribute("title", "Update order");
+		PlaceOrder placeOrder = this.placeOrderRepository.findById(poid).get();
+		m.addAttribute("order", placeOrder);
+		return "stockist/update_order";
+	}
+
+	@PostMapping("/process-update-order")
+	public String processUpdateOrder(@ModelAttribute PlaceOrder m, Principal p, Model model) {
+
+		int a = m.getUser().getId();
+//		System.out.println(a +" user id");
+
+		String name = p.getName();
+		User tempUser = this.userRepository.getUserByUserName(name);
+//		tempUser.setId(a);
+		m.setUser(tempUser);
+		this.placeOrderRepository.save(m);
+		return "redirect:/stockist/see-order-stockist";
 	}
 
 }
