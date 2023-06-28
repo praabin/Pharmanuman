@@ -36,6 +36,7 @@ public class PharmacyController {
 
 	@Autowired
 	private UserRepository userRepository;
+	
 
 	@Autowired
 	private MedicineRepository medicineRepository;
