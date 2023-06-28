@@ -278,28 +278,54 @@ public class PharmacyController {
 		return "redirect:/pharmacy/see-order";
 	}
 
+	/*
+	 * @RequestMapping("/see-order-stockist") public String seeUpdatedOrder(Model
+	 * model, Principal principal) {
+	 * 
+	 * // List<PlaceOrder> findAll = this.placeOrderRepository.findAll();
+	 * 
+	 * String name = principal.getName(); User tempUser =
+	 * this.userRepository.getUserByUserName(name); int id = tempUser.getId();
+	 * List<PlaceOrder> findAll = this.placeOrderRepository.findPlaceOrderById(id);
+	 * 
+	 * 
+	 * PlaceOrder foundPlaceOrder = null;
+	 * 
+	 * for (PlaceOrder placeOrder : findAll) {
+	 * 
+	 * foundPlaceOrder = placeOrder; }
+	 * 
+	 * List<PlaceOrder> orders = this.placeOrderRepository
+	 * .findPlaceOrderByPharmacyName(foundPlaceOrder.getPharmacyName());
+	 * 
+	 * model.addAttribute("orderr", orders); return "pharmacy/see_order_stockist";
+	 * 
+	 * }
+	 */
+
 	@RequestMapping("/see-order-stockist")
 	public String seeUpdatedOrder(Model model, Principal principal) {
+		String name = principal.getName();
+		User tempUser = this.userRepository.getUserByUserName(name);
+		int id = tempUser.getId();
+		List<PlaceOrder> findAll = this.placeOrderRepository.findPlaceOrderById(id);
 
-		List<PlaceOrder> findAll = this.placeOrderRepository.findAll();
-
-		PlaceOrder foundPlaceOrder = null; // Declare a variable outside the loop
+		PlaceOrder foundPlaceOrder = null;
 
 		for (PlaceOrder placeOrder : findAll) {
-			System.out.println(placeOrder.getPharmacyName());
-
-			foundPlaceOrder = placeOrder; // Assign the current PlaceOrder object to the
+			if (placeOrder.getPharmacyName() != null) {
+				foundPlaceOrder = placeOrder;
+				break; // Exit the loop once a non-null pharmacyName is found
+			}
 		}
 
-		List<PlaceOrder> orders = this.placeOrderRepository
-				.findPlaceOrderByPharmacyName(foundPlaceOrder.getPharmacyName());
-
-		System.out.println("herdim " + findAll);
+		List<PlaceOrder> orders = new ArrayList<>();
+		if (foundPlaceOrder != null && foundPlaceOrder.getPharmacyName() != null) {
+			orders = this.placeOrderRepository.findPlaceOrderByPharmacyName(foundPlaceOrder.getPharmacyName());
+		}
 
 		model.addAttribute("orderr", orders);
 		return "pharmacy/see_order_stockist";
-
 	}
-
 
 }
