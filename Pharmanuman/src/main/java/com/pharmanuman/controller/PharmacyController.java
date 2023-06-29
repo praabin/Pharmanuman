@@ -1,5 +1,6 @@
 package com.pharmanuman.controller;
 
+import java.io.ByteArrayInputStream;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,6 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +30,7 @@ import com.pharmanuman.entities.Medicine;
 import com.pharmanuman.entities.PlaceOrder;
 import com.pharmanuman.entities.User;
 import com.pharmanuman.helper.MyMessage;
+import com.pharmanuman.services.PdfService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -43,6 +49,11 @@ public class PharmacyController {
 
 	@Autowired
 	private PlaceOrderRepository placeOrderRepository;
+	
+	
+
+	@Autowired
+	private PdfService ps;
 
 	@ModelAttribute
 	public void addCommonData(Model model, Principal principal) {
@@ -305,6 +316,7 @@ public class PharmacyController {
 
 	@RequestMapping("/see-order-stockist")
 	public String seeUpdatedOrder(Model model, Principal principal) {
+		
 		String name = principal.getName();
 		User tempUser = this.userRepository.getUserByUserName(name);
 		int id = tempUser.getId();
@@ -326,6 +338,24 @@ public class PharmacyController {
 
 		model.addAttribute("orderr", orders);
 		return "pharmacy/see_order_stockist";
+	}
+	
+	
+	
+	// print ko kura
+	
+	
+
+	@PostMapping("/create-pdf")
+	public ResponseEntity<InputStreamResource> createPdf( Principal p) {
+		ByteArrayInputStream pdf = ps.createPdf(p);
+
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.add("Content-diposition", "inline;file=prabin.pdf");
+
+		return ResponseEntity.ok().headers(httpHeaders).contentType(MediaType.APPLICATION_PDF)
+				.body(new InputStreamResource(pdf));
+
 	}
 
 }

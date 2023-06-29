@@ -227,6 +227,15 @@ public class Medicine {
 		this.manufacturerLocation = manufacturerLocation;
 	}
 
+	@Override
+	public String toString() {
+		return "Medicine [name=" + name + ", quantity=" + quantity + ", price=" + price + ", composition=" + composition
+				+ ", type=" + type + ", description=" + description + ", manufacturerDate=" + manufacturerDate
+				+ ", expiryDate=" + expiryDate + ", dosageForm=" + dosageForm + ", storageInstructions="
+				+ storageInstructions + ", manufacturerName=" + manufacturerName + ", manufacturerLocation="
+				+ manufacturerLocation + "]";
+	}
+
 	/*
 	 * @Override public String toString() { return "Medicine [mid=" + mid +
 	 * ", name=" + name + ", quantity=" + quantity + ", price=" + price +
@@ -237,4 +246,6 @@ public class Medicine {
 	 * ", manufacturerLocation=" + manufacturerLocation + ", user=" + user + "]"; }
 	 * 
 	 */
+	
+	
 }

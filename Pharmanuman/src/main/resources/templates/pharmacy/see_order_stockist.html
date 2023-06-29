@@ -61,12 +61,12 @@
 
 							<th scope="col">Status</th>
 
-							<th scope="col">Actions</th>
+
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="p : ${orderr}">
-						
+
 							<td th:text="MID+${p.poid}"></td>
 							<td th:text="${p.name}"></td>
 							<td th:text="${p.quantity}"></td>
@@ -88,21 +88,23 @@
 							<td th:text="${p.pharmacyName}"></td>
 							<td th:text="${p.status}"></td>
 
-							<td>
-								<div class="d-flex justify-content-start align-items-center">
-
-									<form
-										th:action="@{/stockist/updateOrder/{poid}(poid=${p.poid})}"
-										method="post">
-										<button type="submit" class="btn btn-primary btn-sm">Edit</button>
-									</form>
-								</div>
-							</td>
 
 						</tr>
 					</tbody>
 
 				</table>
+
+
+
+
+				<div
+					class="d-flex justify-content-start align-items-center ">
+
+					<form th:action="@{/pharmacy/create-pdf}" method="post">
+						<button type="submit" class="btn btn-primary btn-sm">Print</button>
+					</form>
+				</div>
+
 
 
 			</div>

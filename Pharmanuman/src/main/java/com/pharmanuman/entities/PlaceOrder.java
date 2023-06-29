@@ -173,4 +173,13 @@ public class PlaceOrder {
 		this.pharmacyName = pharmacyName;
 	}
 
+	@Override
+	public String toString() {
+		return "PlaceOrder [poid=" + poid + ", pharmacyName=" + pharmacyName + ", name=" + name + ", quantity="
+				+ quantity + ", status=" + status + ", location=" + location + ", phone=" + phone + ", price=" + price
+				+ ", total=" + total + ", stockist=" + stockist + ", createdDate=" + createdDate + ", arriveDate="
+				+ arriveDate + ", user=" + user + "]";
+	}
+
+	
 }
