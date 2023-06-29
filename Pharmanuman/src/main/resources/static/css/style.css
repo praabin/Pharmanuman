@@ -9,7 +9,7 @@ body {
 }
 
 .intro {
-	font-family: "Helvetica Neue", Arial, sans-serif ;
+	font-family: "Helvetica Neue", Arial, sans-serif;
 	font-size: 22px;
 	line-height: 1.6;
 	color: #ffffff;
@@ -45,16 +45,104 @@ body {
 	display: none;
 }
 
-
 #login .container #login-row #login-column #login-box {
 	margin-top: 120px;
 	max-width: 600px;
 	height: 400px;
 	border: 1px solid #9C9C9C;
 	background-color: #FFFFFF;
-	
 }
 
+/*naya  */
+.mycard {
+	background-color: #f2f2f2;
+	padding: 30px;
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+	font-size: 24px;
+	color: #333;
+	margin-bottom: 30px;
+}
+
+label {
+	font-weight: bold;
+}
+
+.form-control {
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding: 10px;
+}
+
+.dropdown select {
+	width: 100% !important;
+	height: 40px !important;
+	padding: 10px !important;
+	font-size: 14px !important;
+}
+
+.btn {
+	margin-top: 20px;
+}
+
+.bg-primary {
+	background-color: #007bff;
+}
+
+.bg-danger {
+	background-color: #dc3545;
+}
+
+.text-white {
+	color: #fff;
+}
+
+.alert {
+	padding: 10px;
+	margin-bottom: 20px;
+	border-radius: 5px;
+}
+
+.alert-success {
+	background-color: #d4edda;
+	border-color: #c3e6cb;
+	color: #155724;
+}
+
+.alert-danger {
+	background-color: #f8d7da;
+	border-color: #f5c6cb;
+	color: #721c24;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.text-red {
+	color: red;
+}
+
+.text-bold {
+	font-weight: bold;
+}
+
+.text-italic {
+	font-style: italic;
+}
+
+.text-highlight {
+	background-color: #ffcc00;
+}
+
+.text-uppercase {
+	text-transform: uppercase;
+}
+
+/* naya khatam */
 #login .container #login-row #login-column #login-box #login-form {
 	padding: 20px;
 }

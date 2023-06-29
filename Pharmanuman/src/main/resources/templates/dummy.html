@@ -20,14 +20,21 @@
 							<p class="text-center" th:text="${session.message.content}"></p>
 						</div>
 
-						<h1 class="text-center">Register Here</h1>
+						<p class="text-center text-red text-bold">Please complete this
+							form thoughtfully, as the information provided cannot be edited
+							later.</p>
+
+						<h1 class="text-center text-highlight text-uppercase">Register
+							Here</h1>
+
+
 						<form th:action="@{/register}" method="post">
 
 							<!-- name field -->
 							<div class="form-group">
 								<label for="nameField">Name </label> <input name="name"
 									type="text" class="form-control" id="nameField"
-									placeholder="Enter name">
+									placeholder="Enter your name" required="required">
 							</div>
 							<div class="form-group">
 								<label for="emailField">Email</label> <input name="email"
@@ -37,14 +44,15 @@
 							<div class="form-group">
 								<label for="passwordField">Password</label> <input
 									name="password" type="password" class="form-control"
-									id="passwordField" placeholder="Password" required="required">
+									id="passwordField" placeholder="Enter password"
+									required="required">
 							</div>
 
 							<!-- role drop down starts here -->
 
-							<div class="dropdown mb-3">
+							<div class="dropdown mb-4">
 								<label for="dropdownMenu">Select role:</label> <select
-									id="dropdownMenu" name="role">
+									id="dropdownMenu" name="role" class="form-control">
 									<option value="ROLE_PHARMACY">Pharmacy</option>
 									<option value="ROLE_STOCKIST">Stockist</option>
 									<option value="ROLE_PC">Pharmaceutical Company</option>
@@ -55,14 +63,15 @@
 
 							<!-- about  -->
 							<div class="form-group">
+								<label for="about">About</label>
 								<textarea name="about"
 									placeholder="Write something about yourself..."
-									class="form-control" rows="8"></textarea>
+									class="form-control" rows="8" required="required"></textarea>
 							</div>
 
 							<!-- terms and conditions agreement -->
 							<div class="form-group form-check">
-								<input name="agreement" type="checkbox" class="form-check-input" />
+								<input name="agreement" type="checkbox" class="form-check-input"  required="required"/>
 								<label for="agreement">Accept terms and conditions</label>
 							</div>
 
