@@ -25,9 +25,9 @@
 
 				<div id="login-row"
 					class="row justify-content-center align-items-center">
-					
+
 					<div id="login-column" class="col-md-6">
-					
+
 						<div id="login-box" style="height: 500px;" class="col-md-12">
 							<form id="login-form" class="form" th:action="@{/dologin}"
 								action="#" method="post">
@@ -56,33 +56,46 @@
 								</div>
 
 								<div class="form-group">
-									<label for="username" >Email:</label><br>
-									<input type="text" name="username" id="username"
-										class="form-control">
+									<label for="username">Email:</label><br> <input
+										type="text" name="username" id="username" class="form-control">
 								</div>
+								
 								<div class="form-group">
-									<label for="password" >Password:</label><br>
-									<input type="password" name="password" id="password"
+									<label for="password">Password:</label><br> <input
+										type="password" name="password" id="password"
 										class="form-control" required="required">
 								</div>
-								<div class="form-group">
-									<input type="submit" name="submit" class="btn btn-primary"
-										value="Login">
-								</div>
 
 
-								<br>
+
+								<br> <br> <br>
+
+
 								<div id="register-link" class="text-right">
-									<a href="/forgot">Forgot Password?</a>
+									<a href="/forgot">Forgot password?</a>
 								</div>
 
-								<br>
-								<div class="container text-center mt-4">
-									<h1 class="form-control">Don't have account?</h1>
+
+								<div class="container">
+									<div class="form-group">
+										<input type="submit" name="submit"
+											class="btn btn-primary btn-block" value="Login">
+									</div>
 								</div>
-								<div class="container text-center">
-									<a href="/signup" >Register here</a>
+
+
+
+								<div class="container text-center ">
+									<h1 class="form-control">Don't have an account?</h1>
 								</div>
+								<div class="container">
+									<div class="form-group">
+										<a href="/signup" class="btn btn-primary btn-block"
+											style="background-color: green; color: white;"> Create
+											new account</a>
+									</div>
+								</div>
+
 
 
 							</form>
