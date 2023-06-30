@@ -43,14 +43,9 @@ h2 {
 			th:action="@{/stockist/process-update-order}" method="post">
 			<div id="medicine-sections">
 				<div class="medicine-section" id="medicine1">
-					<h4>Medicine 1</h4>
+
 
 					<input type="hidden" th:value="${order.poid}" name="poid" />
-
-
-
-
-
 
 
 
@@ -68,12 +63,13 @@ h2 {
 						</div>
 
 
-						
-							<div class="col-md-4">
+
+						<div class="col-md-4">
 							<div class="form-group">
 								<label for="name1">User Id:</label> <input type="number"
 									class="form-control" id="name1" name="user"
-									th:value="${order.user.id}" required="required">
+									th:value="${order.user.id}" required="required"
+									readonly="readonly">
 							</div>
 						</div>
 
@@ -208,7 +204,7 @@ h2 {
 				<button type="submit"
 					class="btn btn-primary btn-submit align-center">Update
 					Order</button>
-				<a href="/pharmacy/index"
+				<a href="/stockist/see-order-stockist"
 					class="btn btn-primary btn-submit align-center text-white">Go
 					to dashboard</a>
 

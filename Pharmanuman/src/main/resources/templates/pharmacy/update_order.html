@@ -43,9 +43,9 @@ h2 {
 			th:action="@{/pharmacy/process-update-order}" method="post">
 			<div id="medicine-sections">
 				<div class="medicine-section" id="medicine1">
-					<h4>Medicine 1</h4>
+					<h4>Medicine </h4>
 					
-					<input type="text" th:value="${order.poid}" name="poid" />
+					<input type="hidden" th:value="${order.poid}" name="poid" />
 					
 					<div class="form-row">
 						<div class="col-md-4">
