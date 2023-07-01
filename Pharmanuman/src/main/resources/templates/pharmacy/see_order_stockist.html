@@ -17,7 +17,7 @@
 	<section>
 		<div class="card mr-3 ml-4 ">
 			<div class="card-body">
-				<h1 class="text-center">Your Stock List</h1>
+				<h1 class="text-center">Your Order List</h1>
 
 				<div th:if="${session.msg}" class="container">
 
@@ -28,10 +28,6 @@
 					<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
 				</div>
 
-				<div class="search-controller my-4">
-					<input type="text" class="form-control"
-						placeholder="Search your medicines" />
-				</div>
 
 				<table class="table">
 					<thead class="thead-dark">
@@ -54,10 +50,10 @@
 							<th scope="col">Arrive date</th>
 
 
-							<th scope="col">Stockist Name</th>
+<!-- 							<th scope="col">Stockist Name</th>
 
 
-							<th scope="col">Pharmacy Name</th>
+							<th scope="col">Pharmacy Name</th> -->
 
 							<th scope="col">Status</th>
 
@@ -82,10 +78,12 @@
 
 							<td th:text="${p.createdDate}"></td>
 							<td th:text="${p.arriveDate}"></td>
-							<td th:text="${p.stockist}"></td>
+							
+<!-- 							<td th:text="${p.stockist}"></td>
 
 
 							<td th:text="${p.pharmacyName}"></td>
+							 -->
 							<td th:text="${p.status}"></td>
 
 
@@ -97,8 +95,7 @@
 
 
 
-				<div
-					class="d-flex justify-content-start align-items-center ">
+				<div class="d-flex justify-content-start align-items-center ">
 
 					<form th:action="@{/pharmacy/create-pdf}" method="post">
 						<button type="submit" class="btn btn-primary btn-sm">Print</button>

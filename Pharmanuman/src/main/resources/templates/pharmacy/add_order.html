@@ -32,13 +32,13 @@
 					<h1 class="text-center">Order now</h1>
 
 					<div class="form-group">
-						<label for="name">Name:</label> <input type="text" name="name"
-							class="form-control" />
+						<label for="name">Medicine name:</label> <input type="text" name="name"
+							class="form-control" required="required" />
 					</div>
 
 					<div class="form-group">
 						<label for="quantity">Quantity:</label> <input type="number"
-							name="quantity" class="form-control" min="0" />
+							name="quantity" class="form-control" min="0" required="required" />
 					</div>
 
 
@@ -50,12 +50,13 @@
 
 					<div class="form-group">
 						<label for="location">Location:</label> <input type="text"
-							name="location" class="form-control" />
+							name="location" class="form-control" required="required" />
 					</div>
 
 					<div class="form-group">
 						<label for="phone">Phone:</label> <input type="tel"
-							pattern="[0-9]+" name="phone" class="form-control" />
+							pattern="[0-9]+" name="phone" class="form-control"
+							required="required" />
 					</div>
 
 					<!-- 					<div class="form-row">
@@ -71,36 +72,36 @@
 					</div> -->
 
 					<div class="form-row">
-					
+
 						<div class="form-group col-md-6">
 							<label for="createdDate">Created Date:</label> <input type="date"
-								name="createdDate" class="form-control" />
+								name="createdDate" class="form-control" required="required"
+								id="createdDateInput" />
 						</div>
 
 						<div class="form-group col-md-6">
 							<label for="arriveDate">Arrive Date:</label> <input type="date"
-								name="arriveDate" class="form-control" />
+								name="arriveDate" class="form-control" required="required" />
 						</div>
 					</div>
 
 					<div class="dropdown mb-3">
 						<label for="dropdownMenu">Select stockist:</label> <select
-							id="dropdownMenu" name="stockist">
+							required="required" id="dropdownMenu" name="stockist">
 							<option th:each="stockist : ${stockistUsers}"
 								th:value="${stockist.name}" th:text="${stockist.name}"></option>
 						</select>
 					</div>
 
 
-					<!-- 
+
 					<div class="col-md-4">
 						<div class="form-group">
-							<label for="pharmacyname">Pharmacy Name:</label> <input type="text"
-								class="form-control" id="pharmacyName" name="pharmacyName"
-								th:value="${order.pharmacyName}" required="required"
-								readonly="readonly">
+							 <input hidden="true"
+								type="text" class="form-control" id="pharmacyName"
+								name="pharmacyName" th:value="${user.name}" >
 						</div>
-					</div> -->
+					</div>
 
 
 					<div class="container text-center">
@@ -114,6 +115,16 @@
 	<!-- Bootstrap JS -->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+	<script>
+		// Get the current date
+		var currentDate = new Date().toISOString().split('T')[0];
+
+		// Set the minimum date value to the current date
+		document.getElementById('createdDateInput').setAttribute('min',
+				currentDate);
+	</script>
 </body>
 
 </html>

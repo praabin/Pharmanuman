@@ -54,19 +54,18 @@ body {
 	<section>
 		<div class="container card">
 
-					<div class="mycard mt-3">
+			<div class="mycard mt-3">
 
-						<div th:if="${session.msg}"
-							th:classappend="${session.msg.type}" class="alert"
-							role="alert">
-							<p class="text-center" th:text="${session.msg.content}"></p>
+				<div th:if="${session.msg}" th:classappend="${session.msg.type}"
+					class="alert" role="alert">
+					<p class="text-center" th:text="${session.msg.content}"></p>
 
-							<!-- <th:block th:text="${#session.removeAttribute('message')}"></th:block> -->
-							<!-- error occurred in above line -->
-							
-							<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
-						</div>
-				
+					<!-- <th:block th:text="${#session.removeAttribute('message')}"></th:block> -->
+					<!-- error occurred in above line -->
+
+					<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
+				</div>
+
 			</div>
 			<h2 class="card-header text-center">Add Medicine</h2>
 			<form id="order-form" th:object="${medicine}"
@@ -74,30 +73,30 @@ body {
 
 				<div id="medicine-sections">
 					<div class="card-body bg-light p-4 mb-4">
-						<h4>Medicine </h4>
+						<h4>Medicine</h4>
 						<div class="row">
-						
+
 							<div class="col-md-4">
 								<div class="form-group">
 									<label for="name1">Medicine Name:</label> <input type="text"
 										class="form-control "
 										th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
-										id="name1" name="name" placeholder="Enter medicine name"
-									>
+										id="name1" name="name" placeholder="Enter medicine name">
 
 
 									<div th:each="e : ${#fields.errors('name')}"
 										class="invalid-feedback" th:text="${e}"></div>
 								</div>
 							</div>
-							
+
 							<div class="col-md-2">
 								<div class="form-group">
 									<label for="quantity1">Quantity:</label> <input type="number"
-										class="form-control"  th:classappend="${#fields.hasErrors('quantity') ? 'is-invalid' : ''}" id="quantity1" name="quantity"
-										placeholder="Enter quantity" >
-										
-										
+										min="0" class="form-control"
+										th:classappend="${#fields.hasErrors('quantity') ? 'is-invalid' : ''}"
+										id="quantity1" name="quantity" placeholder="Enter quantity">
+
+
 									<div th:each="e : ${#fields.errors('quantity')}"
 										class="invalid-feedback" th:text="${e}"></div>
 								</div>
@@ -106,31 +105,25 @@ body {
 								<div class="form-group">
 									<label for="price1">Price:</label> <input type="text"
 										class="form-control" id="price1"
-										
-										
-										 th:classappend="${#fields.hasErrors('price') ? 'is-invalid' : ''}"
-										 name="price"
-										placeholder="Enter price" >
-										
-										
-										
+										th:classappend="${#fields.hasErrors('price') ? 'is-invalid' : ''}"
+										name="price" placeholder="Enter price">
+
+
+
 									<div th:each="e : ${#fields.errors('price')}"
 										class="invalid-feedback" th:text="${e}"></div>
-										
+
 								</div>
 							</div>
 							<div class="col-md-2">
 								<div class="form-group">
 									<label for="composition1">Composition:</label> <input
 										type="text" class="form-control"
-										
-										
-										 th:classappend="${#fields.hasErrors('composition') ? 'is-invalid' : ''}"
-										 id="composition1"
-										name="composition" placeholder="Enter composition"
-										>
-										
-										
+										th:classappend="${#fields.hasErrors('composition') ? 'is-invalid' : ''}"
+										id="composition1" name="composition"
+										placeholder="Enter composition">
+
+
 									<div th:each="e : ${#fields.errors('composition')}"
 										class="invalid-feedback" th:text="${e}"></div>
 								</div>
@@ -139,14 +132,11 @@ body {
 								<div class="form-group">
 									<label for="type1">Type:</label> <input type="text"
 										class="form-control"
-										
-										
-										 th:classappend="${#fields.hasErrors('type') ? 'is-invalid' : ''}"
-										 id="type1" name="type"
-										placeholder="Enter type" >
-										
-										
-										
+										th:classappend="${#fields.hasErrors('type') ? 'is-invalid' : ''}"
+										id="type1" name="type" placeholder="Enter type">
+
+
+
 									<div th:each="e : ${#fields.errors('type')}"
 										class="invalid-feedback" th:text="${e}"></div>
 								</div>
@@ -156,13 +146,11 @@ body {
 								<div class="form-group">
 									<label for="manufacturerDate1">Manufacturer Date:</label> <input
 										type="date" class="form-control"
-										
-										 th:classappend="${#fields.hasErrors('manufacturerDate') ? 'is-invalid' : ''}"
-										 id="manufacturerDate1"
-										name="manufacturerDate" >
-										
-										
-										
+										th:classappend="${#fields.hasErrors('manufacturerDate') ? 'is-invalid' : ''}"
+										id="manufacturerDate1" name="manufacturerDate">
+
+
+
 									<div th:each="e : ${#fields.errors('manufacturerDate')}"
 										class="invalid-feedback" th:text="${e}"></div>
 								</div>
@@ -171,12 +159,10 @@ body {
 								<div class="form-group">
 									<label for="expiryDate1">Expiry Date:</label> <input
 										type="date" class="form-control"
-										
-										 th:classappend="${#fields.hasErrors('expiryDate') ? 'is-invalid' : ''}"
-										 id="expiryDate1"
-										name="expiryDate" >
-										
-										
+										th:classappend="${#fields.hasErrors('expiryDate') ? 'is-invalid' : ''}"
+										id="expiryDate1" name="expiryDate">
+
+
 									<div th:each="e : ${#fields.errors('expiryDate')}"
 										class="invalid-feedback" th:text="${e}"></div>
 								</div>
@@ -185,13 +171,11 @@ body {
 								<div class="form-group">
 									<label for="dosageForm1">Dosage Form:</label> <input
 										type="text" class="form-control"
-										
-										 th:classappend="${#fields.hasErrors('dosageForm') ? 'is-invalid' : ''}"
-										 id="dosageForm1"
-										name="dosageForm" placeholder="Enter dosage form"
-										>
-										
-										
+										th:classappend="${#fields.hasErrors('dosageForm') ? 'is-invalid' : ''}"
+										id="dosageForm1" name="dosageForm"
+										placeholder="Enter dosage form">
+
+
 									<div th:each="e : ${#fields.errors('dosageForm')}"
 										class="invalid-feedback" th:text="${e}"></div>
 								</div>
@@ -200,14 +184,12 @@ body {
 								<div class="form-group">
 									<label for="storageInstructions1">Storage Instructions:</label>
 									<input type="text" class="form-control"
-									
-									 th:classappend="${#fields.hasErrors('storageInstructions') ? 'is-invalid' : ''}"
-									
+										th:classappend="${#fields.hasErrors('storageInstructions') ? 'is-invalid' : ''}"
 										id="storageInstructions1" name="storageInstructions"
-										placeholder="Enter storage instructions" >
-										
-										
-										
+										placeholder="Enter storage instructions">
+
+
+
 									<div th:each="e : ${#fields.errors('storageInstructions')}"
 										class="invalid-feedback" th:text="${e}"></div>
 								</div>
@@ -216,14 +198,12 @@ body {
 								<div class="form-group">
 									<label for="manufacturerName1">Manufacturer Name:</label> <input
 										type="text" class="form-control"
-										
-										 th:classappend="${#fields.hasErrors('manufacturerName') ? 'is-invalid' : ''}"
-										 id="manufacturerName1"
-										name="manufacturerName" placeholder="Enter manufacturer name"
-										>
-										
-										
-										
+										th:classappend="${#fields.hasErrors('manufacturerName') ? 'is-invalid' : ''}"
+										id="manufacturerName1" name="manufacturerName"
+										placeholder="Enter manufacturer name">
+
+
+
 									<div th:each="e : ${#fields.errors('manufacturerName')}"
 										class="invalid-feedback" th:text="${e}"></div>
 								</div>
@@ -232,13 +212,12 @@ body {
 								<div class="form-group">
 									<label for="manufacturerLocation1">Manufacturer
 										Location:</label> <input type="text" class="form-control"
-										
-										 th:classappend="${#fields.hasErrors('manufacturerLocation') ? 'is-invalid' : ''}"
+										th:classappend="${#fields.hasErrors('manufacturerLocation') ? 'is-invalid' : ''}"
 										id="manufacturerLocation1" name="manufacturerLocation"
-										placeholder="Enter manufacturer location" >
-										
-										
-										
+										placeholder="Enter manufacturer location">
+
+
+
 									<div th:each="e : ${#fields.errors('manufacturerLocation')}"
 										class="invalid-feedback" th:text="${e}"></div>
 								</div>
@@ -246,13 +225,12 @@ body {
 							<div class="col-md-4">
 								<div class="form-group">
 									<label for="description1">Description:</label>
-									<textarea rows=4 class="form-control" 
-									 th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}"
-									id="description1"
-										name="description" placeholder="Enter description"
-										></textarea>
-										
-										
+									<textarea rows=4 class="form-control"
+										th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}"
+										id="description1" name="description"
+										placeholder="Enter description"></textarea>
+
+
 									<div th:each="e : ${#fields.errors('description')}"
 										class="invalid-feedback" th:text="${e}"></div>
 								</div>

@@ -49,8 +49,6 @@ public class PharmacyController {
 
 	@Autowired
 	private PlaceOrderRepository placeOrderRepository;
-	
-	
 
 	@Autowired
 	private PdfService ps;
@@ -126,6 +124,8 @@ public class PharmacyController {
 		String name = p.getName();
 		User tempUser = this.userRepository.getUserByUserName(name);
 		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
+		medicines.sort(Comparator.comparing(Medicine::getName, String.CASE_INSENSITIVE_ORDER));
+
 		m.addAttribute("medicines", medicines);
 		return "pharmacy/view_medicine";
 	}
@@ -226,6 +226,9 @@ public class PharmacyController {
 		String name = p.getName();
 		User tempUser = this.userRepository.getUserByUserName(name);
 		List<PlaceOrder> orders = this.placeOrderRepository.findPlaceOrderById(tempUser.getId());
+
+		Collections.sort(orders, Comparator.comparing(PlaceOrder::getCreatedDate));
+
 		model.addAttribute("placeorder", orders);
 
 		return "pharmacy/see_order";
@@ -316,7 +319,7 @@ public class PharmacyController {
 
 	@RequestMapping("/see-order-stockist")
 	public String seeUpdatedOrder(Model model, Principal principal) {
-		
+
 		String name = principal.getName();
 		User tempUser = this.userRepository.getUserByUserName(name);
 		int id = tempUser.getId();
@@ -336,18 +339,16 @@ public class PharmacyController {
 			orders = this.placeOrderRepository.findPlaceOrderByPharmacyName(foundPlaceOrder.getPharmacyName());
 		}
 
+		Collections.sort(orders, Comparator.comparing(PlaceOrder::getCreatedDate));
+
 		model.addAttribute("orderr", orders);
 		return "pharmacy/see_order_stockist";
 	}
-	
-	
-	
+
 	// print ko kura
-	
-	
 
 	@PostMapping("/create-pdf")
-	public ResponseEntity<InputStreamResource> createPdf( Principal p) {
+	public ResponseEntity<InputStreamResource> createPdf(Principal p) {
 		ByteArrayInputStream pdf = ps.createPdf(p);
 
 		HttpHeaders httpHeaders = new HttpHeaders();
