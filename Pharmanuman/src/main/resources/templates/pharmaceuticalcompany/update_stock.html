@@ -43,7 +43,7 @@ h2 {
 			th:action="@{/pc/process-update}" method="post">
 			<div id="medicine-sections">
 				<div class="medicine-section" id="medicine1">
-					<h4>Medicine 1</h4>
+					<h4>Medicine </h4>
 					<input type="hidden" th:value="${medicine.mfcid}" name="mfcid" />
 					<div class="form-row">
 						<div class="col-md-4">
@@ -199,6 +199,7 @@ h2 {
 				<button type="submit"
 					class="btn btn-primary btn-submit align-center">Update
 					Medicine</button>
+					
 				<a href="/pc/index"
 					class="btn btn-primary btn-submit align-center text-white">Go
 					to dashboard</a>

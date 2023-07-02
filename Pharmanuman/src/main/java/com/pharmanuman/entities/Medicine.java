@@ -1,5 +1,7 @@
 package com.pharmanuman.entities;
 
+import java.time.LocalDate;
+
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,9 +15,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -50,21 +54,20 @@ public class Medicine {
 	@NotBlank(message = "Type shouldn't be blank")
 	private String type;
 
-	@Column(length = 200, nullable = false)
+	@Column(nullable = false)
 	@Length(max = 200, message = "Description should be less than 200 character")
+	@NotBlank(message = "Description cannot be blank")
 	private String description;
 
-//	@Past(message = "Manufacturer date must be in the past")
-	@NotBlank(message = "Shouldn't be blank")
 	@Column(nullable = false)
-	@JsonFormat(pattern = "mm/dd/yyyy", shape = Shape.STRING)
-	private String manufacturerDate;
+	@JsonFormat(pattern = "MM/dd/yyyy", shape = Shape.STRING)
+	@Past(message = "Manufacturer date must be in the past")
+	private LocalDate manufacturerDate;
 
 	@Column(nullable = false)
-	@JsonFormat(pattern = "mm/dd/yyyy", shape = Shape.STRING)
-	@NotBlank(message = "Shouldn't be blank")
-//	@Future(message = "Expiry date must be in the future")
-	private String expiryDate;
+	@JsonFormat(pattern = "MM/dd/yyyy", shape = Shape.STRING)
+	@Future(message = "Expiry date must be in the future")
+	private LocalDate expiryDate;
 
 	@Column(nullable = false)
 	@NotBlank(message = "DosageForm shouldn't be blank")
@@ -96,9 +99,20 @@ public class Medicine {
 		super();
 	}
 
-	public Medicine(int mid, String name, int quantity, double price, String composition, String type,
-			String description, String manufacturerDate, String expiryDate, String dosageForm,
-			String storageInstructions, String manufacturerName, String manufacturerLocation, User user) {
+	public Medicine(int mid,
+			@NotBlank(message = "Name shouldn't be blank") @Size(min = 2, max = 20, message = "min 2 and max 30 characters required") String name,
+			@Min(value = 1, message = "Quantity must be a positive number or one") @Max(value = 400, message = "Quantity must be a less than or equals to 400") int quantity,
+			@DecimalMin(value = "1.00", inclusive = true, message = "Price must be a positive number or one") double price,
+			@NotBlank(message = "Composition shouldn't be blank") @Size(min = 2, max = 20, message = "min 2 and max 20 characters required") String composition,
+			@NotBlank(message = "Type shouldn't be blank") String type,
+			@Length(max = 200, message = "Description should be less than 200 character") String description,
+			@Past(message = "Manufacturer date must be in the past") LocalDate manufacturerDate,
+			@Future(message = "Expiry date must be in the future") LocalDate expiryDate,
+			@NotBlank(message = "DosageForm shouldn't be blank") @Size(min = 2, max = 20, message = "min 2 and max 20 characters required") String dosageForm,
+			@NotBlank(message = "StorageInstructions shouldn't be blank") @Size(min = 2, max = 20, message = "min 2 and max 20 characters required") String storageInstructions,
+			@NotBlank(message = "ManufacturerName shouldn't be blank") @Size(min = 2, max = 20, message = "min 2 and max 30 characters required") String manufacturerName,
+			@NotBlank(message = "ManufacturerLocation shouldn't be blank") @Size(min = 2, max = 20, message = "min 2 and max 30 characters required") String manufacturerLocation,
+			User user) {
 		super();
 		this.mid = mid;
 		this.name = name;
@@ -180,19 +194,19 @@ public class Medicine {
 		this.description = description;
 	}
 
-	public String getManufacturerDate() {
+	public LocalDate getManufacturerDate() {
 		return manufacturerDate;
 	}
 
-	public void setManufacturerDate(String manufacturerDate) {
+	public void setManufacturerDate(LocalDate manufacturerDate) {
 		this.manufacturerDate = manufacturerDate;
 	}
 
-	public String getExpiryDate() {
+	public LocalDate getExpiryDate() {
 		return expiryDate;
 	}
 
-	public void setExpiryDate(String expiryDate) {
+	public void setExpiryDate(LocalDate expiryDate) {
 		this.expiryDate = expiryDate;
 	}
 
@@ -228,15 +242,6 @@ public class Medicine {
 		this.manufacturerLocation = manufacturerLocation;
 	}
 
-	@Override
-	public String toString() {
-		return "Medicine [name=" + name + ", quantity=" + quantity + ", price=" + price + ", composition=" + composition
-				+ ", type=" + type + ", description=" + description + ", manufacturerDate=" + manufacturerDate
-				+ ", expiryDate=" + expiryDate + ", dosageForm=" + dosageForm + ", storageInstructions="
-				+ storageInstructions + ", manufacturerName=" + manufacturerName + ", manufacturerLocation="
-				+ manufacturerLocation + "]";
-	}
-
 	/*
 	 * @Override public String toString() { return "Medicine [mid=" + mid +
 	 * ", name=" + name + ", quantity=" + quantity + ", price=" + price +
@@ -245,7 +250,5 @@ public class Medicine {
 	 * expiryDate + ", dosageForm=" + dosageForm + ", storageInstructions=" +
 	 * storageInstructions + ", manufacturerName=" + manufacturerName +
 	 * ", manufacturerLocation=" + manufacturerLocation + ", user=" + user + "]"; }
-	 * 
 	 */
-
 }
