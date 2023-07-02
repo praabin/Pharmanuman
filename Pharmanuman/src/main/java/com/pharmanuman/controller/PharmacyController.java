@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ import com.pharmanuman.helper.MyMessage;
 import com.pharmanuman.services.PdfService;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/pharmacy")
@@ -87,9 +89,18 @@ public class PharmacyController {
 	}
 
 	@RequestMapping("/process-order")
-	public String processOrder(@ModelAttribute Medicine medicine, Principal p, Model m, HttpSession session) {
+	public String processOrder(@Valid @ModelAttribute Medicine medicine, BindingResult result, Principal p, Model m,
+			HttpSession session) {
 
 		try {
+
+			if (result.hasErrors()) {
+				System.out.println("Errors cha hai ");
+				m.addAttribute("medicine", medicine);
+				return "pharmacy/add_medicine";
+
+			}
+
 			String tempName = p.getName();
 			User user = this.userRepository.getUserByUserName(tempName);
 			medicine.setUser(user);

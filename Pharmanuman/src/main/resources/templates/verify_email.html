@@ -37,11 +37,12 @@
 								<!-- error occurred in above line -->
 							</div>
 
-							<h3 class="text-center mt-3">Please verify your email</h3>
+							<h3 class="text-center mt-4">Please verify your email</h3>
+							
 
 							<form action="" th:action="@{/send-otp-email}" method="post">
 
-								<div class="form-group mt-2">
+								<div class="form-group">
 									<input type="email" placeholder="Enter email here"
 										class="form-control" required="required" name="email" />
 								</div>
@@ -50,7 +51,6 @@
 								<div class="container text-center">
 									<button class="btn btn-primary">Send OTP</button>
 								</div>
-
 
 
 								<div class="container text-center mt-2">

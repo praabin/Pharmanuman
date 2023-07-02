@@ -40,7 +40,7 @@ public class UserController {
         List<User> stockistList = userList.stream()
                 .filter(user -> user.getRole().equals("ROLE_PHARMACY"))
                 .collect(Collectors.toList());
-        model.addAttribute("pharmacy", stockistList);
+        model.addAttribute("stockist", stockistList);
         return "userList";
     }
     

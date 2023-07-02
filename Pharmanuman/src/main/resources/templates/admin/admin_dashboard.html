@@ -6,8 +6,69 @@
 <title>user dashboard</title>
 </head>
 <body>
+
 	<div class="container">
 		<h1 class="text-center">Welcome to Admin dashboard</h1>
 	</div>
+
+
+
+	<div class="row justify-content-center text-center mt-5">
+		<div class="col-sm-6 col-md-4 col-lg-3">
+			<div class="card text-white bg-secondary mb-3">
+				<div class="card-header">Pharmacy</div>
+				<div class="card-body">
+					<h5 class="card-title">
+						<a href="#" th:href="@{/admin/get-all-pharmacy}"
+							class="text-white">View Pharmacy</a>
+					</h5>
+					<p class="card-text">Click to view available local pharmacies</p>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="col-sm-6 col-md-4 col-lg-3">
+			<div class="card text-white bg-danger mb-3">
+				<div class="card-header">Stockist</div>
+				<div class="card-body">
+					<h5 class="card-title">
+						<a href="#" th:href="@{/admin/get-all-stockist}"
+							class="text-white">View Stockist</a>
+					</h5>
+					<p class="card-text">Click to view available stockist</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row justify-content-center text-center">
+		<div class="col-sm-6 col-md-4 col-lg-3">
+			<div class="card text-white bg-success mb-3">
+				<div class="card-header">Pharmaceutical company</div>
+				<div class="card-body">
+					<h5 class="card-title">
+						<a href="#" th:href="@{/admin/get-all-company}" class="text-white">View Pharmaceutical company</a>
+					</h5>
+					<p class="card-text">Click to view available phramaceutical
+						companies</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6 col-md-4 col-lg-3">
+			<div class="card text-white bg-info mb-3">
+				<div class="card-header">Setting</div>
+				<div class="card-body">
+					<h5 class="card-title">
+						<a href="#" th:href="@{/pharmacy/setting}" class="text-white">Setting</a>
+					</h5>
+					<p class="card-text">Click to access and modify your pharmacy
+						settings</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 </body>
 </html>

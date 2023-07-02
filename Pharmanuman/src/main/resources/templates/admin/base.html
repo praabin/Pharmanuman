@@ -35,43 +35,37 @@
 
 		<div class="collapse navbar-collapse text-uppercase"
 			id="navbarSupportedContent">
-
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item active"><a class="nav-link" th:href="@{/}">Home</a></li>
-
+				<li class="nav-item active"><a class="nav-link"
+					th:href="@{/admin/index}">Home</a></li>
 
 				<li class="nav-item active"><a class="nav-link"
-					th:href="@{/signin}"><span th:text="${user.name}"></span></a></li>
-
+					th:href="@{/admin/index}"><span
+						th:text="${user.name}"></span></a></li>
 
 				<li class="nav-item active"><a class="nav-link"
 					th:href="@{/logout}">Logout</a></li>
-
 			</ul>
-
 		</div>
 	</nav>
 
 	<!-- sidebar starts from here  -->
 	<!--a.item*5  -->
 	<div class="sidebar mt-2">
+  <span th:onclick="toggleSidebar()" class="crossBtn">&times;</span>
+  <a href="#" th:href="@{/admin/index}" class="item"
+    ><i class="fa-solid fa-house"></i> Home</a
+  >
 
-		<span th:onclick="toggleSidebar()" class="crossBtn">&times;</span> <a
-			href="#" th:href="@{/user/index}" class="item"><i
-			class="fa-solid fa-house"></i> Home</a> <a href="#"
-			th:href="@{/user/show-contact/0}" class="item"><i
-			class="fa-solid fa-address-book"></i> View Pharmaceutical Company</a> <a
-			href="#" th:href="@{/user/add-contact}" class="item"><i
-			class="fa-sharp fa-solid fa-plus"></i>View Stockist</a> <a href="#"
-			th:href="@{/user/add-contact}" class="item"><i
-			class="fa-sharp fa-solid fa-plus"></i>View Pharmacy</a> <a href="#"
-			th:href="@{/user/profile}" class="item"><i
-			class="fa-solid fa-user"></i> Your profile</a> <a href="#" class="item">
-			<i class="fa-solid fa-gear"></i> Settings
-		</a> <a href="#" th:href="@{/logout}" class="item"><i
-			class="fa-sharp fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
-
-		<div class="divider"></div>
+  <a href="#" th:href="@{/admin/profile}" class="item"
+    ><i class="fa-solid fa-user"></i> Your profile</a
+  >
+  <a href="#" th:href="@{/pc/setting}" class="item">
+    <i class="fa-solid fa-gear"></i> Settings
+  </a>
+  <a href="#" th:href="@{/logout}" class="item"
+    ><i class="fa-sharp fa-solid fa-arrow-right-from-bracket"></i> Logout</a
+  >		<div class="divider"></div>
 	</div>
 
 	<!-- end of sidebar  -->

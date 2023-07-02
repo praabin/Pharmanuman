@@ -45,7 +45,7 @@ tbody tr:nth-child(even) {
 </head>
 <body>
 
-	<h1 class="text-center">Local Pharmacy List</h1>
+	<h1 class="text-center">Stockist List</h1>
 
 	<div class="container">
 
@@ -57,7 +57,6 @@ tbody tr:nth-child(even) {
 					<th>Email</th>
 					<th>Password</th>
 					<th>About</th>
-					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -67,21 +66,6 @@ tbody tr:nth-child(even) {
 					<td th:text="${user.email}"></td>
 					<td th:text="${user.password}"></td>
 					<td th:text="${user.about}"></td>
-
-
-
-					<td><div
-							class="d-flex justify-content-start align-items-center">
-							<a href="#" th:onclick="|delete(${user.id})|"
-								class="btn btn-danger btn-sm mr-2">Delete</a>
-						</div>
-
-
-						<form method="post">
-							<button type="submit" class="btn btn-primary btn-sm">Update</button>
-						</form>
-						</td>
-
 
 				</tr>
 			</tbody>
