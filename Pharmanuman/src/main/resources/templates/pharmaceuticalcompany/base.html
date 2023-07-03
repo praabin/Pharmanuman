@@ -39,8 +39,7 @@
 					th:href="@{/pc/index}">Home</a></li>
 
 				<li class="nav-item active"><a class="nav-link"
-					th:href="@{/pc/index}"><span
-						th:text="${user.name}"></span></a></li>
+					th:href="@{/pc/index}"><span th:text="${user.name}"></span></a></li>
 
 				<li class="nav-item active"><a class="nav-link"
 					th:href="@{/logout}">Logout</a></li>
@@ -51,32 +50,38 @@
 	<!-- sidebar starts from here  -->
 	<!--a.item*5  -->
 
-<div class="sidebar mt-2">
-  <span th:onclick="toggleSidebar()" class="crossBtn">&times;</span>
-  <a href="#" th:href="@{/pc/index}" class="item"
-    ><i class="fa-solid fa-house"></i> Home</a
-  >
-  <a href="#"  th:href="@{/pc/prediction}"  class="item"
-    ><i class="fa-solid fa-address-book"></i> Stock Prediction</a
-  >
-  <a href="#" th:href="@{/pc/view-stock}" class="item"
-    ><i class="fa-sharp fa-solid fa-plus"></i>View Medicine</a
-  >
-  <a href="#" th:href="@{/pc/add-stock}" class="item"
-    ><i class="fa-sharp fa-solid fa-plus"></i>Add Medicine</a
-  >
-  <a href="#" th:href="@{/pc/profile}" class="item"
-    ><i class="fa-solid fa-user"></i> Your profile</a
-  >
-  <a href="#" th:href="@{/pc/setting}" class="item">
-    <i class="fa-solid fa-gear"></i> Settings
-  </a>
-  <a href="#" th:href="@{/logout}" class="item"
-    ><i class="fa-sharp fa-solid fa-arrow-right-from-bracket"></i> Logout</a
-  >
+	<div class="sidebar mt-2">
+		<span th:onclick="toggleSidebar()" class="crossBtn">&times;</span> <a
+			href="#" th:href="@{/pc/index}" class="item"><i
+			class="fa-solid fa-house"></i> Home</a> 
+			
+			
+			<a href="#"
+			th:href="@{/pc/view-stock}" class="item"><i
+			class="fa-sharp fa-solid fa-plus"></i>View Medicine</a> <a href="#"
+			th:href="@{/pc/add-stock}" class="item"><i
+			class="fa-sharp fa-solid fa-plus"></i>Add Medicine</a> <a href="#"
+			th:href="@{/pc/profile}" class="item"><i class="fa-solid fa-user"></i>
+			Your profile</a> <a href="#" th:href="@{/pc/setting}" class="item"> <i
+			class="fa-solid fa-gear"></i> Settings
+		</a> <a href="#" th:href="@{/logout}" class="item"><i
+			class="fa-sharp fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
 
-  <div class="divider"></div>
-</div>
+		<div class="divider"></div>
+
+		<h1 class="form-control">For prediction</h1>
+		
+		<a href="#"
+			th:href="@{/pc/prediction}" class="item">
+			<i
+			class="fa-solid fa-address-book"></i> Stock Prediction</a> 
+			
+		<a href="#" th:href="@{/pc/add-stock-prediction}" class="item"><i
+			class="fa-sharp fa-solid fa-plus"></i>Add Stock For Prediction</a>
+
+
+		<div class="divider"></div>
+	</div>
 
 
 	<!-- end of sidebar  -->

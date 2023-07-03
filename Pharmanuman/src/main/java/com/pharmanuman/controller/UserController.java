@@ -24,25 +24,23 @@ public class UserController {
 	 * return "userList"; }
 	 */
     
-    @GetMapping("/users/stockist")
-    public String getUserRoleStockist(Model model) {
-        List<User> userList = userRepository.findAll();
-        List<User> stockistList = userList.stream()
-                .filter(user -> user.getRole().equals("ROLE_STOCKIST"))
-                .collect(Collectors.toList());
-        model.addAttribute("stockist", stockistList);
-        return "userList";
-    }
     
-    @GetMapping("/users/pharmacy")
-    public String getUsers(Model model) {
-        List<User> userList = userRepository.findAll();
-        List<User> stockistList = userList.stream()
-                .filter(user -> user.getRole().equals("ROLE_PHARMACY"))
-                .collect(Collectors.toList());
-        model.addAttribute("stockist", stockistList);
-        return "userList";
-    }
+    //badh dekhe partai 7/03
     
+	/*
+	 * @GetMapping("/users/stockist") public String getUserRoleStockist(Model model)
+	 * { List<User> userList = userRepository.findAll(); List<User> stockistList =
+	 * userList.stream() .filter(user -> user.getRole().equals("ROLE_STOCKIST"))
+	 * .collect(Collectors.toList()); model.addAttribute("stockist", stockistList);
+	 * return "userList"; }
+	 */
+    
+	/*
+	 * @GetMapping("/users/pharmacy") public String getUsers(Model model) {
+	 * List<User> userList = userRepository.findAll(); List<User> stockistList =
+	 * userList.stream() .filter(user -> user.getRole().equals("ROLE_PHARMACY"))
+	 * .collect(Collectors.toList()); model.addAttribute("stockist", stockistList);
+	 * return "userList"; }
+	 */
 }
 

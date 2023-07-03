@@ -47,6 +47,9 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
 	private List<PlaceOrder> placeOrders = new ArrayList<>();
 
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+	private List<MedicineForPrediction> medicinesForPrediction = new ArrayList<>();
+
 	public User() {
 		super();
 	}
@@ -134,10 +137,12 @@ public class User {
 		this.placeOrders = placeOrders;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", role=" + role
-				+ ", about=" + about + ", medicines=" + medicines + "]";
+	public List<MedicineForPrediction> getMedicinesForPrediction() {
+		return medicinesForPrediction;
+	}
+
+	public void setMedicinesForPrediction(List<MedicineForPrediction> medicinesForPrediction) {
+		this.medicinesForPrediction = medicinesForPrediction;
 	}
 
 }

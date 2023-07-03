@@ -72,171 +72,155 @@ body {
 				<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
 			</div>
 			<h2 class="card-header text-center">Add Stock</h2>
-			<form novalidate="novalidate" id="order-form"
-				th:object="${medicineForCompany}" th:action="@{/pc/process-order}"
-				method="post">
+
+			<form id="order-form" method="post" action="#"
+				th:object="${medicineForPrediction}"
+				th:action="@{/pc/process-stock}">
 
 				<div id="medicine-sections">
 					<div class="card-body bg-light p-4 mb-4">
 						<h4>Medicine</h4>
 						<div class="row">
-							<div class="col-md-4">
+
+
+
+							<div class="col-md-3">
 								<div class="form-group">
-									<label for="name1">Medicine Name:</label> <input type="text"
-										class="form-control "
-										th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
-										id="name1" name="name" placeholder="Enter medicine name"
-										required="required" th:value="${medicineForCompany.name}">
+									<label for="datum">Datum:</label> <input type="date"
+										class="form-control" id="datum" name="datum"
+										th:classappend="${#fields.hasErrors('datum') ? 'is-invalid' : ''}"
+										th:value="${medicineForPrediction.datum}">
+
+								</div>
 
 
-									<div th:each="e : ${#fields.errors('name')}"
+								<div th:each="e : ${#fields.errors('datum')}"
+									class="invalid-feedback" th:text="${e}"></div>
+							</div>
+
+
+
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="quantity1">M01AB:</label> <input type="number"
+										class="form-control" id="quantity1" name="mo1ab"
+										placeholder="Enter M01AB"
+										th:classappend="${#fields.hasErrors('mo1ab') ? 'is-invalid' : ''}"
+										th:value="${medicineForPrediction.mo1ab}">
+
+
+									<div th:each="e : ${#fields.errors('mo1ab')}"
 										class="invalid-feedback" th:text="${e}"></div>
 
 								</div>
 							</div>
+
+
 							<div class="col-md-2">
 								<div class="form-group">
-									<label for="quantity1">Quantity:</label> <input type="number"
-										class="form-control"
-										th:classappend="${#fields.hasErrors('quantity') ? 'is-invalid' : ''}"
-										id="quantity1" name="quantity" placeholder="Enter quantity"
-										required="required" min="0"
-										th:value="${medicineForCompany.quantity}">
+									<label for="quantity1">MO1AE:</label> <input type="number"
+										class="form-control" id="quantity1" name="mo1ae"
+										placeholder="Enter MO1AE"
+										th:classappend="${#fields.hasErrors('mo1ae') ? 'is-invalid' : ''}"
+										th:value="${medicineForPrediction.mo1ae}">
 
 
-									<div th:each="e : ${#fields.errors('quantity')}"
-										class="invalid-feedback" th:text="${e}"></div>
-								</div>
-							</div>
-							<div class="col-md-2">
-								<div class="form-group">
-									<label for="price1">Price:</label> <input type="text"
-										class="form-control" id="price1"
-										th:classappend="${#fields.hasErrors('price') ? 'is-invalid' : ''}"
-										name="price" placeholder="Enter price" required="required"
-										min="0" th:value="${medicineForCompany.price}">
-
-
-
-									<div th:each="e : ${#fields.errors('price')}"
+									<div th:each="e : ${#fields.errors('mo1ae')}"
 										class="invalid-feedback" th:text="${e}"></div>
 
 								</div>
 							</div>
+
+
+
+
+
 							<div class="col-md-2">
 								<div class="form-group">
-									<label for="composition1">Composition:</label> <input
-										type="text" class="form-control"
-										th:classappend="${#fields.hasErrors('composition') ? 'is-invalid' : ''}"
-										id="composition1" name="composition"
-										placeholder="Enter composition" required="required"
-										th:value="${medicineForCompany.composition}">
+									<label for="quantity1">NO2BA:</label> <input type="number"
+										class="form-control" id="quantity1" name="no2ba"
+										placeholder="Enter NO2BA"
+										th:classappend="${#fields.hasErrors('no2ba') ? 'is-invalid' : ''}"
+										th:value="${medicineForPrediction.no2ba}">
 
-
-									<div th:each="e : ${#fields.errors('composition')}"
+									<div th:each="e : ${#fields.errors('no2ba')}"
 										class="invalid-feedback" th:text="${e}"></div>
-								</div>
-							</div>
-							<div class="col-md-2">
-								<div class="form-group">
-									<label for="type1">Type:</label> <input type="text"
-										class="form-control"
-										th:classappend="${#fields.hasErrors('type') ? 'is-invalid' : ''}"
-										id="type1" name="type" placeholder="Enter type"
-										required="required" th:value="${medicineForCompany.type}">
 
-
-
-									<div th:each="e : ${#fields.errors('type')}"
-										class="invalid-feedback" th:text="${e}"></div>
 								</div>
 							</div>
 
 							<div class="col-md-2">
 								<div class="form-group">
-									<label for="manufacturerDate1">Manufacturer Date:</label> <input
-										type="date" class="form-control"
-										th:classappend="${#fields.hasErrors('manufacturerDate') ? 'is-invalid' : ''}"
-										id="manufacturerDate1" name="manufacturerDate"
-										required="required"
-										th:value="${medicineForCompany.manufacturerDate}">
+									<label for="quantity1">NO2BE:</label> <input type="number"
+										class="form-control" id="quantity1" name="no2be"
+										placeholder="Enter NO2BE"
+										th:classappend="${#fields.hasErrors('no2be') ? 'is-invalid' : ''}"
+										th:value="${medicineForPrediction.no2ba}">
 
-
-
-									<div th:each="e : ${#fields.errors('manufacturerDate')}"
+									<div th:each="e : ${#fields.errors('no2be')}"
 										class="invalid-feedback" th:text="${e}"></div>
+
 								</div>
 							</div>
+
+
+
+
 							<div class="col-md-2">
 								<div class="form-group">
-									<label for="expiryDate1">Expiry Date:</label> <input
-										type="date" class="form-control"
-										th:classappend="${#fields.hasErrors('expiryDate') ? 'is-invalid' : ''}"
-										id="expiryDate1" name="expiryDate" required="required"
-										th:value="${medicineForCompany.expiryDate}">
+									<label for="quantity1">NO5B:</label> <input type="number"
+										class="form-control" id="quantity1" name="no5b"
+										placeholder="Enter NO5B"
+										th:classappend="${#fields.hasErrors('no5b') ? 'is-invalid' : ''}"
+										th:value="${medicineForPrediction.no5b}">
 
 
-									<div th:each="e : ${#fields.errors('expiryDate')}"
+									<div th:each="e : ${#fields.errors('no5b')}"
 										class="invalid-feedback" th:text="${e}"></div>
+
 								</div>
 							</div>
-							<div class="col-md-4">
+
+
+
+							<div class="col-md-2">
 								<div class="form-group">
-									<label for="dosageForm1">Dosage Form:</label> <input
-										type="text" class="form-control"
-										th:classappend="${#fields.hasErrors('dosageForm') ? 'is-invalid' : ''}"
-										id="dosageForm1" name="dosageForm"
-										placeholder="Enter dosage form" required="required"
-										th:value="${medicineForCompany.dosageForm}">
+									<label for="quantity1">NO5C:</label> <input type="number"
+										class="form-control" id="quantity1" name="no5c"
+										placeholder="Enter NO5C"
+										th:classappend="${#fields.hasErrors('no5c') ? 'is-invalid' : ''}"
+										th:value="${medicineForPrediction.no5c}">
 
-
-									<div th:each="e : ${#fields.errors('dosageForm')}"
+									<div th:each="e : ${#fields.errors('no5c')}"
 										class="invalid-feedback" th:text="${e}"></div>
 								</div>
 							</div>
-							<div class="col-md-4">
+
+							<div class="col-md-2">
 								<div class="form-group">
-									<label for="storageInstructions1">Storage Instructions:</label>
-									<input type="text" class="form-control"
-										th:classappend="${#fields.hasErrors('storageInstructions') ? 'is-invalid' : ''}"
-										id="storageInstructions1" name="storageInstructions"
-										placeholder="Enter storage instructions" required="required"
-										th:value="${medicineForCompany.storageInstructions}">
+									<label for="quantity1">RO3:</label> <input type="number"
+										class="form-control" id="quantity1" name="ro3"
+										placeholder="Enter RO3"
+										th:classappend="${#fields.hasErrors('ro3') ? 'is-invalid' : ''}"
+										th:value="${medicineForPrediction.ro3}">
 
-
-
-									<div th:each="e : ${#fields.errors('storageInstructions')}"
+									<div th:each="e : ${#fields.errors('ro3')}"
 										class="invalid-feedback" th:text="${e}"></div>
+
 								</div>
 							</div>
-							<div class="col-md-4">
+
+							<div class="col-md-2">
 								<div class="form-group">
-									<label for="manufacturerName1">Manufacturer Name:</label> <input
-										type="text" class="form-control"
-										th:classappend="${#fields.hasErrors('manufacturerName') ? 'is-invalid' : ''}"
-										id="manufacturerName1" name="manufacturerName"
-										placeholder="Enter manufacturer name" required="required"
-										th:value="${medicineForCompany.manufacturerName}">
+									<label for="quantity1">RO6:</label> <input type="number"
+										class="form-control" id="quantity1" name="r06"
+										placeholder="Enter RO6"
+										th:classappend="${#fields.hasErrors('r06') ? 'is-invalid' : ''}"
+										th:value="${medicineForPrediction.r06}">
 
-
-
-									<div th:each="e : ${#fields.errors('manufacturerName')}"
+									<div th:each="e : ${#fields.errors('r06')}"
 										class="invalid-feedback" th:text="${e}"></div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label for="manufacturerLocation1">Manufacturer
-										Location:</label> <input type="text" class="form-control"
-										th:classappend="${#fields.hasErrors('manufacturerLocation') ? 'is-invalid' : ''}"
-										id="manufacturerLocation1" name="manufacturerLocation"
-										placeholder="Enter manufacturer location" required="required"
-										th:value="${medicineForCompany.manufacturerLocation}">
 
-
-
-									<div th:each="e : ${#fields.errors('manufacturerLocation')}"
-										class="invalid-feedback" th:text="${e}"></div>
 								</div>
 							</div>
 
@@ -244,128 +228,24 @@ body {
 
 
 
-
-
-
-
-							<div class="col-md-4">
-								<div class="form-group">
-									<label for="batchNumber">Manufacturer batchNumber:</label> <input
-										type="text" class="form-control"
-										th:classappend="${#fields.hasErrors('batchNumber') ? 'is-invalid' : ''}"
-										id="batchNumber" name="batchNumber"
-										placeholder="Enter batchNumber " required="required"
-										th:value="${medicineForCompany.batchNumber}">
-
-
-
-									<div th:each="e : ${#fields.errors('batchNumber')}"
-										class="invalid-feedback" th:text="${e}"></div>
-								</div>
-							</div>
-
-
-							<div class="col-md-4">
-								<div class="form-group">
-									<label for="registrationNumber">Manufacturer
-										registrationNumber:</label> <input type="text" class="form-control"
-										th:classappend="${#fields.hasErrors('registrationNumber') ? 'is-invalid' : ''}"
-										id="registrationNumber" name="registrationNumber"
-										placeholder="Enter registrationNumber " required="required"
-										th:value="${medicineForCompany.registrationNumber}">
-
-
-
-									<div th:each="e : ${#fields.errors('registrationNumber')}"
-										class="invalid-feedback" th:text="${e}"></div>
-								</div>
-							</div>
-
-
-
-
-							<div class="col-md-4">
-								<div class="form-group">
-									<label for="countryOfOrigin">Manufacturer
-										countryOfOrigin:</label> <input type="text" class="form-control"
-										th:classappend="${#fields.hasErrors('countryOfOrigin') ? 'is-invalid' : ''}"
-										id="countryOfOrigin" name="countryOfOrigin"
-										placeholder="Enter manufacturer location" required="required"
-										th:value="${medicineForCompany.countryOfOrigin}">
-
-
-
-									<div th:each="e : ${#fields.errors('countryOfOrigin')}"
-										class="invalid-feedback" th:text="${e}"></div>
-								</div>
-							</div>
-
-
-
-
-
-
-							<div class="col-md-4">
-								<div class="form-group">
-									<label for="prescriptionRequired">Manufacturer
-										prescriptionRequired:</label> <input type="text" class="form-control"
-										th:classappend="${#fields.hasErrors('prescriptionRequired') ? 'is-invalid' : ''}"
-										id="prescriptionRequired" name="prescriptionRequired"
-										placeholder="Enter manufacturer location" required="required"
-										th:value="${medicineForCompany.prescriptionRequired}">
-
-
-
-									<div th:each="e : ${#fields.errors('prescriptionRequired')}"
-										class="invalid-feedback" th:text="${e}"></div>
-								</div>
-							</div>
-
-
-
-
-							<div class="col-md-4">
-								<div class="form-group">
-									<label for="packaging">Manufacturer packaging:</label> <input
-										type="text" class="form-control"
-										th:classappend="${#fields.hasErrors('packaging') ? 'is-invalid' : ''}"
-										id="packaging" name="packaging" placeholder="Enter packaging"
-										required="required" th:value="${medicineForCompany.packaging}">
-
-
-
-									<div th:each="e : ${#fields.errors('packaging')}"
-										class="invalid-feedback" th:text="${e}"></div>
-								</div>
-							</div>
-
-							<div class="col-md-4">
-								<div class="form-group">
-									<label for="description1">Description:</label>
-									<textarea rows=4 class="form-control"
-										th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}"
-										id="description1" name="description"
-										placeholder="Enter description" required="required"
-										th:field="${medicineForCompany.description}"></textarea>
-
-
-									<div th:each="e : ${#fields.errors('description')}"
-										class="invalid-feedback" th:text="${e}"></div>
-								</div>
-							</div>
 
 						</div>
 					</div>
 				</div>
 
+
+
+
 				<div class="text-center mt-2 mb-3">
 					<button type="submit"
 						class="btn btn-success btn-submit align-center">Add</button>
-					<a href="/pharmaceuticalcompany/index"
+					<a href="/pharmacy/index"
 						class="btn btn-danger btn-submit align-center text-white">Go
 						to dashboard</a>
 				</div>
 			</form>
+
+
 		</div>
 	</section>
 

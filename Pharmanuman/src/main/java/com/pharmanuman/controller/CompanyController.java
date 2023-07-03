@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pharmanuman.dao.MedicineForCompanyRepository;
+import com.pharmanuman.dao.MedicineForPredictionRepo;
 import com.pharmanuman.dao.MedicineRepository;
 import com.pharmanuman.dao.UserRepository;
 import com.pharmanuman.entities.Medicine;
 import com.pharmanuman.entities.MedicineForCompany;
+import com.pharmanuman.entities.MedicineForPrediction;
 import com.pharmanuman.entities.User;
 import com.pharmanuman.helper.MyMessage;
 
@@ -38,6 +40,9 @@ public class CompanyController {
 
 	@Autowired
 	MedicineForCompanyRepository medicineForCompanyRepository;
+
+	@Autowired
+	MedicineForPredictionRepo medicineForPredictionRepo;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -219,6 +224,53 @@ public class CompanyController {
 		}
 
 		return "pharmaceuticalcompany/medicine_details";
+	}
+
+// prediction k lagi 
+	@RequestMapping("/add-stock-prediction")
+	public String addStockForPrediction(Model model) {
+
+		model.addAttribute("medicineForPrediction", new MedicineForPrediction());
+		model.addAttribute("title", "Prediction");
+		return "pharmaceuticalcompany/add_category";
+	}
+
+	@RequestMapping("/process-stock")
+	public String processMedicineForPrediciton(@Valid @ModelAttribute MedicineForPrediction medicineForPrediction,
+			BindingResult result, Principal p, Model m, HttpSession session) {
+//		m.addAttribute("medicine", new MedicineForPrediction());
+
+		try {
+
+			if (result.hasErrors()) {
+
+				System.out.println("Error:: " + result.toString());
+				return "pharmaceuticalcompany/add_category";
+
+			}
+			String tempName = p.getName();
+			User user = this.userRepository.getUserByUserName(tempName);
+			medicineForPrediction.setUser(user);
+			user.getMedicinesForPrediction().add(medicineForPrediction);
+
+			this.userRepository.save(user);
+
+			System.out.println("data: " + medicineForPrediction);
+			System.out.println("medicines added to database");
+			String name = p.getName();
+			User tempUser = this.userRepository.getUserByUserName(name);
+//			List<MedicineForCompany> medicines = this.medicineForCompanyRepository.findMedicinesById(tempUser.getId());
+
+//			Collections.sort(medicines, Comparator.comparingInt(MedicineForCompany::getMid).reversed());
+//			m.addAttribute("medicines", medicines);
+
+			session.setAttribute("message", new MyMessage("Successfully Updated!! ", "alert-success"));
+
+			return "pharmaceuticalcompany/add_category";
+		} catch (Exception e) {
+			return "pharmaceuticalcompany/add_category";
+		}
+
 	}
 
 }
