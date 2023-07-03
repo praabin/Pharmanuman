@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ import com.pharmanuman.entities.User;
 import com.pharmanuman.helper.MyMessage;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/pc")
@@ -76,7 +78,9 @@ public class CompanyController {
 	@GetMapping("/add-stock")
 	public String openAddContactForm(Model model, Principal p) {
 		model.addAttribute("title", "Order medicine");
-		model.addAttribute("mfc", new MedicineForCompany());
+
+		model.addAttribute("medicineForCompany", new MedicineForCompany());
+
 		String name = p.getName();
 		User tempUser = this.userRepository.getUserByUserName(name);
 		List<MedicineForCompany> medicines = this.medicineForCompanyRepository.findMedicinesById(tempUser.getId());
@@ -85,26 +89,41 @@ public class CompanyController {
 	}
 
 	@RequestMapping("/process-order")
-	public String processOrder(@ModelAttribute MedicineForCompany medicineForCompany, Principal p, Model m,
-			HttpSession session) {
+	public String processOrder(@Valid @ModelAttribute MedicineForCompany medicineForCompany, BindingResult result,
+			Principal p, Model m, HttpSession session) {
+		m.addAttribute("medicine", new MedicineForCompany());
 
-		String tempName = p.getName();
-		User user = this.userRepository.getUserByUserName(tempName);
-		medicineForCompany.setUser(user);
-		user.getMedicinesForCompany().add(medicineForCompany);
+		try {
 
-		this.userRepository.save(user);
+			if (result.hasErrors()) {
+				System.out.println("Error:: " + result.toString());
+//				m.addAttribute("medicineCompany", medicineForCompany);
+				return "pharmaceuticalcompany/add_stock";
 
-		System.out.println("data: " + medicineForCompany);
-		System.out.println("medicines added to database");
-		String name = p.getName();
-		User tempUser = this.userRepository.getUserByUserName(name);
-		List<MedicineForCompany> medicines = this.medicineForCompanyRepository.findMedicinesById(tempUser.getId());
-//		Collections.sort(medicines, Comparator.comparingInt(MedicineForCompany::getMid).reversed());
-		m.addAttribute("medicines", medicines);
+			}
 
-		session.setAttribute("message", new MyMessage("Successfully Updated!! ", "alert-success"));
-		return "pharmaceuticalcompany/view_stock";
+			String tempName = p.getName();
+			User user = this.userRepository.getUserByUserName(tempName);
+			medicineForCompany.setUser(user);
+			user.getMedicinesForCompany().add(medicineForCompany);
+
+			this.userRepository.save(user);
+
+			System.out.println("data: " + medicineForCompany);
+			System.out.println("medicines added to database");
+			String name = p.getName();
+			User tempUser = this.userRepository.getUserByUserName(name);
+			List<MedicineForCompany> medicines = this.medicineForCompanyRepository.findMedicinesById(tempUser.getId());
+//			Collections.sort(medicines, Comparator.comparingInt(MedicineForCompany::getMid).reversed());
+			m.addAttribute("medicines", medicines);
+
+			session.setAttribute("message", new MyMessage("Successfully Updated!! ", "alert-success"));
+
+			return "pharmaceuticalcompany/view_stock";
+		} catch (Exception e) {
+			return "pharmaceuticalcompany/view_stock";
+		}
+
 	}
 
 	@RequestMapping("/view-stock")

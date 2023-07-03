@@ -80,6 +80,7 @@ public class PharmacyController {
 	@GetMapping("/order-medicine")
 	public String openAddContactForm(Model model, Principal p) {
 		model.addAttribute("title", "Order medicine");
+		
 		model.addAttribute("medicine", new Medicine());
 
 		String name = p.getName();
