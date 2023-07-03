@@ -26,19 +26,45 @@
 	<section>
 		<div class="container">
 			<div class="card p-4">
-				<form id="process-order-form" th:object="${placeorder}"
+
+				<div th:if="${session.msg}" th:classappend="${session.msg.type}"
+					class="alert" role="alert">
+					<p class="text-center" th:text="${session.msg.content}"></p>
+
+					<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
+				</div>
+
+
+				<form novalidate="novalidate" id="process-order-form"
+					th:object="${placeOrder}"
 					th:action="@{/pharmacy/process-order-form}" method="post">
 
 					<h1 class="text-center">Order now</h1>
 
 					<div class="form-group">
-						<label for="name">Medicine name:</label> <input type="text" name="name"
-							class="form-control" required="required" />
+						<label for="name">Medicine name:</label> <input type="text"
+							name="name" class="form-control" required="required"
+							th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
+							th:value="${placeOrder.name}" />
+
+						<div th:each="p : ${#fields.errors('name')}"
+							class="invalid-feedback" th:text="${p}"></div>
+
 					</div>
+
+
+
+
 
 					<div class="form-group">
 						<label for="quantity">Quantity:</label> <input type="number"
-							name="quantity" class="form-control" min="0" required="required" />
+							name="quantity" class="form-control" required="required"
+							th:classappend="${#fields.hasErrors('quantity') ? 'is-invalid' : ''}"
+							th:value="${placeOrder.quantity}" />
+
+						<div th:each="p : ${#fields.errors('quantity')}"
+							class="invalid-feedback" th:text="${p}"></div>
+
 					</div>
 
 
@@ -50,13 +76,30 @@
 
 					<div class="form-group">
 						<label for="location">Location:</label> <input type="text"
-							name="location" class="form-control" required="required" />
+							name="location" class="form-control" required="required"
+							th:classappend="${#fields.hasErrors('location') ? 'is-invalid' : ''}"
+							th:value="${placeOrder.location}" />
+
+						<div th:each="p : ${#fields.errors('location')}"
+							class="invalid-feedback" th:text="${p}"></div>
+
+
 					</div>
 
+
+
+
+
+
 					<div class="form-group">
-						<label for="phone">Phone:</label> <input type="tel"
-							pattern="[0-9]+" name="phone" class="form-control"
-							required="required" />
+						<label for="phone">Phone:</label> <input type="tel" name="phone"
+							class="form-control" required="required"
+							th:classappend="${#fields.hasErrors('phone') ? 'is-invalid' : ''}"
+							th:value="${placeOrder.phone}" />
+
+						<div th:each="p : ${#fields.errors('phone')}"
+							class="invalid-feedback" th:text="${p}"></div>
+
 					</div>
 
 					<!-- 					<div class="form-row">
@@ -76,12 +119,23 @@
 						<div class="form-group col-md-6">
 							<label for="createdDate">Created Date:</label> <input type="date"
 								name="createdDate" class="form-control" required="required"
-								id="createdDateInput" />
+								th:classappend="${#fields.hasErrors('createdDate') ? 'is-invalid' : ''}"
+								th:value="${placeOrder.createdDate}" id="createdDateInput" />
+
+
+							<div th:each="p : ${#fields.errors('createdDate')}"
+								class="invalid-feedback" th:text="${p}"></div>
 						</div>
 
 						<div class="form-group col-md-6">
 							<label for="arriveDate">Arrive Date:</label> <input type="date"
-								name="arriveDate" class="form-control" required="required" />
+								name="arriveDate" class="form-control" required="required"
+								th:classappend="${#fields.hasErrors('arriveDate') ? 'is-invalid' : ''}"
+								th:value="${placeOrder.arriveDate}" />
+
+
+							<div th:each="p : ${#fields.errors('arriveDate')}"
+								class="invalid-feedback" th:text="${p}"></div>
 						</div>
 					</div>
 
@@ -97,9 +151,8 @@
 
 					<div class="col-md-4">
 						<div class="form-group">
-							 <input hidden="true"
-								type="text" class="form-control" id="pharmacyName"
-								name="pharmacyName" th:value="${user.name}" >
+							<input hidden="true" type="text" class="form-control"
+								id="pharmacyName" name="pharmacyName" th:value="${user.name}">
 						</div>
 					</div>
 
@@ -117,14 +170,7 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-	<script>
-		// Get the current date
-		var currentDate = new Date().toISOString().split('T')[0];
 
-		// Set the minimum date value to the current date
-		document.getElementById('createdDateInput').setAttribute('min',
-				currentDate);
-	</script>
 </body>
 
 </html>

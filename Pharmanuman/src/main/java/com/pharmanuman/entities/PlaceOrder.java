@@ -1,5 +1,7 @@
 package com.pharmanuman.entities;
 
+import java.time.LocalDate;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
@@ -9,6 +11,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class PlaceOrder {
@@ -19,29 +27,45 @@ public class PlaceOrder {
 
 	private String pharmacyName;
 
+	@Column(nullable = false)
+	@NotBlank(message = "Name shouldn't be blank")
+	@Size(min = 2, max = 20, message = "min 2 and max 30 characters required")
 	private String name;
 
+	@Column(nullable = false)
+	@Min(value = 1, message = "Quantity must be a positive number or one")
+	@Max(value = 400, message = "Quantity must be a less than or equals to 400")
+//	@NotBlank(message = "can't be blank")
 	private int quantity;
 
 	private String status;
 
+	@NotBlank(message = "Location shouldn't be blank")
+	@Size(min = 2, max = 20, message = "min 2 and max 30 characters required")
 	private String location;
 
+	@NotBlank(message = "Phone number shouldn't be blank")
+	@Pattern(regexp = "\\d{10}", message = "Phone number should be a 10-digit number")
 	private String phone;
 
 	private double price;
 
 	private double total;
 
+	@NotBlank
 	private String stockist;
 
-	@Column(nullable = false)
-	@JsonFormat(pattern = "mm/dd/yyyy", shape = Shape.STRING)
-	private String createdDate;
 
 	@Column(nullable = false)
-	@JsonFormat(pattern = "mm/dd/yyyy", shape = Shape.STRING)
-	private String arriveDate;
+	@JsonFormat(pattern = "MM/dd/yyyy", shape = Shape.STRING)
+//	@NotBlank
+	private LocalDate createdDate = LocalDate.now();;
+
+	@Column(nullable = false)
+//	@NotBlank(message = "can't be blank")
+	@JsonFormat(pattern = "MM/dd/yyyy", shape = Shape.STRING)
+	@Future(message = "arriveDate must be in the future")
+	private LocalDate arriveDate;
 
 	@ManyToOne
 	private User user;
@@ -50,9 +74,14 @@ public class PlaceOrder {
 		super();
 	}
 
-	public PlaceOrder(int poid, String pharmacyName, String name, int quantity, String status, String location,
-			String phone, double price, double total, String stockist, String createdDate, String arriveDate,
-			User user) {
+	public PlaceOrder(int poid, String pharmacyName,
+			@NotBlank(message = "Name shouldn't be blank") @Size(min = 2, max = 20, message = "min 2 and max 30 characters required") String name,
+			@Min(value = 1, message = "Quantity must be a positive number or one") @Max(value = 400, message = "Quantity must be a less than or equals to 400") @NotBlank(message = "can't be blank") int quantity,
+			String status,
+			@NotBlank(message = "Location shouldn't be blank") @Size(min = 2, max = 20, message = "min 2 and max 30 characters required") String location,
+			@NotBlank(message = "Phone number shouldn't be blank") @Pattern(regexp = "\\d{10}", message = "Phone number should be a 10-digit number") String phone,
+			double price, double total, @NotBlank String stockist, LocalDate createdDate,
+			@Future(message = "arriveDate must be in the future") LocalDate arriveDate, User user) {
 		super();
 		this.poid = poid;
 		this.pharmacyName = pharmacyName;
@@ -77,6 +106,14 @@ public class PlaceOrder {
 		this.poid = poid;
 	}
 
+	public String getPharmacyName() {
+		return pharmacyName;
+	}
+
+	public void setPharmacyName(String pharmacyName) {
+		this.pharmacyName = pharmacyName;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -85,12 +122,12 @@ public class PlaceOrder {
 		this.name = name;
 	}
 
-	public User getUser() {
-		return user;
+	public int getQuantity() {
+		return quantity;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	public String getStatus() {
@@ -109,28 +146,12 @@ public class PlaceOrder {
 		this.location = location;
 	}
 
-	public String getCreatedDate() {
-		return createdDate;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setCreatedDate(String createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public String getArriveDate() {
-		return arriveDate;
-	}
-
-	public void setArriveDate(String arriveDate) {
-		this.arriveDate = arriveDate;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public double getPrice() {
@@ -149,14 +170,6 @@ public class PlaceOrder {
 		this.total = total;
 	}
 
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
 	public String getStockist() {
 		return stockist;
 	}
@@ -165,21 +178,28 @@ public class PlaceOrder {
 		this.stockist = stockist;
 	}
 
-	public String getPharmacyName() {
-		return pharmacyName;
+	public LocalDate getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setPharmacyName(String pharmacyName) {
-		this.pharmacyName = pharmacyName;
+	public void setCreatedDate(LocalDate createdDate) {
+		this.createdDate = createdDate;
 	}
 
-	@Override
-	public String toString() {
-		return "PlaceOrder [poid=" + poid + ", pharmacyName=" + pharmacyName + ", name=" + name + ", quantity="
-				+ quantity + ", status=" + status + ", location=" + location + ", phone=" + phone + ", price=" + price
-				+ ", total=" + total + ", stockist=" + stockist + ", createdDate=" + createdDate + ", arriveDate="
-				+ arriveDate + ", user=" + user + "]";
+	public LocalDate getArriveDate() {
+		return arriveDate;
 	}
 
-	
+	public void setArriveDate(LocalDate arriveDate) {
+		this.arriveDate = arriveDate;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 }

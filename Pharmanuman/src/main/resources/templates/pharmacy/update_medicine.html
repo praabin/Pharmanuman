@@ -38,15 +38,22 @@ h2 {
 <body>
 
 	<div class="container card">
+
+		<div th:if="${session.msg}" th:classappend="${session.msg.type}"
+			class="alert" role="alert">
+			<p class="text-center" th:text="${session.msg.content}"></p>
+
+			<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
+		</div>
 		<h2>Update Medicine</h2>
 		<form id="order-form" th:object="${medicine}"
 			th:action="@{/pharmacy/process-update}" method="post">
 			<div id="medicine-sections">
 				<div class="medicine-section" id="medicine1">
 					<h4>Medicine 1</h4>
-					
+
 					<input type="hidden" th:value="${medicine.mid}" name="mid" />
-					
+
 					<div class="form-row">
 						<div class="col-md-4">
 							<div class="form-group">
@@ -74,7 +81,8 @@ h2 {
 							<div class="form-group">
 								<label for="composition1">Composition:</label> <input
 									type="text" class="form-control" id="composition1"
-									name="composition" th:value="${medicine.composition}" required="required">
+									name="composition" th:value="${medicine.composition}"
+									required="required">
 							</div>
 						</div>
 						<div class="col-md-4">
@@ -88,14 +96,16 @@ h2 {
 							<div class="form-group">
 								<label for="description1">Description:</label> <input
 									type="text" class="form-control" id="description1"
-									name="description" th:value="${medicine.description}" required="required">
+									name="description" th:value="${medicine.description}"
+									required="required">
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
 								<label for="manufacturerDate1">Manufacturer Date:</label> <input
 									type="date" class="form-control" id="manufacturerDate1"
-									name="manufacturerDate" th:value="${medicine.manufacturerDate}" required="required">
+									name="manufacturerDate" th:value="${medicine.manufacturerDate}"
+									required="required">
 							</div>
 						</div>
 						<div class="col-md-4">
@@ -124,7 +134,8 @@ h2 {
 							<div class="form-group">
 								<label for="manufacturerName1">Manufacturer Name:</label> <input
 									type="text" class="form-control" id="manufacturerName1"
-									name="manufacturerName" th:value="${medicine.manufacturerName}" required="required" >
+									name="manufacturerName" th:value="${medicine.manufacturerName}"
+									required="required">
 							</div>
 						</div>
 						<div class="col-md-4">
@@ -159,5 +170,5 @@ h2 {
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-	</body>
+</body>
 </html>

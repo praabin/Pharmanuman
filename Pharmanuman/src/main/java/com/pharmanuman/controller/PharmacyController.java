@@ -81,6 +81,7 @@ public class PharmacyController {
 	public String openAddContactForm(Model model, Principal p) {
 		model.addAttribute("title", "Order medicine");
 		model.addAttribute("medicine", new Medicine());
+
 		String name = p.getName();
 		User tempUser = this.userRepository.getUserByUserName(name);
 		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
@@ -95,7 +96,7 @@ public class PharmacyController {
 		try {
 
 			if (result.hasErrors()) {
-				System.out.println("Errors cha hai ");
+
 				m.addAttribute("medicine", medicine);
 				return "pharmacy/add_medicine";
 
@@ -150,12 +151,24 @@ public class PharmacyController {
 	}
 
 	@PostMapping("/process-update")
-	public String processUpdate(@ModelAttribute Medicine m, Principal p, Model model) {
-		String name = p.getName();
-		User tempUser = this.userRepository.getUserByUserName(name);
-		m.setUser(tempUser);
-		this.medicineRepository.save(m);
-		return "pharmacy/update_medicine";
+	public String processUpdate(@ModelAttribute Medicine m, Principal p, Model model, HttpSession session) {
+		try {
+
+			String name = p.getName();
+			User tempUser = this.userRepository.getUserByUserName(name);
+			m.setUser(tempUser);
+			this.medicineRepository.save(m);
+
+			model.addAttribute("medicine", new Medicine());
+			session.setAttribute("msg", new MyMessage("Successfully updated!! ", "alert-success"));
+			return "pharmacy/update_medicine";
+
+		} catch (Exception e) {
+			
+//			model.addAttribute("medicine", new Medicine());
+			session.setAttribute("msg", new MyMessage("Something went wrong!! ", "alert-danger"));
+			return "pharmacy/update_medicine";
+		}
 	}
 
 	// password change module
@@ -207,28 +220,65 @@ public class PharmacyController {
 
 	// order
 
-	@PostMapping("/process-order-form")
-	public String proceOrderForm(@ModelAttribute PlaceOrder placeOrder, Model m, Principal p, HttpSession session) {
+	// to open order form
+	@GetMapping("/users")
+	public String getUserRoleStockist(Model model) {
+		model.addAttribute("title", "Order medicine");
+		model.addAttribute("placeOrder", new PlaceOrder());
 
-		User tempUser = this.userRepository.getUserByUserName(p.getName());
-		double price = 0.0;
-		placeOrder.setPrice(price);
-		placeOrder.setStatus("Pending");
-
-		placeOrder.setPharmacyName(tempUser.getName());
-		placeOrder.setTotal(price);
-
-		placeOrder.setUser(tempUser);
-
-		tempUser.getPlaceOrders().add(placeOrder);
-		this.userRepository.save(tempUser);
-		System.out.println("pharmacy name " + placeOrder.getPharmacyName());
-		session.setAttribute("pharmacyname", placeOrder.getPharmacyName());
-
-//		System.out.println("medicine added to database" + placeOrder);
-
+		List<User> stockistUsers = userRepository.findByRole("ROLE_STOCKIST");
+		System.out.println("list of users" + stockistUsers);
+		model.addAttribute("stockistUsers", stockistUsers);
 		return "pharmacy/add_order";
+	}
 
+	@PostMapping("/process-order-form")
+	public String proceOrderForm(@Valid @ModelAttribute PlaceOrder placeOrder, BindingResult result, Model m,
+			Principal p, HttpSession session) {
+
+		try {
+
+			if (result.hasErrors()) {
+				m.addAttribute("placeorder", placeOrder);
+
+				List<User> stockistUsers = userRepository.findByRole("ROLE_STOCKIST");
+				System.out.println("list of users" + stockistUsers);
+				m.addAttribute("stockistUsers", stockistUsers);
+				return "pharmacy/add_order";
+			}
+			User tempUser = this.userRepository.getUserByUserName(p.getName());
+			double price = 0.0;
+			placeOrder.setPrice(price);
+			placeOrder.setStatus("Pending");
+
+			placeOrder.setPharmacyName(tempUser.getName());
+			placeOrder.setTotal(price);
+
+			placeOrder.setUser(tempUser);
+
+			tempUser.getPlaceOrders().add(placeOrder);
+			this.userRepository.save(tempUser);
+			session.setAttribute("pharmacyname", placeOrder.getPharmacyName());
+
+			List<User> stockistUsers = userRepository.findByRole("ROLE_STOCKIST");
+			System.out.println("list of users" + stockistUsers);
+			m.addAttribute("stockistUsers", stockistUsers);
+
+			session.setAttribute("msg",
+					new MyMessage("Ordered Successfully!! Would you like to place another order? ", "alert-success"));
+			// Clear the form fields
+			m.addAttribute("placeOrder", new PlaceOrder());
+
+			return "pharmacy/add_order";
+
+		} catch (Exception e) {
+			// Clear the form fields
+			m.addAttribute("placeOrder", new PlaceOrder());
+
+			session.setAttribute("msg", new MyMessage("Something went wrong!! " + e.getMessage(), "alert-danger"));
+			return "pharmacy/add_order";
+
+		}
 	}
 
 	@RequestMapping("/see-order")
@@ -243,18 +293,6 @@ public class PharmacyController {
 		model.addAttribute("placeorder", orders);
 
 		return "pharmacy/see_order";
-	}
-
-	// to open order form
-	@GetMapping("/users")
-	public String getUserRoleStockist(Model model) {
-		model.addAttribute("title", "Order medicine");
-		model.addAttribute("placeorder", new PlaceOrder());
-
-		List<User> stockistUsers = userRepository.findByRole("ROLE_STOCKIST");
-		System.out.println("list of users" + stockistUsers);
-		model.addAttribute("stockistUsers", stockistUsers);
-		return "pharmacy/add_order";
 	}
 
 	// to open update form

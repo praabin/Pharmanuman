@@ -72,7 +72,7 @@ body {
 				<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
 			</div>
 			<h2 class="card-header text-center">Add Stock</h2>
-			<form id="order-form" th:object="${medicine}"
+			<form novalidate="novalidate" id="order-form" th:object="${medicine}"
 				th:action="@{/stockist/process-order}" method="post">
 
 				<div id="medicine-sections">
@@ -85,7 +85,7 @@ body {
 										class="form-control "
 										th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
 										id="name1" name="name" placeholder="Enter medicine name"
-										required="required">
+										required="required" th:value="${medicine.name}">
 
 
 									<div th:each="e : ${#fields.errors('name')}"
@@ -98,7 +98,7 @@ body {
 										class="form-control"
 										th:classappend="${#fields.hasErrors('quantity') ? 'is-invalid' : ''}"
 										id="quantity1" name="quantity" placeholder="Enter quantity"
-										min="0" required="required">
+										min="0" required="required" th:value="${medicine.quantity}">
 
 
 									<div th:each="e : ${#fields.errors('quantity')}"
@@ -111,7 +111,7 @@ body {
 										class="form-control" id="price1"
 										th:classappend="${#fields.hasErrors('price') ? 'is-invalid' : ''}"
 										name="price" placeholder="Enter price" min="0"
-										required="required">
+										required="required" th:value="${medicine.price}">
 
 
 
@@ -126,7 +126,8 @@ body {
 										type="text" class="form-control"
 										th:classappend="${#fields.hasErrors('composition') ? 'is-invalid' : ''}"
 										id="composition1" name="composition"
-										placeholder="Enter composition" required="required">
+										placeholder="Enter composition" required="required"
+										th:value="${medicine.composition}">
 
 
 									<div th:each="e : ${#fields.errors('composition')}"
@@ -139,7 +140,7 @@ body {
 										class="form-control"
 										th:classappend="${#fields.hasErrors('type') ? 'is-invalid' : ''}"
 										id="type1" name="type" placeholder="Enter type"
-										required="required">
+										required="required" th:value="${medicine.type}">
 
 
 
@@ -154,7 +155,7 @@ body {
 										type="date" class="form-control"
 										th:classappend="${#fields.hasErrors('manufacturerDate') ? 'is-invalid' : ''}"
 										id="manufacturerDate1" name="manufacturerDate"
-										required="required">
+										required="required" th:value="${medicine.manufacturerDate}">
 
 
 
@@ -167,7 +168,8 @@ body {
 									<label for="expiryDate1">Expiry Date:</label> <input
 										type="date" class="form-control"
 										th:classappend="${#fields.hasErrors('expiryDate') ? 'is-invalid' : ''}"
-										id="expiryDate1" name="expiryDate" required="required">
+										id="expiryDate1" name="expiryDate" required="required"
+										th:value="${medicine.expiryDate}">
 
 
 									<div th:each="e : ${#fields.errors('expiryDate')}"
@@ -180,7 +182,8 @@ body {
 										type="text" class="form-control"
 										th:classappend="${#fields.hasErrors('dosageForm') ? 'is-invalid' : ''}"
 										id="dosageForm1" name="dosageForm"
-										placeholder="Enter dosage form" required="required">
+										placeholder="Enter dosage form" required="required"
+										th:value="${medicine.dosageForm}">
 
 
 									<div th:each="e : ${#fields.errors('dosageForm')}"
@@ -193,7 +196,8 @@ body {
 									<input type="text" class="form-control"
 										th:classappend="${#fields.hasErrors('storageInstructions') ? 'is-invalid' : ''}"
 										id="storageInstructions1" name="storageInstructions"
-										placeholder="Enter storage instructions" required="required">
+										placeholder="Enter storage instructions" required="required"
+										th:value="${medicine.storageInstructions}">
 
 
 
@@ -207,7 +211,8 @@ body {
 										type="text" class="form-control"
 										th:classappend="${#fields.hasErrors('manufacturerName') ? 'is-invalid' : ''}"
 										id="manufacturerName1" name="manufacturerName"
-										placeholder="Enter manufacturer name" required="required">
+										placeholder="Enter manufacturer name" required="required"
+										th:value="${medicine.manufacturerName}">
 
 
 
@@ -221,7 +226,8 @@ body {
 										Location:</label> <input type="text" class="form-control"
 										th:classappend="${#fields.hasErrors('manufacturerLocation') ? 'is-invalid' : ''}"
 										id="manufacturerLocation1" name="manufacturerLocation"
-										placeholder="Enter manufacturer location" required="required">
+										placeholder="Enter manufacturer location" required="required"
+										th:value="${medicine.manufacturerLocation}">
 
 
 
@@ -235,7 +241,8 @@ body {
 									<textarea rows=4 class="form-control"
 										th:classappend="${#fields.hasErrors('description') ? 'is-invalid' : ''}"
 										id="description1" name="description"
-										placeholder="Enter description" required="required"></textarea>
+										placeholder="Enter description" required="required"
+										th:field="${medicine.description}"></textarea>
 
 
 									<div th:each="e : ${#fields.errors('description')}"

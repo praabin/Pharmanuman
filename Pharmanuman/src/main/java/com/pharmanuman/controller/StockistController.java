@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ import com.pharmanuman.entities.User;
 import com.pharmanuman.helper.MyMessage;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/stockist")
@@ -84,7 +86,14 @@ public class StockistController {
 	}
 
 	@RequestMapping("/process-order")
-	public String processOrder(@ModelAttribute Medicine medicine, Principal p, Model m, HttpSession session) {
+	public String processOrder(@Valid @ModelAttribute Medicine medicine, BindingResult result, Principal p, Model m,
+			HttpSession session) {
+
+		if (result.hasErrors()) {
+			m.addAttribute("medicine", medicine);
+			return "stockist/add_stock";
+
+		}
 
 		String tempName = p.getName();
 		User user = this.userRepository.getUserByUserName(tempName);
@@ -99,6 +108,7 @@ public class StockistController {
 		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
 		Collections.sort(medicines, Comparator.comparingInt(Medicine::getMid).reversed());
 		m.addAttribute("medicines", medicines);
+		m.addAttribute("medicine", new Medicine());
 
 		session.setAttribute("message", new MyMessage("Successfully Updated!! ", "alert-success"));
 		return "stockist/add_stock";
@@ -226,7 +236,6 @@ public class StockistController {
 	public String processUpdateOrder(@ModelAttribute PlaceOrder m, Principal p, Model model) {
 
 		int a = m.getUser().getId();
-//		System.out.println(a +" user id");
 
 		String name = p.getName();
 		User tempUser = this.userRepository.getUserByUserName(name);

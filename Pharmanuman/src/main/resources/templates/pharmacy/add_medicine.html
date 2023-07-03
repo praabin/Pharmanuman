@@ -77,7 +77,9 @@ body {
 								<div class="form-group">
 									<label for="name1">Medicine Name:</label> <input type="text"
 										class="form-control "
+										
 										th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
+										
 										id="name1" name="name" placeholder="Enter medicine name"
 										th:value="${medicine.name}">
 
