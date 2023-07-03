@@ -80,7 +80,7 @@ public class PharmacyController {
 	@GetMapping("/order-medicine")
 	public String openAddContactForm(Model model, Principal p) {
 		model.addAttribute("title", "Order medicine");
-		
+
 		model.addAttribute("medicine", new Medicine());
 
 		String name = p.getName();
@@ -99,6 +99,8 @@ public class PharmacyController {
 			if (result.hasErrors()) {
 
 				m.addAttribute("medicine", medicine);
+
+				session.setAttribute("msg", new MyMessage("Something went wrong!! ", "alert-danger"));
 				return "pharmacy/add_medicine";
 
 			}
@@ -118,9 +120,11 @@ public class PharmacyController {
 			List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
 			Collections.sort(medicines, Comparator.comparingInt(Medicine::getMid).reversed());
 			m.addAttribute("medicines", medicines);
+
+			m.addAttribute("medicine", new Medicine());
 			session.setAttribute("msg", new MyMessage("Successfully added!! ", "alert-success"));
 
-			return "pharmacy/add_medicine";
+			return "pharmacy/view_medicine";
 
 		} catch (Exception e) {
 
@@ -152,8 +156,16 @@ public class PharmacyController {
 	}
 
 	@PostMapping("/process-update")
-	public String processUpdate(@ModelAttribute Medicine m, Principal p, Model model, HttpSession session) {
+	public String processUpdate(@Valid @ModelAttribute Medicine m, BindingResult result, Principal p, Model model,
+			HttpSession session) {
 		try {
+
+			if (result.hasErrors()) {
+				System.out.println("Error:: " + result.toString());
+				session.setAttribute("msg", new MyMessage("Something went wrong!! ", "alert-danger"));
+				return "pharmacy/update_medicine";
+
+			}
 
 			String name = p.getName();
 			User tempUser = this.userRepository.getUserByUserName(name);
@@ -165,7 +177,7 @@ public class PharmacyController {
 			return "pharmacy/update_medicine";
 
 		} catch (Exception e) {
-			
+
 //			model.addAttribute("medicine", new Medicine());
 			session.setAttribute("msg", new MyMessage("Something went wrong!! ", "alert-danger"));
 			return "pharmacy/update_medicine";
@@ -307,17 +319,27 @@ public class PharmacyController {
 	}
 
 	@PostMapping("/process-update-order")
-	public String processUpdateOrder(@ModelAttribute PlaceOrder m, Principal p, Model model) {
+	public String processUpdateOrder(@ModelAttribute PlaceOrder m, Principal p, Model model, HttpSession session) {
+		try {
 
-		m.setStatus("Pending");
+			m.setStatus("Pending");
 
-		String name = p.getName();
-		User tempUser = this.userRepository.getUserByUserName(name);
+			String name = p.getName();
+			User tempUser = this.userRepository.getUserByUserName(name);
 
-		m.setUser(tempUser);
+			m.setUser(tempUser);
 
-		this.placeOrderRepository.save(m);
-		return "redirect:/pharmacy/see-order";
+			this.placeOrderRepository.save(m);
+
+			session.setAttribute("msg", new MyMessage("Updated Successfully! ", "alert-success"));
+			return "redirect:/pharmacy/see-order";
+
+		} catch (Exception e) {
+			// TODO: handle exception
+
+			session.setAttribute("msg", new MyMessage("Something went wrong! ", "alert-danger"));
+			return "redirect:/pharmacy/see-order";
+		}
 	}
 
 	@GetMapping("/delete/{mid}")

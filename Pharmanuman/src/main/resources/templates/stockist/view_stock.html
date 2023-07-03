@@ -193,7 +193,7 @@ body {
 							<td th:text="${m.manufacturerLocation}"></td>
 							<td>
 								<div class="d-flex justify-content-start align-items-center">
-									<a href="#" th:onclick="|deleteMedicine(${m.mid})|"
+									<a href="#" th:onclick="|deleteMedicineFromStockist(${m.mid})|"
 										class="btn btn-danger btn-sm mr-2">Delete</a>
 									<form th:action="@{/stockist/updateStock/{mid}(mid=${m.mid})}"
 										method="post">

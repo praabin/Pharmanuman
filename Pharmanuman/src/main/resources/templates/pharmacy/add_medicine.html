@@ -81,7 +81,9 @@ body {
 										th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
 										
 										id="name1" name="name" placeholder="Enter medicine name"
-										th:value="${medicine.name}">
+										th:value="${medicine.name}"
+										
+										>
 
 
 									<div th:each="e : ${#fields.errors('name')}"

@@ -131,6 +131,7 @@ public class StockistController {
 
 	@GetMapping("/delete/{mid}")
 	public String deleteMedicineFromStockist(@PathVariable("mid") int mid, Model m, Principal p, HttpSession session) {
+		
 
 		Medicine medicine = this.medicineRepository.findById(mid).get();
 		User tempUser = this.userRepository.getUserByUserName(p.getName());
@@ -151,22 +152,39 @@ public class StockistController {
 		m.addAttribute("title", "Update medicine");
 		Medicine tempMedicine = this.medicineRepository.findById(id).get();
 		m.addAttribute("medicine", tempMedicine);
-		return "stockist/view_stock";
+		return "stockist/update_stock";
 	}
 
 	@PostMapping("/process-update")
-	public String processUpdate(@ModelAttribute Medicine m, Principal p, Model model, HttpSession session) {
+	public String processUpdate(@Valid @ModelAttribute Medicine medicine,BindingResult result, Principal p, Model model, HttpSession session) {
 //		Medicine oldMedcine = this.medicineRepository.findById(m.getMid()).get();
-		String name = p.getName();
-		User tempUser = this.userRepository.getUserByUserName(name);
-		m.setUser(tempUser);
-		this.medicineRepository.save(m);
+		try {
+			
+			if(result.hasErrors()) {
+				System.out.println("Error:: "+result.toString());
+				session.setAttribute("message", new MyMessage("Successfully Updated!! ", "alert-success"));
+				return "stockist/update_stock";
 
-		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
-		model.addAttribute("medicines", medicines);
+			}
 
-		session.setAttribute("message", new MyMessage("Successfully Updated!! ", "alert-success"));
-		return "stockist/view_stock";
+			String name = p.getName();
+			User tempUser = this.userRepository.getUserByUserName(name);
+			medicine.setUser(tempUser);
+			this.medicineRepository.save(medicine);
+
+			List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
+			model.addAttribute("medicines", medicines);
+
+			session.setAttribute("message", new MyMessage("Successfully Updated!! ", "alert-success"));
+			return "stockist/view_stock";
+
+		} catch (Exception e) {
+
+			model.addAttribute("medicine", new Medicine());
+			session.setAttribute("message", new MyMessage("Something went wrong!! ", "alert-danger"));
+			return "stockist/view_stock";
+
+		}
 	}
 
 	@PostMapping("/change-password")
