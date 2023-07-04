@@ -39,7 +39,7 @@
 					th:href="@{/pc/index}">Home</a></li>
 
 				<li class="nav-item active"><a class="nav-link"
-					th:href="@{/pc/index}"><span th:text="${user.name}"></span></a></li>
+					th:href="@{/pc/profile}"><span th:text="${user.name}"></span></a></li>
 
 				<li class="nav-item active"><a class="nav-link"
 					th:href="@{/logout}">Logout</a></li>
@@ -78,6 +78,10 @@
 			
 		<a href="#" th:href="@{/pc/add-stock-prediction}" class="item"><i
 			class="fa-sharp fa-solid fa-plus"></i>Add Stock For Prediction</a>
+			
+			
+		<a href="#" th:href="@{/pc/view-stock-for-prediction}" class="item"><i
+			class="fa-sharp fa-solid fa-plus"></i>View Stock For Prediction</a>
 
 
 		<div class="divider"></div>

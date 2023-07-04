@@ -122,10 +122,12 @@ public class CompanyController {
 //			Collections.sort(medicines, Comparator.comparingInt(MedicineForCompany::getMid).reversed());
 			m.addAttribute("medicines", medicines);
 
-			session.setAttribute("message", new MyMessage("Successfully Updated!! ", "alert-success"));
+			session.setAttribute("message", new MyMessage("Successfully Added!! ", "alert-success"));
 
 			return "pharmaceuticalcompany/view_stock";
 		} catch (Exception e) {
+
+			session.setAttribute("message", new MyMessage("Something went wrong!! ", "alert-danger"));
 			return "pharmaceuticalcompany/view_stock";
 		}
 
@@ -149,18 +151,27 @@ public class CompanyController {
 	@GetMapping("/delete/{mfcid}")
 	public String deleteMedicine(@PathVariable("mfcid") int mfcid, Model m, Principal p, HttpSession session) {
 
-		MedicineForCompany medicine = this.medicineForCompanyRepository.findById(mfcid).get();
-		User tempUser = this.userRepository.getUserByUserName(p.getName());
-		tempUser.getMedicinesForCompany().remove(medicine);
-		this.userRepository.save(tempUser);
+		try {
 
-		String name = p.getName();
-		User tempUser1 = this.userRepository.getUserByUserName(name);
-		List<MedicineForCompany> medicines = this.medicineForCompanyRepository.findMedicinesById(tempUser1.getId());
-		m.addAttribute("medicines", medicines);
+			MedicineForCompany medicine = this.medicineForCompanyRepository.findById(mfcid).get();
+			User tempUser = this.userRepository.getUserByUserName(p.getName());
+			tempUser.getMedicinesForCompany().remove(medicine);
+			this.userRepository.save(tempUser);
 
-		session.setAttribute("message", new MyMessage("Deleted Successfully!! ", "alert-success"));
-		return "pharmaceuticalcompany/view_stock";
+			String name = p.getName();
+			User tempUser1 = this.userRepository.getUserByUserName(name);
+			List<MedicineForCompany> medicines = this.medicineForCompanyRepository.findMedicinesById(tempUser1.getId());
+			m.addAttribute("medicines", medicines);
+
+			session.setAttribute("message", new MyMessage("Deleted Successfully!! ", "alert-success"));
+			return "pharmaceuticalcompany/view_stock";
+
+		} catch (Exception e) {
+			// TODO: handle exception
+
+			session.setAttribute("message", new MyMessage("Something went wrong!! ", "alert-danger"));
+			return "pharmaceuticalcompany/view_stock";
+		}
 	}
 
 	@PostMapping("/updateStock/{mfcid}")
@@ -174,16 +185,25 @@ public class CompanyController {
 	@PostMapping("/process-update")
 	public String processUpdate(@ModelAttribute MedicineForCompany m, Principal p, Model model, HttpSession session) {
 //		Medicine oldMedcine = this.medicineRepository.findById(m.getMid()).get();
-		String name = p.getName();
-		User tempUser = this.userRepository.getUserByUserName(name);
-		m.setUser(tempUser);
-		this.medicineForCompanyRepository.save(m);
+		try {
 
-		List<MedicineForCompany> medicines = this.medicineForCompanyRepository.findMedicinesById(tempUser.getId());
-		model.addAttribute("medicines", medicines);
+			String name = p.getName();
+			User tempUser = this.userRepository.getUserByUserName(name);
+			m.setUser(tempUser);
+			this.medicineForCompanyRepository.save(m);
 
-		session.setAttribute("message", new MyMessage("Successfully Updated!! ", "alert-success"));
-		return "pharmaceuticalcompany/view_stock";
+			List<MedicineForCompany> medicines = this.medicineForCompanyRepository.findMedicinesById(tempUser.getId());
+			model.addAttribute("medicines", medicines);
+
+			session.setAttribute("message", new MyMessage("Successfully Updated!! ", "alert-success"));
+			return "pharmaceuticalcompany/view_stock";
+
+		} catch (Exception e) {
+			// TODO: handle exception
+
+			session.setAttribute("message", new MyMessage("Something went wrong!! ", "alert-danger"));
+			return "pharmaceuticalcompany/view_stock";
+		}
 	}
 
 	@PostMapping("/change-password")
@@ -264,13 +284,27 @@ public class CompanyController {
 //			Collections.sort(medicines, Comparator.comparingInt(MedicineForCompany::getMid).reversed());
 //			m.addAttribute("medicines", medicines);
 
-			session.setAttribute("message", new MyMessage("Successfully Updated!! ", "alert-success"));
+			session.setAttribute("message", new MyMessage("Successfully Added!! ", "alert-success"));
 
 			return "pharmaceuticalcompany/add_category";
 		} catch (Exception e) {
+
+			session.setAttribute("message", new MyMessage("Something went wrong!! ", "alert-danger"));
 			return "pharmaceuticalcompany/add_category";
 		}
 
+	}
+
+	@RequestMapping("/view-stock-for-prediction")
+	public String viewStockForPrediction(Model m, Principal p) {
+		m.addAttribute("title", "View stock for prediction");
+		String name = p.getName();
+		User tempUser = this.userRepository.getUserByUserName(name);
+		List<MedicineForPrediction> medicines = this.medicineForPredictionRepo
+				.findMedicineForPredictionById(tempUser.getId());
+		System.out.println(medicines);
+		m.addAttribute("mfp", medicines);
+		return "pharmaceuticalcompany/view_stock_for_prediction";
 	}
 
 }

@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+	th:replace="pharmaceuticalcompany/base::Layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>View Medicine</title>
+
+<style type="text/css">
+/* Global Styles */
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f8f8f8;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+/* Card Styles */
+.card {
+	background-color: #fff;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+.card-title {
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+/* Search Styles */
+.search-controller {
+	margin-bottom: 20px;
+}
+
+.search-input {
+	width: 100%;
+	padding: 10px;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+/* Table Styles */
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.table thead th {
+	background-color: #f0f0f0;
+	color: #333;
+	font-weight: bold;
+	padding: 10px;
+	text-align: left;
+}
+
+.table tbody td {
+	padding: 10px;
+	border-bottom: 1px solid #f0f0f0;
+}
+
+.table tbody tr:last-child td {
+	border-bottom: none;
+}
+
+/* Button Styles */
+.button-group {
+	display: flex;
+	gap: 10px;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.button-group button {
+	padding: 10px 20px;
+	font-size: 16px;
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+	color: #fff;
+}
+
+.button-group button.primary {
+	background-color: #007bff;
+}
+
+.button-group button.danger {
+	background-color: #dc3545;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+	.container {
+		padding: 10px;
+	}
+	.card {
+		padding: 10px;
+	}
+	.card-title {
+		font-size: 20px;
+		margin-bottom: 10px;
+	}
+	.search-input {
+		font-size: 14px;
+	}
+	.button-group button {
+		padding: 8px 16px;
+		font-size: 14px;
+	}
+	.table thead th {
+		font-size: 14px;
+	}
+	.table tbody td {
+		font-size: 14px;
+	}
+}
+
+@media screen and (max-width: 576px) {
+	.table thead th {
+		font-size: 12px;
+		padding: 8px;
+	}
+	.table tbody td {
+		font-size: 12px;
+		padding: 8px;
+	}
+}
+</style>
+
+</head>
+<body>
+
+	<section>
+		<div class="card mr-3 ml-4 ">
+			<div class="card-body">
+
+
+				<div th:if="${session.message}"
+					th:classappend="${session.message.type}" class="alert" role="alert">
+					<p class="text-center" th:text="${session.message.content}"></p>
+
+					<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
+				</div>
+
+				<h1 class="text-center">Your Stock</h1>
+
+				<div th:if="${session.msg}" class="container">
+					<div th:classappend="${'alert-'+session.msg.type}"
+						class="alert text-center" role="alert">
+						<span th:text="${session.msg.content}"></span>
+					</div>
+					<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
+				</div>
+
+				<!--  search-->
+				<!-- 	<div class="search-container my-4">
+					<input onkeyup="searchPC()" id="search-input" type="text"
+						class="form-control" placeholder="Search your medicines" />
+					<div class="search-result"></div>
+				</div> -->
+
+				<div class="table-responsive">
+					<table class="table">
+						<thead class="thead-dark">
+							<tr>
+								<th scope="col">Id</th>
+								<th scope="col">datum</th>
+								<th scope="col">mo1ab</th>
+								<th scope="col">mo1ae</th>
+								<th scope="col">no2ba</th>
+								<th scope="col">no2be</th>
+								<th scope="col">no5b</th>
+								<th scope="col">no5c</th>
+								<th scope="col">ro3</th>
+								<th scope="col">r06</th>
+
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="m : ${mfp}">
+								<td th:text="${m.mfpid}"></td>
+
+
+								<td th:text="${m.datum}"></td>
+								<td th:text="${m.mo1ab}"></td>
+								<td th:text="${m.mo1ae}"></td>
+								<td th:text="${m.no2ba}"></td>
+								<td th:text="${m.no2be}"></td>
+								<td th:text="${m.no5b}"></td>
+								<td th:text="${m.no5c}"></td>
+								<td th:text="${m.ro3}"></td>
+								<td th:text="${m.r06}"></td>
+								<td>
+								
+
+<!-- 									<div class="d-flex justify-content-start align-items-center">
+										<a href="#" th:onclick="|deleteMedicinePrediction(${m.mfp})|"
+											class="btn btn-danger btn-sm mr-2">Delete</a>
+
+										<form th:action="@{/pc/updateStock/{mfp}(mfp=${m.mfp})}"
+											method="post">
+											<button type="submit" class="btn btn-primary btn-sm">Update</button>
+										</form>
+									</div>
+
+ -->
+								</td>
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

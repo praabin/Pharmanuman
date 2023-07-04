@@ -89,29 +89,39 @@ public class StockistController {
 	public String processOrder(@Valid @ModelAttribute Medicine medicine, BindingResult result, Principal p, Model m,
 			HttpSession session) {
 
-		if (result.hasErrors()) {
-			m.addAttribute("medicine", medicine);
+		try {
+
+			if (result.hasErrors()) {
+				m.addAttribute("medicine", medicine);
+				return "stockist/add_stock";
+
+			}
+
+			String tempName = p.getName();
+			User user = this.userRepository.getUserByUserName(tempName);
+			medicine.setUser(user);
+			user.getMedicines().add(medicine);
+			this.userRepository.save(user);
+
+			System.out.println("data: " + medicine);
+			System.out.println("medicines added to database");
+			String name = p.getName();
+			User tempUser = this.userRepository.getUserByUserName(name);
+			List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
+			Collections.sort(medicines, Comparator.comparingInt(Medicine::getMid).reversed());
+			m.addAttribute("medicines", medicines);
+			m.addAttribute("medicine", new Medicine());
+
+			session.setAttribute("message", new MyMessage("Successfully Added!! ", "alert-success"));
 			return "stockist/add_stock";
 
+		} catch (Exception e) {
+			// TODO: handle exception
+
+			session.setAttribute("message", new MyMessage("Something went wrong!! ", "alert-danger"));
+			return "stockist/add_stock";
 		}
 
-		String tempName = p.getName();
-		User user = this.userRepository.getUserByUserName(tempName);
-		medicine.setUser(user);
-		user.getMedicines().add(medicine);
-		this.userRepository.save(user);
-
-		System.out.println("data: " + medicine);
-		System.out.println("medicines added to database");
-		String name = p.getName();
-		User tempUser = this.userRepository.getUserByUserName(name);
-		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser.getId());
-		Collections.sort(medicines, Comparator.comparingInt(Medicine::getMid).reversed());
-		m.addAttribute("medicines", medicines);
-		m.addAttribute("medicine", new Medicine());
-
-		session.setAttribute("message", new MyMessage("Successfully Updated!! ", "alert-success"));
-		return "stockist/add_stock";
 	}
 
 	@RequestMapping("/view-medicine")
@@ -131,20 +141,27 @@ public class StockistController {
 
 	@GetMapping("/delete/{mid}")
 	public String deleteMedicineFromStockist(@PathVariable("mid") int mid, Model m, Principal p, HttpSession session) {
-		
 
-		Medicine medicine = this.medicineRepository.findById(mid).get();
-		User tempUser = this.userRepository.getUserByUserName(p.getName());
-		tempUser.getMedicines().remove(medicine);
-		this.userRepository.save(tempUser);
+		try {
 
-		String name = p.getName();
-		User tempUser1 = this.userRepository.getUserByUserName(name);
-		List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser1.getId());
-		m.addAttribute("medicines", medicines);
+			Medicine medicine = this.medicineRepository.findById(mid).get();
+			User tempUser = this.userRepository.getUserByUserName(p.getName());
+			tempUser.getMedicines().remove(medicine);
+			this.userRepository.save(tempUser);
 
-		session.setAttribute("message", new MyMessage("Deleted Successfully!! ", "alert-success"));
-		return "stockist/view_stock";
+			String name = p.getName();
+			User tempUser1 = this.userRepository.getUserByUserName(name);
+			List<Medicine> medicines = this.medicineRepository.findMedicinesById(tempUser1.getId());
+			m.addAttribute("medicines", medicines);
+
+			session.setAttribute("message", new MyMessage("Deleted Successfully!! ", "alert-success"));
+			return "stockist/view_stock";
+
+		} catch (Exception e) {
+
+			session.setAttribute("message", new MyMessage("Something went wrong!! ", "alert-danger"));
+			return "stockist/view_stock";
+		}
 	}
 
 	@PostMapping("/updateStock/{mid}")
@@ -156,13 +173,14 @@ public class StockistController {
 	}
 
 	@PostMapping("/process-update")
-	public String processUpdate(@Valid @ModelAttribute Medicine medicine,BindingResult result, Principal p, Model model, HttpSession session) {
+	public String processUpdate(@Valid @ModelAttribute Medicine medicine, BindingResult result, Principal p,
+			Model model, HttpSession session) {
 //		Medicine oldMedcine = this.medicineRepository.findById(m.getMid()).get();
 		try {
-			
-			if(result.hasErrors()) {
-				System.out.println("Error:: "+result.toString());
-				session.setAttribute("message", new MyMessage("Successfully Updated!! ", "alert-success"));
+
+			if (result.hasErrors()) {
+				System.out.println("Error:: " + result.toString());
+				session.setAttribute("message", new MyMessage("Error occured ", "alert-success"));
 				return "stockist/update_stock";
 
 			}
@@ -251,16 +269,27 @@ public class StockistController {
 	}
 
 	@PostMapping("/process-update-order")
-	public String processUpdateOrder(@ModelAttribute PlaceOrder m, Principal p, Model model) {
+	public String processUpdateOrder(@ModelAttribute PlaceOrder m, Principal p, Model model, HttpSession session) {
 
-		int a = m.getUser().getId();
+		try {
 
-		String name = p.getName();
-		User tempUser = this.userRepository.getUserByUserName(name);
-//		tempUser.setId(a);
-		m.setUser(tempUser);
-		this.placeOrderRepository.save(m);
-		return "redirect:/stockist/see-order-stockist";
+			int a = m.getUser().getId();
+
+			String name = p.getName();
+			User tempUser = this.userRepository.getUserByUserName(name);
+//			tempUser.setId(a);
+			m.setUser(tempUser);
+			this.placeOrderRepository.save(m);
+
+			session.setAttribute("msg", new MyMessage("Successfully Status Updated!! ", "alert-success"));
+			return "redirect:/stockist/see-order-stockist";
+
+		} catch (Exception e) {
+			// TODO: handle exception
+
+			session.setAttribute("msg", new MyMessage("Something went wroing!! ", "alert-danger"));
+			return "redirect:/stockist/see-order-stockist";
+		}
 	}
 
 }

@@ -353,41 +353,29 @@ public class PharmacyController {
 	}
 
 	@GetMapping("/delete-order/{poid}")
-	public String deleteOrder(@PathVariable("poid") int poid, Model m, Principal p) {
+	public String deleteOrder(@PathVariable("poid") int poid, Model m, Principal p, HttpSession session) {
 
-		PlaceOrder medicine = this.placeOrderRepository.findById(poid).get();
-		System.out.println("order id " + medicine.getPoid());
-		User tempUser = this.userRepository.getUserByUserName(p.getName());
-		tempUser.getPlaceOrders().remove(medicine);
-		this.userRepository.save(tempUser);
-		System.out.println("deleted successfully");
-		return "redirect:/pharmacy/see-order";
+		try {
+
+			PlaceOrder medicine = this.placeOrderRepository.findById(poid).get();
+			System.out.println("order id " + medicine.getPoid());
+			User tempUser = this.userRepository.getUserByUserName(p.getName());
+			tempUser.getPlaceOrders().remove(medicine);
+			this.userRepository.save(tempUser);
+			System.out.println("deleted successfully");
+
+			session.setAttribute("msg", new MyMessage("Deleted Successfully! ", "alert-success"));
+			return "redirect:/pharmacy/see-order";
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error");
+
+			session.setAttribute("msg", new MyMessage("Something went wrong! ", "alert-danger"));
+			return "redirect:/pharmacy/see-order";
+
+		}
 	}
-
-	/*
-	 * @RequestMapping("/see-order-stockist") public String seeUpdatedOrder(Model
-	 * model, Principal principal) {
-	 * 
-	 * // List<PlaceOrder> findAll = this.placeOrderRepository.findAll();
-	 * 
-	 * String name = principal.getName(); User tempUser =
-	 * this.userRepository.getUserByUserName(name); int id = tempUser.getId();
-	 * List<PlaceOrder> findAll = this.placeOrderRepository.findPlaceOrderById(id);
-	 * 
-	 * 
-	 * PlaceOrder foundPlaceOrder = null;
-	 * 
-	 * for (PlaceOrder placeOrder : findAll) {
-	 * 
-	 * foundPlaceOrder = placeOrder; }
-	 * 
-	 * List<PlaceOrder> orders = this.placeOrderRepository
-	 * .findPlaceOrderByPharmacyName(foundPlaceOrder.getPharmacyName());
-	 * 
-	 * model.addAttribute("orderr", orders); return "pharmacy/see_order_stockist";
-	 * 
-	 * }
-	 */
 
 	@RequestMapping("/see-order-stockist")
 	public String seeUpdatedOrder(Model model, Principal principal) {
