@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+	th:replace="pharmaceuticalcompany/base::Layout(~{::section})">
+
+<head>
+<title>Add Medicine</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<style type="text/css">
+body {
+	background-color: #f7f7f7;
+}
+
+.card {
+	border: none;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+	background-color: #f8f9fa;
+	border-bottom: 1px solid #e9ecef;
+}
+
+.btn-submit {
+	background-color: #28a745;
+	border-color: #28a745;
+}
+
+.btn-submit:hover {
+	background-color: #218838;
+	border-color: #218838;
+}
+
+.btn-danger {
+	background-color: #dc3545;
+	border-color: #dc3545;
+}
+
+.btn-danger:hover {
+	background-color: #c82333;
+	border-color: #bd2130;
+}
+
+@media ( max-width : 576px) {
+	.col-md-4, .col-md-2 {
+		margin-bottom: 15px;
+	}
+}
+</style>
+</head>
+
+<body>
+	<section>
+
+		<div class="container card">
+
+			<div class="mycard mt-3">
+
+				<div th:if="${session.msg}" th:classappend="${session.msg.type}"
+					class="alert" role="alert">
+					<p class="text-center" th:text="${session.msg.content}"></p>
+					<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
+				</div>
+
+			</div>
+
+			<div th:if="${session.message}"
+				th:classappend="${session.message.type}" class="alert" role="alert">
+				<p class="text-center" th:text="${session.message.content}"></p>
+
+				<th:block th:text="${@sessionRemover.removeMessageFromSession()}"></th:block>
+			</div>
+			<h2 class="card-header text-center">Add Stock</h2>
+
+			<form id="order-form" method="post" action="#"
+				th:object="${medicineForPrediction}"
+				th:action="@{/pc/process-update-stock}" >
+
+				<div id="medicine-sections">
+					<div class="card-body bg-light p-4 mb-4">
+						<h4>Medicine</h4>
+						
+					<input type="hidden" th:value="${medicineForPrediction.mfpid}" name="mfpid" />
+						<div class="row">
+
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="datum">Datum:</label> <input type="date"
+										class="form-control" id="datum" name="datum"
+										th:classappend="${#fields.hasErrors('datum') ? 'is-invalid' : ''}"
+										th:value="${medicineForPrediction.datum}">
+
+								</div>
+
+
+								<div th:each="e : ${#fields.errors('datum')}"
+									class="invalid-feedback" th:text="${e}"></div>
+							</div>
+
+
+
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="quantity1">M01AB:</label> <input type="number"
+										class="form-control" id="quantity1" name="mo1ab"
+										placeholder="Enter M01AB"
+										th:classappend="${#fields.hasErrors('mo1ab') ? 'is-invalid' : ''}"
+										th:value="${medicineForPrediction.mo1ab}">
+
+
+									<div th:each="e : ${#fields.errors('mo1ab')}"
+										class="invalid-feedback" th:text="${e}"></div>
+
+								</div>
+							</div>
+
+
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="quantity1">MO1AE:</label> <input type="number"
+										class="form-control" id="quantity1" name="mo1ae"
+										placeholder="Enter MO1AE"
+										th:classappend="${#fields.hasErrors('mo1ae') ? 'is-invalid' : ''}"
+										th:value="${medicineForPrediction.mo1ae}">
+
+
+									<div th:each="e : ${#fields.errors('mo1ae')}"
+										class="invalid-feedback" th:text="${e}"></div>
+
+								</div>
+							</div>
+
+
+
+
+
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="quantity1">NO2BA:</label> <input type="number"
+										class="form-control" id="quantity1" name="no2ba"
+										placeholder="Enter NO2BA"
+										th:classappend="${#fields.hasErrors('no2ba') ? 'is-invalid' : ''}"
+										th:value="${medicineForPrediction.no2ba}">
+
+									<div th:each="e : ${#fields.errors('no2ba')}"
+										class="invalid-feedback" th:text="${e}"></div>
+
+								</div>
+							</div>
+
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="quantity1">NO2BE:</label> <input type="number"
+										class="form-control" id="quantity1" name="no2be"
+										placeholder="Enter NO2BE"
+										th:classappend="${#fields.hasErrors('no2be') ? 'is-invalid' : ''}"
+										th:value="${medicineForPrediction.no2ba}">
+
+									<div th:each="e : ${#fields.errors('no2be')}"
+										class="invalid-feedback" th:text="${e}"></div>
+
+								</div>
+							</div>
+
+
+
+
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="quantity1">NO5B:</label> <input type="number"
+										class="form-control" id="quantity1" name="no5b"
+										placeholder="Enter NO5B"
+										th:classappend="${#fields.hasErrors('no5b') ? 'is-invalid' : ''}"
+										th:value="${medicineForPrediction.no5b}">
+
+
+									<div th:each="e : ${#fields.errors('no5b')}"
+										class="invalid-feedback" th:text="${e}"></div>
+
+								</div>
+							</div>
+
+
+
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="quantity1">NO5C:</label> <input type="number"
+										class="form-control" id="quantity1" name="no5c"
+										placeholder="Enter NO5C"
+										th:classappend="${#fields.hasErrors('no5c') ? 'is-invalid' : ''}"
+										th:value="${medicineForPrediction.no5c}">
+
+									<div th:each="e : ${#fields.errors('no5c')}"
+										class="invalid-feedback" th:text="${e}"></div>
+								</div>
+							</div>
+
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="quantity1">RO3:</label> <input type="number"
+										class="form-control" id="quantity1" name="ro3"
+										placeholder="Enter RO3"
+										th:classappend="${#fields.hasErrors('ro3') ? 'is-invalid' : ''}"
+										th:value="${medicineForPrediction.ro3}">
+
+									<div th:each="e : ${#fields.errors('ro3')}"
+										class="invalid-feedback" th:text="${e}"></div>
+
+								</div>
+							</div>
+
+							<div class="col-md-2">
+								<div class="form-group">
+									<label for="quantity1">RO6:</label> <input type="number"
+										class="form-control" id="quantity1" name="r06"
+										placeholder="Enter RO6"
+										th:classappend="${#fields.hasErrors('r06') ? 'is-invalid' : ''}"
+										th:value="${medicineForPrediction.r06}">
+
+									<div th:each="e : ${#fields.errors('r06')}"
+										class="invalid-feedback" th:text="${e}"></div>
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="text-center mt-2 mb-3">
+					<button type="submit"
+						class="btn btn-success btn-submit align-center">Update</button>
+
+					<a href="/pc/index"
+						class="btn btn-danger btn-submit align-center text-white">Go
+						to dashboard</a>
+
+				</div>
+			</form>
+
+
+		</div>
+	</section>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

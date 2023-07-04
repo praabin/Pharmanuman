@@ -182,6 +182,7 @@ body {
 								<th scope="col">no5c</th>
 								<th scope="col">ro3</th>
 								<th scope="col">r06</th>
+								<th scope="col">Actions</th>
 
 
 							</tr>
@@ -201,19 +202,19 @@ body {
 								<td th:text="${m.ro3}"></td>
 								<td th:text="${m.r06}"></td>
 								<td>
-								
 
-<!-- 									<div class="d-flex justify-content-start align-items-center">
-										<a href="#" th:onclick="|deleteMedicinePrediction(${m.mfp})|"
-											class="btn btn-danger btn-sm mr-2">Delete</a>
 
-										<form th:action="@{/pc/updateStock/{mfp}(mfp=${m.mfp})}"
+									<div class="d-flex justify-content-start align-items-center">
+
+
+										<form
+											th:action="@{/pc/updateStockPrediction/{mfpid}(mfpid=${m.mfpid})}"
 											method="post">
 											<button type="submit" class="btn btn-primary btn-sm">Update</button>
 										</form>
 									</div>
 
- -->
+
 								</td>
 
 							</tr>

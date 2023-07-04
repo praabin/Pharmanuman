@@ -9,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -19,8 +18,7 @@ public class MedicineForPrediction {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int mfpid;
 
-	@Column(nullable = false, unique = true)
-//	@NotBlank(message = "Cann't be blank")
+	@Column(unique = true)
 	private LocalDate datum;
 
 	@Column(nullable = false)

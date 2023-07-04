@@ -275,17 +275,11 @@ public class CompanyController {
 
 			this.userRepository.save(user);
 
-			System.out.println("data: " + medicineForPrediction);
-			System.out.println("medicines added to database");
 			String name = p.getName();
 			User tempUser = this.userRepository.getUserByUserName(name);
-//			List<MedicineForCompany> medicines = this.medicineForCompanyRepository.findMedicinesById(tempUser.getId());
-
-//			Collections.sort(medicines, Comparator.comparingInt(MedicineForCompany::getMid).reversed());
-//			m.addAttribute("medicines", medicines);
 
 			session.setAttribute("message", new MyMessage("Successfully Added!! ", "alert-success"));
-
+			m.addAttribute("medicineForPrediction", new MedicineForPrediction());
 			return "pharmaceuticalcompany/add_category";
 		} catch (Exception e) {
 
@@ -305,6 +299,39 @@ public class CompanyController {
 		System.out.println(medicines);
 		m.addAttribute("mfp", medicines);
 		return "pharmaceuticalcompany/view_stock_for_prediction";
+	}
+
+	@PostMapping("/updateStockPrediction/{mfpid}")
+	public String updateStockPrediction(@PathVariable("mfpid") int id, Model m) {
+		m.addAttribute("title", "Update medicine");
+		MedicineForPrediction tempMedicine = this.medicineForPredictionRepo.findById(id).get();
+		m.addAttribute("medicineForPrediction", tempMedicine);
+		return "pharmaceuticalcompany/update_category";
+	}
+
+	@PostMapping("/process-update-stock")
+	public String processUpdateStock(@ModelAttribute MedicineForPrediction medicineForPrediction, Principal p,
+			Model model, HttpSession session) {
+
+		try {
+
+			String name = p.getName();
+			User tempUser = this.userRepository.getUserByUserName(name);
+			medicineForPrediction.setUser(tempUser);
+			this.medicineForPredictionRepo.save(medicineForPrediction);
+
+			List<MedicineForPrediction> medicines = this.medicineForPredictionRepo
+					.findMedicineForPredictionById(tempUser.getId());
+			model.addAttribute("medicineForPrediction", medicines);
+
+			session.setAttribute("message", new MyMessage("Successfully Updated!! ", "alert-success"));
+			return "pharmaceuticalcompany/view_stock_for_prediction";
+
+		} catch (Exception e) {
+
+			session.setAttribute("message", new MyMessage("Something went wrong!! ", "alert-danger"));
+			return "pharmaceuticalcompany/view_stock_for_prediction";
+		}
 	}
 
 }
