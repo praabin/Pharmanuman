@@ -1,7 +1,7 @@
 @charset "ISO-8859-1";
 /* Pharmacy */
-body {
-	background: url(../img/medications.jpg);
+body {/* 
+	background: url(../img/medications.jpg); */
 	background-size: cover;
 	
 }

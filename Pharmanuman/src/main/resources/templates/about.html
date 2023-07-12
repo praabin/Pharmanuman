@@ -2,12 +2,104 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
 	th:replace="base::Layout(~{::div})">
 <head>
-<meta charset="UTF-8" />
-<title>about</title>
+<meta charset="UTF-8">
+<title>About Us</title>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f3f3f3;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+.about-content {
+	display: flex;
+	align-items: center;
+	gap: 40px;
+}
+
+.about-image {
+	width: 300px;
+	border-radius: 50%;
+	object-fit: cover;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.about-text {
+	flex: 1;
+}
+
+.about-heading {
+	font-size: 36px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.about-description {
+	font-size: 18px;
+	color: #777;
+	line-height: 1.5;
+	margin-bottom: 20px;
+}
+
+.about-button {
+	padding: 10px 20px;
+	font-size: 18px;
+	border: none;
+	border-radius: 5px;
+	background-color: #007bff;
+	color: #fff;
+	text-decoration: none;
+	transition: background-color 0.3s ease;
+}
+
+.about-button:hover {
+	background-color: #0056b3;
+}
+
+.footer {
+	background-color: #333;
+	color: #fff;
+	padding: 10px;
+	text-align: center;
+}
+</style>
 </head>
 <body>
+
 	<div class="container">
-		<h1>Welcome to about page</h1>
+		<div class="about-content">
+			<img src="img/about-image.jpg" alt="About Us" class="about-image">
+			<div class="about-text">
+				<h2 class="about-heading">About Us</h2>
+				<p class="about-description">Pharmaunman is a leading
+					pharmaceutical company dedicated to improving global healthcare. We
+					strive to develop innovative and high-quality medicines that
+					address critical medical needs and improve patients' lives.</p>
+				<p class="about-description">Our team of dedicated scientists,
+					researchers, and healthcare professionals work tirelessly to
+					discover new treatments and therapies. We collaborate with leading
+					medical institutions and experts to ensure our products are safe,
+					effective, and meet the highest standards of quality.</p>
+				<p class="about-description">At Pharmaunman, we are committed to
+					making a positive impact on global health by providing access to
+					affordable and life-saving medications. We believe in the power of
+					innovation, collaboration, and integrity to drive meaningful change
+					in healthcare.</p>
+				<a href="#" class="about-button">Learn More</a>
+			</div>
+		</div>
 	</div>
+
+	<footer class="footer">
+		<p>&copy; 2023 Pharmaunman. All rights reserved.</p>
+	</footer>
+
 </body>
 </html>
