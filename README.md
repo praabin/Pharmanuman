@@ -1,2 +1,4 @@
 # Pharmanuman
-Smart Pharmacy Demand Forecasting using SpringBoot
+Abstract:
+Pharmanuman is a web application designed to streamline the supply chain in the pharmaceutical industry, empowering local pharmacies and stockists to efficiently manage their inventory. This application facilitates collaboration between stockists and local pharmacies, enabling direct ordering of medicines. By eliminating traditional processes like phone calls and paper-based order notes, the application significantly improves efficiency and accuracy. The demand forecasting feature has been removed from Pharmanuman, focusing solely on inventory management and order placement. The web app remains accessible from any device with an internet connection and maintains a seamless and secure user experience, revolutionizing the ordering process in the pharmaceutical industry.
+
