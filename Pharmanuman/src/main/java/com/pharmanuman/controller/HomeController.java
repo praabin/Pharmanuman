@@ -74,7 +74,11 @@ public class HomeController {
 			if (result1.hasErrors()) {
 				System.out.println("Error " + result1.toString());
 				model.addAttribute("user", user);
-				return "signup";
+
+				session.setAttribute("message", new MyMessage("Something went wrong!" + result1, "alert-danger"));
+//				return "signup";
+
+				return "dummy";
 			}
 
 			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -88,12 +92,13 @@ public class HomeController {
 
 			session.setAttribute("message", new MyMessage("Successfully Registered!", "alert-success"));
 //			return "signup";
-			return "signin";
+			return "dummy";
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("user", user);
 			session.setAttribute("message", new MyMessage("Something went wrong!" + e.getMessage(), "alert-danger"));
-			return "signup";
+//			return "signup";		
+			return "dummy";
 		}
 
 	}

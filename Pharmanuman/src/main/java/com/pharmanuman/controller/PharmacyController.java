@@ -73,7 +73,7 @@ public class PharmacyController {
 
 	@RequestMapping("/profile")
 	public String profile(Model model) {
-		model.addAttribute("title", "User Dashboard");
+		model.addAttribute("title", "User profile");
 		return "pharmacy/profile";
 	}
 
