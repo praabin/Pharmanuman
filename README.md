@@ -75,8 +75,9 @@ c. You must be connected with internet
 ![3](https://github.com/Prabin-sc1/Pharmanuman/assets/79828184/2c03caef-43ce-4417-aca1-e373800319d2)
 ![4](https://github.com/Prabin-sc1/Pharmanuman/assets/79828184/7f74c249-9627-4b50-ad50-ef6a3f9172cd)
 ![5](https://github.com/Prabin-sc1/Pharmanuman/assets/79828184/97e290f4-c115-445f-8c92-d9838e3b64d6)
-![6](https://github.com/Prabin-sc1/Pharmanuman/assets/79828184/3a63334c-50f2-43c2-![7](https://github.com/Prabin-sc1/Pharmanuman/assets/79828184/93c9e38b-0b39-4e11-ac50-9b083a2d712d)
-a435-53f62662f06c)
+![6](https://github.com/Prabin-sc1/Pharmanuman/assets/79828184/3a63334c-50f2-43c2-a435-53f62662f06c)
+![7](https://github.com/Prabin-sc1/Pharmanuman/assets/79828184/93c9e38b-0b39-4e11-ac50-9b083a2d712d)
+
 ![8](https://github.com/Prabin-sc1/Pharmanuman/assets/79828184/d2c1d8ee-9be6-4c26-aed0-a57369386146)
 ![8b](https://github.com/Prabin-sc1/Pharmanuman/assets/79828184/a8000c61-cb2b-4164-b3a1-e7a20b4ff81d)
 ![9](https://github.com/Prabin-sc1/Pharmanuman/assets/79828184/e828fa0f-d9ce-4912-be11-c714a9b4affc)
