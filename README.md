@@ -39,9 +39,11 @@ https://github.com/Prabin-sc1/Pharmanuman
 
 2. Open STS IDE
 a. At the top left corner, click one file and choose Open Project file from system.
-ss1
+![Screenshot (163)](https://github.com/Prabin-sc1/Pharmanuman/assets/79828184/261c369f-0fca-48e5-91aa-502de7ad4ef6)
+
 b. Import the folder where you clone the project
-ss2
+
+![Screenshot (164)](https://github.com/Prabin-sc1/Pharmanuman/assets/79828184/af1cfbd8-bbee-4ab1-80ff-cab8ad6d7c7b)
 
 c. Click on finish...
 
@@ -58,11 +60,9 @@ A. open application.properties
 # spring.jpa.hibernate.ddl-auto= update
 
 Prerequisite :
-a. You have to create database namely loginregister
+a. You have to create database namely pharmanuman
 b. Put your database user and password
-c. You should be connected with internet
-
-ss3
+c. You must be connected with internet
 
 4. Now run the app as spring boot app
 
