@@ -7,6 +7,7 @@ Pharmanuman is a web application designed to streamline the supply chain in the 
     2. Technologies Used
     3. Tools Used
     4. Installation
+    5. Screenshots
 
     
     
@@ -48,13 +49,13 @@ c. Click on finish...
 A. open application.properties
 
 
-server.port= 9494
-spring.datasource.url= jdbc:mysql://localhost:3306/pharmanuman
-spring.datasource.username= root
-spring.datasource.password= root
-spring.datasource.driver-class-name= com.mysql.cj.jdbc.Driver
-spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL8Dialect
-spring.jpa.hibernate.ddl-auto= update
+# server.port= 9494
+# spring.datasource.url= jdbc:mysql://localhost:3306/pharmanuman
+# spring.datasource.username= root
+# spring.datasource.password= root
+# spring.datasource.driver-class-name= com.mysql.cj.jdbc.Driver
+# spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL8Dialect
+# spring.jpa.hibernate.ddl-auto= update
 
 Prerequisite :
 a. You have to create database namely loginregister
@@ -66,7 +67,9 @@ ss3
 4. Now run the app as spring boot app
 
 5. Open your favourite browser and copy the below url and paste it in your browser 
-  http://localhost:9494/ 
+  http://localhost:9494/
+
+##  Screenshots
 
   
 
